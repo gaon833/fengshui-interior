@@ -35,3 +35,27 @@ if (dim) {
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') setMenu(false);
 });
+
+
+/* ===== V18: 메뉴 상태 동기화 ===== */
+(() => {
+  const buttons = document.querySelectorAll('.menu-button');
+  const drawer = document.querySelector('.drawer');
+
+  function sync(open) {
+    buttons.forEach(btn => btn.setAttribute('aria-expanded', open ? 'true' : 'false'));
+    document.body.classList.toggle('menu-open', open);
+    if (drawer) drawer.classList.toggle('is-open', open);
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = btn.getAttribute('aria-expanded') !== 'true';
+      window.setTimeout(() => sync(next), 0);
+    });
+  });
+
+  document.querySelectorAll('.drawer-close, .page-dim').forEach(el => {
+    el.addEventListener('click', () => window.setTimeout(() => sync(false), 0));
+  });
+})();

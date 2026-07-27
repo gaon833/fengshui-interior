@@ -334,3 +334,40 @@
     font-size:26px !important;
   }
 }
+
+
+/* ===== V18: 상세페이지 사이드 영역도 자연스럽게 축소 ===== */
+@media(min-width:901px){
+  :root{
+    --detail-left:clamp(320px,42vw,800px);
+    --detail-right:clamp(70px,15vw,300px);
+    --detail-top:clamp(120px,10vw,200px);
+  }
+
+  .detail-info{
+    width:var(--detail-left) !important;
+    transition:width .32s cubic-bezier(.22,1,.36,1) !important;
+  }
+
+  .detail-gallery{
+    margin-left:var(--detail-left) !important;
+    padding-top:var(--detail-top) !important;
+    padding-right:var(--detail-right) !important;
+    transition:
+      margin-left .32s cubic-bezier(.22,1,.36,1),
+      padding-right .32s cubic-bezier(.22,1,.36,1),
+      padding-top .32s cubic-bezier(.22,1,.36,1) !important;
+  }
+}
+
+@media(max-width:900px){
+  .detail-info{
+    position:relative !important;
+    width:auto !important;
+    height:auto !important;
+  }
+
+  .detail-gallery{
+    margin-left:0 !important;
+  }
+}

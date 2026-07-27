@@ -327,3 +327,58 @@
     gap:24px !important;
   }
 }
+
+
+/* ===== V18: WORK 반응형 최종 조정 ===== */
+:root{
+  --work-responsive-sidebar:clamp(220px,25vw,400px);
+  --work-fluid-gap:clamp(16px,2.2vw,35px);
+}
+
+.work-main{
+  margin-left:var(--work-responsive-sidebar) !important;
+  padding-right:var(--work-fluid-gap) !important;
+  transition:
+    margin-left .32s cubic-bezier(.22,1,.36,1),
+    padding-right .32s cubic-bezier(.22,1,.36,1) !important;
+}
+
+.portfolio-columns{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  column-gap:var(--work-fluid-gap) !important;
+}
+
+.portfolio-column{
+  gap:var(--work-fluid-gap) !important;
+}
+
+@media(max-width:900px) and (min-width:601px){
+  .fixed-page-sidebar{
+    display:none !important;
+  }
+
+  .work-main{
+    margin-left:0 !important;
+    padding:90px clamp(16px,3vw,28px) 90px !important;
+  }
+
+  .portfolio-columns{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+@media(max-width:600px){
+  .work-main{
+    margin-left:0 !important;
+    padding:88px 18px 80px !important;
+  }
+
+  .portfolio-columns{
+    grid-template-columns:1fr !important;
+    row-gap:24px !important;
+  }
+
+  .portfolio-column{
+    gap:24px !important;
+  }
+}

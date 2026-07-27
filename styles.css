@@ -690,3 +690,116 @@ header{
     font-size:clamp(14px,4vw,17px) !important;
   }
 }
+
+
+/* ===== V17: 메뉴 여백·색상·타이포 통일 ===== */
+.side-nav,
+.drawer nav{
+  gap:24px !important;
+}
+
+.side-nav a,
+.drawer nav a,
+.side-nav .channel-link,
+.drawer nav .channel-link{
+  font-family:"Helvetica Neue","Nimbus Sans L","Liberation Sans",Arial,sans-serif !important;
+  font-size:18px !important;
+  font-weight:200 !important;
+  line-height:1.35 !important;
+  letter-spacing:.055em !important;
+  text-transform:uppercase !important;
+  color:#9b9b9b !important;
+  transition:none !important;
+}
+
+.side-nav a.active,
+.drawer nav a.active{
+  color:#222 !important;
+}
+
+.side-nav a:hover,
+.drawer nav a:hover,
+.side-nav a:focus,
+.drawer nav a:focus,
+.side-nav a:active,
+.drawer nav a:active{
+  transform:none !important;
+  text-decoration:none !important;
+  outline:none !important;
+}
+
+.side-nav a:not(.active):hover,
+.drawer nav a:not(.active):hover,
+.side-nav a:not(.active):focus,
+.drawer nav a:not(.active):focus,
+.side-nav a:not(.active):active,
+.drawer nav a:not(.active):active{
+  color:#9b9b9b !important;
+}
+
+.menu-divider{
+  display:block !important;
+  width:100px !important;
+  height:1px !important;
+  margin:22px 0 18px !important;
+  background:#666 !important;
+  opacity:.75 !important;
+}
+
+.side-nav .channel-link,
+.drawer nav .channel-link{
+  color:#8f8f8f !important;
+}
+
+@media(max-width:760px){
+  .side-nav,
+  .drawer nav{
+    gap:clamp(17px,4.8vw,22px) !important;
+  }
+
+  .side-nav a,
+  .drawer nav a,
+  .side-nav .channel-link,
+  .drawer nav .channel-link{
+    font-size:clamp(14px,4vw,17px) !important;
+    line-height:1.35 !important;
+  }
+
+  .menu-divider{
+    width:clamp(72px,24vw,96px) !important;
+    margin:clamp(18px,5vw,22px) 0 clamp(14px,4vw,18px) !important;
+  }
+}
+
+
+/* ===== V18: 햄버거 90도 회전 + 부드러운 메뉴 패널 ===== */
+.menu-button{
+  transition:transform .38s cubic-bezier(.22,1,.36,1) !important;
+  transform-origin:center center;
+}
+
+.menu-button[aria-expanded="true"]{
+  transform:rotate(90deg) !important;
+}
+
+.drawer{
+  opacity:0;
+  transform:translateX(-28px);
+  transition:
+    width .35s cubic-bezier(.22,1,.36,1),
+    transform .38s cubic-bezier(.22,1,.36,1),
+    opacity .28s ease !important;
+}
+
+.drawer.is-open,
+body.menu-open .drawer{
+  opacity:1;
+  transform:translateX(0);
+}
+
+@media(prefers-reduced-motion:reduce){
+  .menu-button,
+  .drawer{
+    transition:none !important;
+  }
+}
