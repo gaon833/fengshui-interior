@@ -8,8 +8,24 @@
   <link rel="stylesheet" href="work.css">
 </head>
 <body class="work-page">
-  <header class="topbar">
-    <a class="brand" href="index.html" data-site-name>풍수 인테리어</a>
+  <aside class="work-sidebar">
+    <a class="work-logo" href="index.html">풍수 인테리어</a>
+
+    <nav class="work-side-nav">
+      <a href="about.html">about us</a>
+      <a href="contact.html">contact us</a>
+      <a class="active" href="project.html">work</a>
+    </nav>
+
+    <div class="work-side-info">
+      풍수 인테리어<br>
+      Seoul, Republic of Korea<br>
+      02-0000-0000
+    </div>
+  </aside>
+
+  <header class="work-mobile-header">
+    <a class="brand" href="index.html">풍수 인테리어</a>
     <button class="menu-button" type="button" aria-label="메뉴 열기" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -33,11 +49,45 @@
       </div>
     </section>
 
-    <section id="projectGrid" class="project-grid"></section>
+    <section class="mixed-gallery">
+      <article class="work-tile tile-wide" data-style="Modern" data-size="30">
+        <a href="#">
+          <img src="assets/work-landscape-01.jpg" alt="가로형 인테리어 예시 1">
+          <div class="tile-caption"><span>CALM HOUSE</span><small>Residential · 102㎡ (31평)</small></div>
+        </a>
+      </article>
+
+      <article class="work-tile tile-portrait" data-style="Unique" data-size="40">
+        <a href="#">
+          <img src="assets/work-portrait-01.jpg" alt="세로형 인테리어 예시 1">
+          <div class="tile-caption"><span>LIGHT HALL</span><small>Residential · 138㎡ (42평)</small></div>
+        </a>
+      </article>
+
+      <article class="work-tile tile-medium" data-style="Modern" data-size="20">
+        <a href="#">
+          <img src="assets/work-landscape-02.jpg" alt="가로형 인테리어 예시 2">
+          <div class="tile-caption"><span>SOFT LIVING</span><small>Residential · 82㎡ (25평)</small></div>
+        </a>
+      </article>
+
+      <article class="work-tile tile-portrait tile-portrait-right" data-style="Modern" data-size="50">
+        <a href="#">
+          <img src="assets/work-portrait-02.jpg" alt="세로형 인테리어 예시 2">
+          <div class="tile-caption"><span>QUIET ENTRY</span><small>Residential · 165㎡ (50평)</small></div>
+        </a>
+      </article>
+
+      <article class="work-tile tile-wide" data-style="Unique" data-size="C">
+        <a href="#">
+          <img src="assets/work-landscape-03.jpg" alt="가로형 인테리어 예시 3">
+          <div class="tile-caption"><span>LINE OFFICE</span><small>Commercial</small></div>
+        </a>
+      </article>
+    </section>
   </main>
 
   <div class="page-dim" aria-hidden="true"></div>
-
   <aside class="drawer" aria-hidden="true">
     <button class="drawer-close" type="button" aria-label="메뉴 닫기">
       <span></span><span></span>
@@ -55,7 +105,6 @@
   </aside>
 
   <script src="script.js"></script>
-  <script src="content.js"></script>
   <script src="work.js"></script>
 </body>
 </html>
