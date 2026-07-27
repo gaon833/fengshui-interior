@@ -201,3 +201,32 @@
   backdrop-filter:blur(.7px);
   -webkit-backdrop-filter:blur(.7px);
 }
+
+
+/* ===== V9: 이미지 호버는 미세한 블러만 ===== */
+.work-tile a{
+  overflow:visible;
+}
+
+.work-tile a::after{
+  display:none !important;
+  content:none !important;
+  background:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+.work-tile img{
+  opacity:1 !important;
+  transform:none !important;
+  filter:none !important;
+  transition:filter .28s ease !important;
+}
+
+.work-tile a:hover img,
+.work-tile a:focus img,
+.work-tile a:active img{
+  opacity:1 !important;
+  transform:none !important;
+  filter:blur(.65px) !important;
+}

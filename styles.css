@@ -446,3 +446,25 @@ button{font:inherit}
 .drawer-close:active{
   transform:none !important;
 }
+
+
+/* ===== V9: 메뉴 효과 완전 제거 ===== */
+.side-nav a,
+.drawer nav a,
+.side-nav a.active,
+.drawer nav a.active,
+.side-nav a:hover,
+.drawer nav a:hover,
+.side-nav a:active,
+.drawer nav a:active,
+.side-nav a:focus,
+.drawer nav a:focus{
+  color:#9d9d9d !important;
+  font-weight:200 !important;
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+  text-decoration:none !important;
+  outline:none !important;
+  filter:none !important;
+}

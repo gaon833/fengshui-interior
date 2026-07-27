@@ -204,3 +204,20 @@
     padding:90px 18px 70px;
   }
 }
+
+
+/* ===== V9: 고정 사이드바 메뉴 효과 제거 ===== */
+.fixed-page-nav a,
+.fixed-page-nav a.active,
+.fixed-page-nav a:hover,
+.fixed-page-nav a:active,
+.fixed-page-nav a:focus{
+  color:#9d9d9d !important;
+  font-weight:200 !important;
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+  text-decoration:none !important;
+  outline:none !important;
+  filter:none !important;
+}
