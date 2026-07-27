@@ -1,14 +1,7 @@
 :root{
-  /* 메인 이미지 시작점과 맞춘 고정 사이드 영역 */
   --work-sidebar-width:400px;
-
-  /* 사진 사이 여백과 오른쪽 끝 여백을 같은 70px로 통일 */
   --work-gap:35px;
-
   --work-top:94px;
-  --work-row-gap:76px;
-
-  /* 메인페이지와 동일하게 쓰는 글꼴 기준 */
   --work-font:Arial,"Noto Sans KR",sans-serif;
 }
 
@@ -19,94 +12,11 @@
   font-family:var(--work-font);
 }
 
-.fixed-page-sidebar{
-  position:fixed;
-  inset:0 auto 0 0;
-  z-index:25;
-  width:var(--work-sidebar-width);
-  height:100vh;
-  padding:25px 20px 24px;
-  display:flex;
-  flex-direction:column;
-  background:#fff;
-}
-
-/* 사이드바 글씨는 모두 고정값 */
-.fixed-page-logo{
-  color:#111;
-  font-family:var(--work-font);
-  font-size:12px;
-  font-weight:600;
-  line-height:1;
-  letter-spacing:.12em;
-  white-space:nowrap;
-}
-
-.fixed-page-nav{
-  margin-top:58px;
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-}
-
-.fixed-page-nav a{
-  color:#8f8f8f;
-  font-family:var(--work-font);
-  font-size:11px;
-  font-weight:400;
-  line-height:1;
-  letter-spacing:0;
-}
-
-.fixed-page-nav a.active,
-.fixed-page-nav a:hover{
-  color:#111;
-}
-
-.fixed-page-info{
-  margin-top:auto;
-  color:#8b8b8b;
-  font-family:var(--work-font);
-  font-size:8px;
-  font-weight:400;
-  line-height:1.7;
-}
-
-/* 메인페이지와 같은 오른쪽 위 위치 및 3줄 모양 */
-.fixed-page-menu-button{
-  position:fixed !important;
-  top:24px !important;
-  right:20px !important;
-  left:auto !important;
-  z-index:80;
-  width:24px !important;
-  height:24px !important;
-  padding:0 !important;
-}
-
-.fixed-page-menu-button span{
-  display:block;
-  position:absolute;
-  left:3px;
-  width:18px;
-  height:1px;
-  background:#8a8a8a;
-}
-
-.fixed-page-menu-button span:nth-child(1){top:6px}
-.fixed-page-menu-button span:nth-child(2){top:11px}
-.fixed-page-menu-button span:nth-child(3){top:16px}
-
 .work-main{
   margin-left:var(--work-sidebar-width);
-  padding:
-    var(--work-top)
-    var(--work-gap)
-    130px
-    0;
+  padding:var(--work-top) var(--work-gap) 120px 0;
 }
 
-/* All 글자 시작점 = 첫 번째 이미지 시작점 */
 .work-filters{
   width:100%;
   min-height:126px;
@@ -146,16 +56,20 @@
   color:#111;
 }
 
-/*
-  남은 콘텐츠 폭을 정확히 2등분:
-  (전체 폭 - 사이드바 - 중간 70 - 오른쪽 70) / 2
-*/
-.project-grid{
+/* 두 열의 폭은 완전히 동일 */
+.portfolio-columns{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   column-gap:var(--work-gap);
-  row-gap:var(--work-row-gap);
   align-items:start;
+}
+
+/* 각 열 안의 세로 간격도 동일 */
+.portfolio-column{
+  display:flex;
+  flex-direction:column;
+  gap:var(--work-gap);
+  min-width:0;
 }
 
 .work-tile{
@@ -168,44 +82,19 @@
   text-decoration:none;
 }
 
-.tile-media{
-  width:100%;
-  overflow:hidden;
-  background:#ebe8e1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.tile-media.landscape{
-  aspect-ratio:4 / 3;
-}
-
-.tile-media.portrait{
-  aspect-ratio:4 / 3;
-}
-
-/* 세로 사진도 카드 폭은 동일하되 사진 자체는 좁게 보여 비율 차이를 살림 */
-.tile-media.portrait img{
-  width:auto;
-  height:100%;
-  max-width:68%;
-  object-fit:cover;
-}
-
-.tile-media.landscape img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.tile-media img{
+/* 사진 높이는 원본 비율을 그대로 사용 */
+.work-tile img{
   display:block;
-  transition:opacity .2s ease;
+  width:100%;
+  height:auto;
+  background:#ece9e2;
+  transition:opacity .2s ease, transform .35s ease;
+  transform-origin:center;
 }
 
 .work-tile a:hover img{
   opacity:.92;
+  transform:scale(1.01);
 }
 
 .tile-caption{
@@ -243,7 +132,6 @@
 @media(max-width:1100px) and (min-width:761px){
   :root{
     --work-sidebar-width:320px;
-    --work-gap:40px;
   }
 }
 
@@ -252,18 +140,9 @@
     --work-gap:18px;
   }
 
-  .fixed-page-sidebar{
-    display:none;
-  }
-
   .work-main{
     margin-left:0;
     padding:90px 18px 90px;
-  }
-
-  .fixed-page-menu-button{
-    top:20px !important;
-    right:18px !important;
   }
 
   .work-filters{
@@ -276,12 +155,12 @@
     gap:23px;
   }
 
-  .project-grid{
+  .portfolio-columns{
     grid-template-columns:1fr;
-    row-gap:48px;
+    row-gap:var(--work-gap);
   }
 
-  .tile-media.portrait img{
-    max-width:64%;
+  .portfolio-column{
+    gap:var(--work-gap);
   }
 }

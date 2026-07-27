@@ -125,3 +125,24 @@
     right:18px !important;
   }
 }
+
+
+/* ===== V7 메뉴 타이포 통일 ===== */
+.fixed-page-nav{
+  margin-top:92px;
+  gap:42px;
+}
+
+.fixed-page-nav a{
+  color:#a7a7a7;
+  font-size:22px;
+  font-weight:300;
+  line-height:1;
+  letter-spacing:.025em;
+  text-transform:uppercase;
+}
+
+.fixed-page-nav a.active,
+.fixed-page-nav a:hover{
+  color:#484848;
+}
