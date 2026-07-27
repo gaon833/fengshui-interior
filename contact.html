@@ -3,34 +3,54 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Contact — 풍수 인테리어</title>
+  <title>Contact us — 풍수 인테리어</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="subpages.css">
+  <link rel="stylesheet" href="fixed-pages.css">
 </head>
-<body class="sub-page">
-  <header class="sub-header">
-    <a href="index.html" class="sub-brand" data-site-name>풍수 인테리어</a>
-    <a href="index.html" class="sub-back">← main</a>
-  </header>
-  <main class="editorial-page">
-    <p class="section-label">CONTACT US</p>
-    <h1 id="contactTitle">Contact us</h1>
-    <div class="contact-grid">
-      <div><span>Tel</span><p id="phone"></p></div>
-      <div><span>Email</span><p id="email"></p></div>
-      <div><span>Address</span><p id="address"></p></div>
+<body class="fixed-content-page">
+  <aside class="fixed-page-sidebar">
+    <a class="fixed-page-logo" href="index.html">풍수 인테리어</a>
+
+    <nav class="fixed-page-nav">
+      <a href="about.html" data-page="about">about us</a>
+      <a href="contact.html" class="active" data-page="contact">contact us</a>
+      <a href="project.html" data-page="work">work</a>
+    </nav>
+
+    <div class="fixed-page-info">
+      풍수 인테리어<br>
+      Seoul, Republic of Korea<br>
+      02-0000-0000
     </div>
-    <p id="contactMessage" class="lead small"></p>
+  </aside>
+
+  <button class="menu-button fixed-page-menu-button" type="button" aria-label="메뉴 열기" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <main class="fixed-page-main">
+    <section class="fixed-page-image">
+      <img src="assets/work-landscape-02.jpg" alt="Contact us">
+    </section>
   </main>
-  <script src="content.js"></script>
-  <script>
-    loadJSON('/content/contact.json').then(data => {
-      document.getElementById('contactTitle').textContent = data.title || 'Contact us';
-      document.getElementById('phone').textContent = data.phone || '';
-      document.getElementById('email').textContent = data.email || '';
-      document.getElementById('address').textContent = data.address || '';
-      document.getElementById('contactMessage').textContent = data.message || '';
-    });
-  </script>
+
+  <div class="page-dim" aria-hidden="true"></div>
+  <aside class="drawer" aria-hidden="true">
+    <button class="drawer-close" type="button" aria-label="메뉴 닫기">
+      <span></span><span></span>
+    </button>
+    <nav class="side-nav">
+      <a href="about.html">about us</a>
+      <a href="contact.html">contact us</a>
+      <a href="project.html">work</a>
+    </nav>
+    <div class="drawer-info">
+      풍수 인테리어<br>
+      Seoul, Republic of Korea<br>
+      02-0000-0000
+    </div>
+  </aside>
+
+  <script src="script.js"></script>
 </body>
 </html>

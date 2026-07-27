@@ -7,6 +7,7 @@ const files = [
   "contact.html",
   "styles.css",
   "work.css",
+  "fixed-pages.css",
   "subpages.css",
   "script.js",
   "work.js",
