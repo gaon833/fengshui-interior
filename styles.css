@@ -838,3 +838,95 @@ body.menu-open-no-dim .page-dim{
   display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;
 }
 body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
+
+
+/* ===== V21: 모바일 스크롤 시 로고/햄버거 자동 숨김 ===== */
+@media(max-width:760px){
+  .site-header,
+  .topbar,
+  header,
+  .detail-header{
+    transition:transform .35s cubic-bezier(.22,1,.36,1), opacity .25s ease !important;
+    will-change:transform,opacity;
+  }
+
+  .site-header.mobile-header-hidden,
+  .topbar.mobile-header-hidden,
+  header.mobile-header-hidden,
+  .detail-header.mobile-header-hidden{
+    transform:translateY(-115%) !important;
+    opacity:0 !important;
+    pointer-events:none !important;
+  }
+
+  body.menu-open .site-header,
+  body.menu-open .topbar,
+  body.menu-open header,
+  body.menu-open .detail-header{
+    transform:translateY(0) !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+  }
+}
+
+
+/* ===== V21: 상세 프로젝트 페이지 전환 페이드 ===== */
+.project-detail-page{
+  opacity:0;
+}
+
+.project-detail-page.page-ready{
+  opacity:1;
+  transition:opacity .25s ease;
+}
+
+.project-detail-page.page-leaving{
+  opacity:0 !important;
+  transition:opacity .18s ease !important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  .project-detail-page,
+  .project-detail-page.page-ready,
+  .project-detail-page.page-leaving{
+    opacity:1 !important;
+    transition:none !important;
+  }
+}
+
+
+/* ===== V22: 모바일 전체 페이지 로고 + 햄버거 스크롤 숨김 통일 ===== */
+@media(max-width:760px){
+  .detail-logo,
+  .site-logo,
+  .fixed-page-logo,
+  .brand,
+  .logo,
+  .detail-menu-button,
+  .fixed-page-menu-button,
+  .menu-button{
+    transition:
+      transform .35s cubic-bezier(.22,1,.36,1),
+      opacity .25s ease !important;
+    will-change:transform,opacity;
+  }
+
+  .mobile-scroll-hidden{
+    transform:translateY(-115%) !important;
+    opacity:0 !important;
+    pointer-events:none !important;
+  }
+
+  body.menu-open .detail-logo,
+  body.menu-open .site-logo,
+  body.menu-open .fixed-page-logo,
+  body.menu-open .brand,
+  body.menu-open .logo,
+  body.menu-open .detail-menu-button,
+  body.menu-open .fixed-page-menu-button,
+  body.menu-open .menu-button{
+    transform:translateY(0) !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+  }
+}

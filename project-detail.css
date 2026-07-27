@@ -397,3 +397,52 @@
   .detail-meta p{margin-bottom:38px!important;}
   .detail-meta dl{row-gap:34px!important;}
 }
+
+
+/* ===== V21: 상세페이지 PREV / NEXT ===== */
+.project-pagination{
+  width:100%;
+  margin-top:70px;
+  padding-top:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.project-pagination-link{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  min-height:46px;
+  padding:10px 0;
+  color:#929292;
+  text-decoration:none;
+  font-family:"Helvetica Neue","Nimbus Sans L","Liberation Sans",Arial,sans-serif;
+  font-size:12px;
+  font-weight:200;
+  line-height:1;
+  letter-spacing:.055em;
+  transition:color .2s ease;
+}
+
+.project-pagination-link:hover,
+.project-pagination-link:focus{
+  color:#111;
+}
+
+.project-pagination-link.next{
+  margin-left:auto;
+  text-align:right;
+}
+
+@media(max-width:760px){
+  .project-pagination{
+    margin-top:46px;
+  }
+
+  .project-pagination-link{
+    min-height:48px;
+    font-size:11px;
+    gap:7px;
+  }
+}

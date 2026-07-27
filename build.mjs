@@ -13,6 +13,8 @@ const files = [
   "fixed-pages.css",
   "subpages.css",
   "script.js",
+  "page-transition.js",
+  "mobile-header.js",
   "work.js",
   "project-detail.css",
   "content.js",
