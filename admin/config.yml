@@ -1,0 +1,61 @@
+backend:
+  name: github
+  repo: gaon833/fengshui-interior
+  branch: main
+  base_url: https://fengshui-interior-auth.ksh833833.workers.dev
+  auth_endpoint: auth
+
+locale: ko
+publish_mode: simple
+
+media_folder: assets/uploads
+public_folder: /assets/uploads
+
+collections:
+  - name: settings
+    label: 홈페이지 관리
+    files:
+      - name: main
+        label: 메인 페이지
+        file: content/site.json
+        format: json
+        fields:
+          - {label: 홈페이지 이름, name: site_name, widget: string}
+          - {label: 메인 이미지, name: hero_image, widget: image, choose_url: false}
+
+      - name: about
+        label: About
+        file: content/about.json
+        format: json
+        fields:
+          - {label: 제목, name: title, widget: string}
+          - {label: 소개 내용, name: body, widget: text}
+
+      - name: contact
+        label: Contact
+        file: content/contact.json
+        format: json
+        fields:
+          - {label: 제목, name: title, widget: string}
+          - {label: 전화번호, name: phone, widget: string}
+          - {label: 이메일, name: email, widget: string}
+          - {label: 주소, name: address, widget: string}
+          - {label: 안내 문구, name: message, widget: text}
+
+      - name: projects
+        label: Work 프로젝트
+        file: content/projects.json
+        format: json
+        fields:
+          - label: 프로젝트
+            name: projects
+            widget: list
+            summary: "{{fields.title}} · {{fields.category}}"
+            fields:
+              - {label: 프로젝트명, name: title, widget: string}
+              - label: 분류
+                name: category
+                widget: select
+                options: [Residential, Commercial, Office]
+              - {label: 연도, name: year, widget: string, required: false}
+              - {label: 이미지, name: image, widget: image, choose_url: false}

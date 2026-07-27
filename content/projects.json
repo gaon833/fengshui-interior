@@ -1,0 +1,28 @@
+{
+  "projects": [
+    {
+      "title": "CALM HOUSE",
+      "category": "Residential",
+      "year": "2026",
+      "image": "/assets/hero.jpg"
+    },
+    {
+      "title": "WARM MOOD",
+      "category": "Residential",
+      "year": "2026",
+      "image": "/assets/hero.jpg"
+    },
+    {
+      "title": "LINE & LIGHT",
+      "category": "Residential",
+      "year": "2025",
+      "image": "/assets/hero.jpg"
+    },
+    {
+      "title": "BOUTIQUE OFFICE",
+      "category": "Office",
+      "year": "2025",
+      "image": "/assets/hero.jpg"
+    }
+  ]
+}

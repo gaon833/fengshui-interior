@@ -1,0 +1,232 @@
+
+:root{
+  /* ===== 쉽게 수정하는 영역 ===== */
+  --brand-left: 20px;
+  --brand-top: 18px;
+  --plus-right: 30px;
+  --plus-top: 30px;
+
+  /* 참고 화면 기준: 좌우 약 13.48%, 위쪽 64px */
+  --hero-side: 13.48vw;
+  --hero-top: 100px;
+
+  /* 참고 이미지 비율: 약 1123 × 535 */
+  --hero-ratio: 1123 / 535;
+
+  --page-bg: #fff;
+  --text: #111;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--page-bg);color:var(--text)}
+body{font-family:Arial,"Noto Sans KR",sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+
+.topbar{
+  position:fixed;
+  inset:0 0 auto 0;
+  height:56px;
+  z-index:20;
+  pointer-events:none;
+}
+.brand{
+  position:absolute;
+  left:var(--brand-left);
+  top:var(--brand-top);
+  font-size:14px;
+  letter-spacing:.18em;
+  font-weight:600;
+  pointer-events:auto;
+}
+.menu-button{
+  position:absolute;
+  right:var(--plus-right);
+  top:var(--plus-top);
+  width:28px;
+  height:28px;
+  border:0;
+  background:transparent;
+  padding:3px 2px;
+  cursor:pointer;
+  pointer-events:auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  transform-origin:center;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.menu-button span{
+  display:block;
+  width:20px;
+  height:1px;
+  background:#707070;
+  border-radius:999px;
+}
+.menu-button.active{
+  transform:rotate(90deg);
+}
+
+.hero-wrap{
+  width:calc(100vw - (var(--hero-side) * 2));
+  margin-left:var(--hero-side);
+  padding-top:var(--hero-top);
+}
+.hero-image{
+  display:block;
+  width:100%;
+  aspect-ratio:var(--hero-ratio);
+  object-fit:cover;
+}
+
+.drawer{
+  position:fixed;
+  inset:0 auto 0 0;
+  width: min(400px, 90vw);
+  z-index:50;
+  padding:24px 24px 28px;
+  background:#fff;
+  box-shadow:15px 0 45px rgba(0,0,0,.10);
+  transform:translateX(-105%);
+  transition:transform .32s ease;
+  display:flex;
+  flex-direction:column;
+}
+.drawer.open{transform:translateX(0)}
+.drawer-close{
+  margin-left:auto;
+  border:0;
+  background:transparent;
+  font-size:26px;
+  cursor:pointer;
+}
+.drawer nav{
+  margin-top:58px;
+  display:grid;
+  gap:18px;
+  text-transform:lowercase;
+  font-size:14px;
+}
+.drawer-info{
+  margin-top:auto;
+  font-size:10px;
+  line-height:1.7;
+  color:#777;
+}
+
+.subpage{background:#f7f6f2}
+.topbar.dark{position:relative;height:72px}
+.back-link{
+  position:absolute;
+  right:20px;
+  top:20px;
+  font-size:12px;
+}
+.simple-page{
+  padding:80px clamp(22px,7vw,120px);
+}
+.simple-page h1{
+  font-family:Georgia,serif;
+  font-size:clamp(54px,9vw,120px);
+  font-weight:400;
+  margin:0 0 20px;
+}
+.simple-page p{max-width:600px;line-height:1.8;color:#666}
+
+@media (max-width: 760px){
+  :root{
+    --hero-side: 18px;
+    --hero-top: 88px;
+  }
+  .brand{font-size:12px}
+  .hero-image{aspect-ratio:4 / 3}
+}
+
+
+/* ===== 메뉴 오버레이 / 고정 사이드바 수정 ===== */
+.page-dim{
+  position:fixed;
+  inset:0;
+  z-index:40;
+  background:rgba(0,0,0,.34);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .18s ease, visibility .18s ease;
+}
+.page-dim.open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.drawer{
+  position:fixed;
+  inset:0 auto 0 0;
+  width: min(400px, 90vw);
+  z-index:50;
+  padding:24px 24px 28px;
+  background:#fff;
+  box-shadow:none;
+
+  /* 슬라이딩 제거 */
+  transform:none !important;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .12s ease, visibility .12s ease;
+
+  display:flex;
+  flex-direction:column;
+}
+.drawer.open{
+  transform:none !important;
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* 닫기 X 버튼: 메뉴 선과 같은 색상/굵기 */
+.drawer-close{
+  position:relative;
+  width:24px;
+  height:24px;
+  margin-left:auto;
+  border:0;
+  background:transparent;
+  padding:0;
+  cursor:pointer;
+}
+.drawer-close span{
+  position:absolute;
+  left:2px;
+  top:11px;
+  display:block;
+  width:20px;
+  height:1px;
+  background:#707070;
+  border-radius:999px;
+}
+.drawer-close span:first-child{
+  transform:rotate(45deg);
+}
+.drawer-close span:last-child{
+  transform:rotate(-45deg);
+}
+
+
+.side-nav{
+  margin-top:72px;
+  display:flex;
+  flex-direction:column;
+  gap:26px;
+}
+.side-nav a{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:17px;
+  font-weight:200;
+  color:#6f6f6f;
+  letter-spacing:-0.02em;
+  text-decoration:none;
+}
