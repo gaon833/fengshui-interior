@@ -84,19 +84,3 @@ collections:
                 name: images
                 widget: list
                 field: {label: 사진, name: image, widget: image}
-
-  - name: main_slider
-    label: 메인 슬라이드
-    files:
-      - label: 메인 이미지 3장
-        name: main_slides
-        file: content/main-slides.json
-        fields:
-          - label: 슬라이드 이미지
-            name: slides
-            widget: list
-            min: 3
-            max: 3
-            fields:
-              - {label: 이미지, name: image, widget: image}
-              - {label: 대체문구, name: alt, widget: string, required: false}

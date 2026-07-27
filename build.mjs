@@ -10,7 +10,6 @@ const files = [
   "fixed-pages.css",
   "subpages.css",
   "script.js",
-  "home-slider.js",
   "work.js",
   "project-detail.css",
   "content.js",
