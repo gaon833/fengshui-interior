@@ -230,3 +230,94 @@ button{font:inherit}
   letter-spacing:-0.02em;
   text-decoration:none;
 }
+
+
+/* ===== V6: 모든 페이지 메뉴 패널과 고정 사이드바 완전 통일 ===== */
+.drawer{
+  width:min(400px, 90vw);
+  padding:25px 20px 24px;
+  font-family:Arial,"Noto Sans KR",sans-serif;
+}
+
+/* 열린 메뉴에서도 로고가 고정 사이드바와 같은 위치·모양 */
+.drawer::before{
+  content:"풍수 인테리어";
+  position:absolute;
+  left:20px;
+  top:25px;
+  color:#111;
+  font-family:Arial,"Noto Sans KR",sans-serif;
+  font-size:12px;
+  font-weight:600;
+  line-height:1;
+  letter-spacing:.12em;
+  white-space:nowrap;
+}
+
+/* 닫기 버튼은 메인 햄버거와 동일한 우측 상단 기준 */
+.drawer-close{
+  position:absolute;
+  top:24px;
+  right:20px;
+  width:24px;
+  height:24px;
+  margin:0;
+}
+
+/* 메뉴 글씨의 시작 위치, 크기, 간격, 색상을 고정 사이드바와 동일하게 */
+.side-nav,
+.drawer nav{
+  position:absolute;
+  left:20px;
+  top:95px;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.side-nav a,
+.drawer nav a{
+  color:#8f8f8f;
+  font-family:Arial,"Noto Sans KR",sans-serif;
+  font-size:11px;
+  font-weight:400;
+  line-height:1;
+  letter-spacing:0;
+  text-transform:lowercase;
+}
+
+.side-nav a:hover,
+.drawer nav a:hover{
+  color:#111;
+}
+
+/* 하단 정보도 고정 사이드바와 같은 위치와 글씨 */
+.drawer-info{
+  position:absolute;
+  left:20px;
+  bottom:24px;
+  margin:0;
+  color:#8b8b8b;
+  font-family:Arial,"Noto Sans KR",sans-serif;
+  font-size:8px;
+  font-weight:400;
+  line-height:1.7;
+}
+
+@media(max-width:760px){
+  .drawer{
+    width:min(400px, 90vw);
+  }
+  .drawer::before{
+    top:22px;
+  }
+  .drawer-close{
+    top:20px;
+    right:18px;
+  }
+  .side-nav,
+  .drawer nav{
+    top:92px;
+  }
+}
