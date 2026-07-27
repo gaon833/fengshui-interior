@@ -1,22 +1,8 @@
 {
-  "name": "fengshui-interior-v2-preview",
-  "version": "2.0.0",
+  "name": "fengshui-interior-safe-restore",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "next": "16.0.10",
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "22.10.0",
-    "@types/react": "19.0.3",
-    "@types/react-dom": "19.0.2",
-    "typescript": "5.7.2"
+    "build": "node build.mjs"
   }
 }

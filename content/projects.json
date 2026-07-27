@@ -2,75 +2,39 @@
   "projects": [
     {
       "title": "CALM HOUSE",
-      "slug": "calm-house",
       "category": "Residential",
-      "location": "Seoul",
-      "area": "102㎡ (31평)",
-      "housingType": "Apartment",
-      "family": "3인 가족",
       "year": "2026",
-      "cover": "/assets/hero.jpg",
-      "order": 1,
-      "gallery": [
-        {
-          "image": "/assets/hero.jpg",
-          "orientation": "landscape"
-        },
-        {
-          "image": "/assets/portrait.jpg",
-          "orientation": "portrait"
-        },
-        {
-          "image": "/assets/hero.jpg",
-          "orientation": "landscape"
-        }
-      ],
+      "image": "/assets/hero.jpg",
       "style": "Modern",
-      "sizeGroup": "30"
+      "sizeGroup": "30",
+      "area": "102㎡ (31평)"
     },
     {
       "title": "WARM MOOD",
-      "slug": "warm-mood",
       "category": "Residential",
-      "location": "Seoul",
-      "area": "138㎡ (42평)",
-      "housingType": "Apartment",
-      "family": "4인 가족",
       "year": "2026",
-      "cover": "/assets/hero.jpg",
-      "order": 2,
-      "gallery": [
-        {
-          "image": "/assets/hero.jpg",
-          "orientation": "landscape"
-        },
-        {
-          "image": "/assets/portrait.jpg",
-          "orientation": "portrait"
-        }
-      ],
+      "image": "/assets/hero.jpg",
       "style": "Unique",
-      "sizeGroup": "40"
+      "sizeGroup": "40",
+      "area": "138㎡ (42평)"
     },
     {
-      "title": "LINE AND LIGHT",
-      "slug": "line-and-light",
-      "category": "Office",
-      "location": "Gyeonggi",
-      "area": "191㎡ (58평)",
-      "housingType": "Office",
-      "family": "",
+      "title": "LINE & LIGHT",
+      "category": "Residential",
       "year": "2025",
-      "cover": "/assets/hero.jpg",
-      "order": 3,
-      "gallery": [
-        {
-          "image": "/assets/hero.jpg",
-          "orientation": "landscape"
-        }
-      ],
+      "image": "/assets/hero.jpg",
       "style": "Modern",
-      "sizeGroup": "C"
+      "sizeGroup": "C",
+      "area": "Commercial"
+    },
+    {
+      "title": "BOUTIQUE OFFICE",
+      "category": "Office",
+      "year": "2025",
+      "image": "/assets/hero.jpg",
+      "style": "Unique",
+      "sizeGroup": "30",
+      "area": "102㎡ (31평)"
     }
   ]
 }
