@@ -11,11 +11,13 @@ const files = [
   "subpages.css",
   "script.js",
   "work.js",
+  "project-detail.css",
   "content.js",
   "_headers",
   "assets",
   "content",
-  "admin"
+  "admin",
+  "work"
 ];
 
 await rm("out", { recursive: true, force: true });

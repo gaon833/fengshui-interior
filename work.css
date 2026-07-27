@@ -244,3 +244,39 @@
   transform:none !important;
   filter:blur(1.8px) !important;
 }
+
+
+/* ===== V11: 블러 제거, 흰색 투명 오버레이 ===== */
+.work-tile a{
+  position:relative;
+  overflow:hidden;
+}
+
+.work-tile img{
+  filter:none !important;
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+}
+
+.work-tile a::after{
+  content:"";
+  position:absolute;
+  inset:0 0 34px 0;
+  pointer-events:none;
+  background:rgba(255,255,255,0);
+  transition:background .24s ease;
+}
+
+.work-tile a:hover::after,
+.work-tile a:focus::after{
+  background:rgba(255,255,255,.10);
+}
+
+.work-tile a:hover img,
+.work-tile a:focus img,
+.work-tile a:active img{
+  filter:none !important;
+  opacity:1 !important;
+  transform:none !important;
+}
