@@ -230,3 +230,17 @@
   transform:none !important;
   filter:blur(.65px) !important;
 }
+
+
+/* ===== V10: 블러 효과 강화 ===== */
+.work-tile img{
+  transition:filter .30s ease !important;
+}
+
+.work-tile a:hover img,
+.work-tile a:focus img,
+.work-tile a:active img{
+  opacity:1 !important;
+  transform:none !important;
+  filter:blur(1.8px) !important;
+}

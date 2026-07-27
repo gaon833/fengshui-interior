@@ -221,3 +221,25 @@
   outline:none !important;
   filter:none !important;
 }
+
+
+/* ===== V10: 고정 사이드바 현재 메뉴 강조 ===== */
+.fixed-page-nav a{
+  color:#9d9d9d !important;
+}
+
+.fixed-page-nav a.active{
+  color:#111 !important;
+}
+
+.fixed-page-nav a:not(.active):hover,
+.fixed-page-nav a:not(.active):active,
+.fixed-page-nav a:not(.active):focus{
+  color:#9d9d9d !important;
+}
+
+.fixed-page-nav a.active:hover,
+.fixed-page-nav a.active:active,
+.fixed-page-nav a.active:focus{
+  color:#111 !important;
+}

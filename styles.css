@@ -468,3 +468,47 @@ button{font:inherit}
   outline:none !important;
   filter:none !important;
 }
+
+
+/* ===== V10: 현재 메뉴만 All과 같은 진한 색 ===== */
+.side-nav a,
+.drawer nav a{
+  color:#9d9d9d !important;
+}
+
+.side-nav a.active,
+.drawer nav a.active{
+  color:#111 !important;
+}
+
+.side-nav a:hover,
+.drawer nav a:hover,
+.side-nav a:active,
+.drawer nav a:active,
+.side-nav a:focus,
+.drawer nav a:focus{
+  transform:none !important;
+  transition:none !important;
+  text-decoration:none !important;
+  outline:none !important;
+}
+
+/* active가 아닌 메뉴는 어떤 상태에서도 색 변화 없음 */
+.side-nav a:not(.active):hover,
+.drawer nav a:not(.active):hover,
+.side-nav a:not(.active):active,
+.drawer nav a:not(.active):active,
+.side-nav a:not(.active):focus,
+.drawer nav a:not(.active):focus{
+  color:#9d9d9d !important;
+}
+
+/* 현재 페이지 메뉴는 항상 진한 색 유지 */
+.side-nav a.active:hover,
+.drawer nav a.active:hover,
+.side-nav a.active:active,
+.drawer nav a.active:active,
+.side-nav a.active:focus,
+.drawer nav a.active:focus{
+  color:#111 !important;
+}
