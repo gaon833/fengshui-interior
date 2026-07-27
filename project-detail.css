@@ -377,3 +377,23 @@
 .detail-social{
   display:none !important;
 }
+
+.detail-meta h1{margin-bottom:22px!important;}
+.detail-meta p{margin-bottom:64px!important;}
+.detail-meta dl{row-gap:62px!important;column-gap:48px!important;}
+.detail-meta dt{margin-bottom:14px!important;}
+@media(max-width:1600px) and (min-width:1101px){
+  .detail-meta h1{margin-bottom:18px!important;}
+  .detail-meta p{margin-bottom:52px!important;}
+  .detail-meta dl{row-gap:50px!important;}
+}
+@media(max-width:1100px) and (min-width:761px){
+  .detail-meta h1{margin-bottom:15px!important;}
+  .detail-meta p{margin-bottom:42px!important;}
+  .detail-meta dl{row-gap:38px!important;column-gap:30px!important;}
+}
+@media(max-width:760px){
+  .detail-meta h1{margin-bottom:14px!important;}
+  .detail-meta p{margin-bottom:38px!important;}
+  .detail-meta dl{row-gap:34px!important;}
+}

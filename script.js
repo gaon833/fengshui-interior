@@ -1,32 +1,32 @@
-const menuBtn = document.querySelector('[data-menu-enabled]');
-const drawer = document.querySelector('.drawer');
-const closeBtn = document.querySelector('.drawer-close');
-const dim = document.querySelector('.page-dim');
+(() => {
+  const button = document.querySelector('.menu-button-enabled');
+  const drawer = document.querySelector('.drawer');
+  const close = document.querySelector('.drawer-close');
+  const dim = document.querySelector('.page-dim');
+  if (!button || !drawer) return;
 
-function setMenu(open) {
-  if (!menuBtn || !drawer || !dim) return;
+  const useDim = button.dataset.menuDim === 'true';
 
-  menuBtn.setAttribute('aria-expanded', String(open));
-  drawer.classList.toggle('open', open);
-  drawer.classList.toggle('is-open', open);
-  drawer.setAttribute('aria-hidden', String(!open));
+  function setMenu(open) {
+    button.setAttribute('aria-expanded', String(open));
+    drawer.classList.toggle('open', open);
+    drawer.classList.toggle('is-open', open);
+    drawer.setAttribute('aria-hidden', String(!open));
+    document.body.classList.toggle('menu-open', open);
+    document.body.classList.toggle('menu-open-no-dim', open && !useDim);
+    document.body.style.overflow = open ? 'hidden' : '';
 
-  dim.classList.toggle('open', open);
-  dim.setAttribute('aria-hidden', String(!open));
+    if (dim) {
+      dim.classList.toggle('open', open && useDim);
+      dim.setAttribute('aria-hidden', String(!(open && useDim)));
+      dim.style.pointerEvents = open && useDim ? 'auto' : 'none';
+    }
+  }
 
-  document.body.classList.toggle('menu-open', open);
-  document.body.style.overflow = open ? 'hidden' : '';
-}
-
-if (menuBtn) {
-  menuBtn.addEventListener('click', () => {
-    setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
+  button.addEventListener('click', () => {
+    setMenu(button.getAttribute('aria-expanded') !== 'true');
   });
-}
-
-if (closeBtn) closeBtn.addEventListener('click', () => setMenu(false));
-if (dim) dim.addEventListener('click', () => setMenu(false));
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') setMenu(false);
-});
+  if (close) close.addEventListener('click', () => setMenu(false));
+  if (dim) dim.addEventListener('click', () => { if (useDim) setMenu(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+})();

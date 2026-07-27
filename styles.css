@@ -825,3 +825,16 @@ body.menu-open .drawer{
 .menu-button-disabled:disabled{
   opacity:1 !important;
 }
+
+.menu-button-enabled{
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  opacity:1!important;
+  transform-origin:center center;
+  transition:transform .38s cubic-bezier(.22,1,.36,1)!important;
+}
+.menu-button-enabled[aria-expanded="true"]{transform:rotate(90deg)!important;}
+body.menu-open-no-dim .page-dim{
+  display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+}
+body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}

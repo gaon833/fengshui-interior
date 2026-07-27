@@ -1,21 +1,14 @@
-let activeSize = 'all';
-
-function applyFilters() {
-  document.querySelectorAll('.work-tile').forEach(tile => {
-    const sizeMatch = activeSize === 'all' || tile.dataset.size === activeSize;
-    tile.classList.toggle('is-hidden', !sizeMatch);
+let activeSize='all';
+function applyFilters(){
+  document.querySelectorAll('.work-tile').forEach(tile=>{
+    tile.classList.toggle('is-hidden', !(activeSize==='all'||tile.dataset.size===activeSize));
   });
 }
-
-function setActive(selector, clicked) {
-  document.querySelectorAll(selector).forEach(button => button.classList.remove('active'));
-  clicked.classList.add('active');
-}
-
-document.querySelectorAll('[data-size-filter]').forEach(button => {
-  button.addEventListener('click', () => {
-    activeSize = button.dataset.sizeFilter;
-    setActive('[data-size-filter]', button);
+document.querySelectorAll('[data-size-filter]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    activeSize=button.dataset.sizeFilter;
+    document.querySelectorAll('[data-size-filter]').forEach(item=>item.classList.remove('active'));
+    button.classList.add('active');
     applyFilters();
   });
 });
