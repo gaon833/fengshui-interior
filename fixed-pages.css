@@ -272,3 +272,26 @@
   line-height:1 !important;
   letter-spacing:.055em !important;
 }
+
+
+/* ===== V16: 고정 메뉴도 동일 구성 ===== */
+.fixed-page-nav{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  gap:10px !important;
+}
+
+.fixed-page-nav a{
+  font-family:"Helvetica Neue","Nimbus Sans L","Liberation Sans",Arial,sans-serif !important;
+  font-size:18px !important;
+  font-weight:200 !important;
+  line-height:1.15 !important;
+  letter-spacing:.055em !important;
+}
+
+.fixed-page-nav .channel-link{
+  text-transform:none !important;
+  letter-spacing:.04em !important;
+  color:#454545 !important;
+}

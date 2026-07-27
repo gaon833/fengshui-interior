@@ -5,6 +5,8 @@ const files = [
   "project.html",
   "about.html",
   "contact.html",
+  "studio.html",
+  "service.html",
   "styles.css",
   "work.css",
   "fixed-pages.css",
