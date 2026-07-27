@@ -382,3 +382,14 @@
     gap:24px !important;
   }
 }
+
+
+/* ===== V19: 평형 필터 한 줄만 유지, 기존 가로 폭 유지 ===== */
+.work-filters-size-only .filter-row-size{
+  width:100%;
+  max-width:100%;
+}
+
+.work-filters-size-only{
+  min-height:auto;
+}

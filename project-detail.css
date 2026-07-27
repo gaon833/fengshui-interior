@@ -371,3 +371,9 @@
     margin-left:0 !important;
   }
 }
+
+
+/* ===== V19: 프로젝트 상세 SNS 아이콘 제거 ===== */
+.detail-social{
+  display:none !important;
+}

@@ -803,3 +803,25 @@ body.menu-open .drawer{
     transition:none !important;
   }
 }
+
+
+/* ===== V19: 메인 햄버거만 작동 및 회전 ===== */
+.menu-button-enabled{
+  transition:transform .38s cubic-bezier(.22,1,.36,1) !important;
+  transform-origin:center center;
+}
+
+.menu-button-enabled[aria-expanded="true"]{
+  transform:rotate(90deg) !important;
+}
+
+.menu-button-disabled{
+  pointer-events:none !important;
+  cursor:default !important;
+  opacity:1 !important;
+  transform:none !important;
+}
+
+.menu-button-disabled:disabled{
+  opacity:1 !important;
+}

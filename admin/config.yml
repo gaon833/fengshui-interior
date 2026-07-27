@@ -22,6 +22,8 @@ collections:
         fields:
           - {label: 홈페이지 이름, name: site_name, widget: string}
           - {label: 메인 이미지, name: hero_image, widget: image, choose_url: false}
+          - {label: 블로그 링크, name: blog_url, widget: string, required: false}
+          - {label: 인스타그램 링크, name: instagram_url, widget: string, required: false}
 
       - name: about
         label: About
@@ -32,7 +34,7 @@ collections:
           - {label: 소개 내용, name: body, widget: text}
 
       - name: contact
-        label: Contact
+        label: Reservation
         file: content/contact.json
         format: json
         fields:
