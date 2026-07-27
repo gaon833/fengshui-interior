@@ -164,3 +164,40 @@
     gap:var(--work-gap);
   }
 }
+
+
+/* ===== V8: 이미지 확대 제거, 어둡고 부드러운 글로시 효과 ===== */
+.work-tile a{
+  position:relative;
+  overflow:hidden;
+}
+
+.work-tile img{
+  transform:none !important;
+  transition:filter .28s ease, opacity .28s ease !important;
+  will-change:filter, opacity;
+}
+
+.work-tile a::after{
+  content:"";
+  position:absolute;
+  inset:0 0 auto 0;
+  height:calc(100% - 34px);
+  pointer-events:none;
+  background:rgba(255,255,255,0);
+  backdrop-filter:blur(0);
+  -webkit-backdrop-filter:blur(0);
+  transition:background .28s ease, backdrop-filter .28s ease;
+}
+
+.work-tile a:hover img{
+  transform:none !important;
+  opacity:.88;
+  filter:brightness(.82) saturate(.92) blur(.35px);
+}
+
+.work-tile a:hover::after{
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(.7px);
+  -webkit-backdrop-filter:blur(.7px);
+}

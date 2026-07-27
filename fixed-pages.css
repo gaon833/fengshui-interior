@@ -146,3 +146,61 @@
 .fixed-page-nav a:hover{
   color:#484848;
 }
+
+
+/* ===== V8: 고정 사이드바 메뉴도 동일 ===== */
+.fixed-page-nav{
+  gap:38px;
+}
+
+.fixed-page-nav a{
+  font-family:"Helvetica Neue","Nimbus Sans L","Liberation Sans",Arial,sans-serif;
+  font-size:18px;
+  font-weight:200;
+  line-height:1;
+  letter-spacing:.055em;
+  color:#9d9d9d;
+  transition:none !important;
+  transform:none !important;
+}
+
+.fixed-page-nav a.active{
+  color:#454545;
+  font-weight:200;
+}
+
+.fixed-page-nav a:hover,
+.fixed-page-nav a:active,
+.fixed-page-nav a:focus{
+  color:inherit;
+  transform:none !important;
+  opacity:1;
+  outline:none;
+}
+
+/* ABOUT / CONTACT는 좌우 여백 모두 400px */
+.fixed-content-page .fixed-page-main{
+  margin-left:400px;
+  margin-right:400px;
+  padding:94px 0 110px;
+  min-height:100vh;
+}
+
+.fixed-content-page .fixed-page-image{
+  width:100%;
+}
+
+@media(max-width:1300px) and (min-width:761px){
+  .fixed-content-page .fixed-page-main{
+    margin-left:320px;
+    margin-right:320px;
+  }
+}
+
+@media(max-width:760px){
+  .fixed-content-page .fixed-page-main{
+    margin-left:0;
+    margin-right:0;
+    padding:90px 18px 70px;
+  }
+}
