@@ -1,1 +1,15 @@
-:root{--header-height:86px;--page-gutter:30px;--panel-width:400px;--page-bg:#fff;--text:#2e2e2e;--muted:#969696;--menu-text:#555;--hairline:1px;--landscape-width:82%;--portrait-width:36%;--gallery-gap:105px;--font:Arial,"Helvetica Neue","Noto Sans KR",sans-serif;}
+:root {
+  --header-height: 86px;
+  --page-gutter: 30px;
+  --sidebar-width: 230px;
+  --panel-width: 400px;
+  --page-bg: #ffffff;
+  --text: #2e2e2e;
+  --muted: #969696;
+  --menu-text: #555555;
+  --hairline: 1px;
+  --landscape-width: 82%;
+  --portrait-width: 36%;
+  --gallery-gap: 105px;
+  --font: "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
+}

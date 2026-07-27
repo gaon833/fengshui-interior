@@ -1,2 +1,14 @@
-import SiteChrome from "@/components/SiteChrome"; import ProjectCard from "@/components/ProjectCard"; import { projects } from "@/content/data";
-export default function WorkPage(){return <><SiteChrome/><main className="workPage"><header className="workToolbar"><span className="active">All</span><span>Residential</span><span>Commercial</span><span>Office</span></header><section className="projectGrid">{projects.map(p=><ProjectCard project={p} key={p.slug}/>)}</section></main></>}
+import SiteChrome from "@/components/SiteChrome";
+import WorkBrowser from "@/components/WorkBrowser";
+import { projects } from "@/content/data";
+
+export default function WorkPage() {
+  return (
+    <>
+      <SiteChrome />
+      <main className="workPage">
+        <WorkBrowser projects={projects} />
+      </main>
+    </>
+  );
+}

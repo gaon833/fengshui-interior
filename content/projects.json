@@ -24,7 +24,9 @@
           "image": "/assets/hero.jpg",
           "orientation": "landscape"
         }
-      ]
+      ],
+      "style": "Modern",
+      "sizeGroup": "30"
     },
     {
       "title": "WARM MOOD",
@@ -46,7 +48,9 @@
           "image": "/assets/portrait.jpg",
           "orientation": "portrait"
         }
-      ]
+      ],
+      "style": "Unique",
+      "sizeGroup": "40"
     },
     {
       "title": "LINE AND LIGHT",
@@ -64,7 +68,9 @@
           "image": "/assets/hero.jpg",
           "orientation": "landscape"
         }
-      ]
+      ],
+      "style": "Modern",
+      "sizeGroup": "C"
     }
   ]
 }
