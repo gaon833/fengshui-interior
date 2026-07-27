@@ -1,9 +1,9 @@
 
 :root{
-  --detail-left:400px;
-  --detail-right:70px;
+  --detail-left:800px;
+  --detail-right:300px;
   --detail-gap:70px;
-  --detail-top:48px;
+  --detail-top:200px;
   --detail-font:"Helvetica Neue","Nimbus Sans L","Liberation Sans",Arial,sans-serif;
 }
 
@@ -133,9 +133,14 @@
   font-weight:300;
 }
 
+/*
+  가로 사진 기준:
+  왼쪽 800px + 오른쪽 300px + 상단 200px
+  남는 영역 안에서 가로사진이 100% 표시됨
+*/
 .detail-gallery{
   margin-left:var(--detail-left);
-  padding:var(--detail-top) var(--detail-right) 100px 0;
+  padding:var(--detail-top) var(--detail-right) 110px 0;
   display:flex;
   flex-direction:column;
   gap:var(--detail-gap);
@@ -148,16 +153,26 @@
   justify-content:center;
 }
 
-.detail-photo img{
+.detail-photo.landscape img{
   display:block;
   width:100%;
   height:auto;
 }
 
+/* 세로 사진은 같은 사진 영역 안에서 중앙 정렬 */
 .detail-photo.portrait img{
+  display:block;
   width:auto;
-  max-width:58%;
-  max-height:calc(100vh - 96px);
+  max-width:62%;
+  height:auto;
+}
+
+@media(max-width:1600px) and (min-width:1101px){
+  :root{
+    --detail-left:560px;
+    --detail-right:160px;
+    --detail-top:150px;
+  }
 }
 
 @media(max-width:1100px) and (min-width:761px){
@@ -165,6 +180,7 @@
     --detail-left:320px;
     --detail-right:40px;
     --detail-gap:40px;
+    --detail-top:120px;
   }
 }
 
@@ -183,9 +199,7 @@
     padding:88px 18px 30px;
   }
 
-  .detail-social{
-    margin-bottom:30px;
-  }
+  .detail-social{margin-bottom:30px}
 
   .detail-meta{
     position:static;
@@ -203,6 +217,5 @@
 
   .detail-photo.portrait img{
     max-width:72%;
-    max-height:none;
   }
 }

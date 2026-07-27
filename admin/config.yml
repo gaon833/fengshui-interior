@@ -59,3 +59,28 @@ collections:
                 options: [Residential, Commercial, Office]
               - {label: 연도, name: year, widget: string, required: false}
               - {label: 이미지, name: image, widget: image, choose_url: false}
+
+  - name: project_details
+    label: 프로젝트 상세 관리
+    files:
+      - label: 전체 프로젝트
+        name: projects_detail
+        file: content/projects-detail.json
+        fields:
+          - label: 프로젝트
+            name: projects
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - {label: 슬러그, name: slug, widget: string}
+              - {label: 프로젝트명, name: title, widget: string}
+              - {label: 분류, name: category, widget: string}
+              - {label: 공간유형, name: type, widget: string}
+              - {label: 면적, name: area, widget: string}
+              - {label: 위치, name: location, widget: string}
+              - {label: 연도, name: year, widget: string}
+              - {label: 대표사진, name: cover, widget: image}
+              - label: 상세사진
+                name: images
+                widget: list
+                field: {label: 사진, name: image, widget: image}

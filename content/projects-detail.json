@@ -1,0 +1,101 @@
+{
+  "projects": [
+    {
+      "slug": "calm-house",
+      "title": "CALM HOUSE",
+      "category": "Residential",
+      "type": "아파트",
+      "area": "102㎡ (31평)",
+      "location": "서울",
+      "year": "2026",
+      "cover": "work-landscape-01.jpg",
+      "images": [
+        "work-landscape-01.jpg",
+        "work-portrait-01.jpg",
+        "work-landscape-02.jpg",
+        "work-landscape-03.jpg",
+        "work-portrait-02.jpg"
+      ]
+    },
+    {
+      "slug": "light-hall",
+      "title": "LIGHT HALL",
+      "category": "Residential",
+      "type": "아파트",
+      "area": "82㎡ (25평)",
+      "location": "서울",
+      "year": "2025",
+      "cover": "work-portrait-01.jpg",
+      "images": [
+        "work-portrait-01.jpg",
+        "work-landscape-01.jpg",
+        "work-landscape-03.jpg",
+        "work-portrait-02.jpg"
+      ]
+    },
+    {
+      "slug": "line-office",
+      "title": "LINE OFFICE",
+      "category": "Commercial",
+      "type": "상업공간",
+      "area": "Commercial",
+      "location": "서울",
+      "year": "2024",
+      "cover": "work-landscape-03.jpg",
+      "images": [
+        "work-landscape-03.jpg",
+        "work-landscape-02.jpg",
+        "work-portrait-01.jpg",
+        "work-landscape-01.jpg"
+      ]
+    },
+    {
+      "slug": "quiet-entry",
+      "title": "QUIET ENTRY",
+      "category": "Residential",
+      "type": "아파트",
+      "area": "138㎡ (42평)",
+      "location": "서울",
+      "year": "2026",
+      "cover": "work-portrait-02.jpg",
+      "images": [
+        "work-portrait-02.jpg",
+        "work-landscape-02.jpg",
+        "work-landscape-01.jpg",
+        "work-portrait-01.jpg"
+      ]
+    },
+    {
+      "slug": "soft-living",
+      "title": "SOFT LIVING",
+      "category": "Residential",
+      "type": "아파트",
+      "area": "165㎡ (50평)",
+      "location": "서울",
+      "year": "2025",
+      "cover": "work-landscape-02.jpg",
+      "images": [
+        "work-landscape-02.jpg",
+        "work-landscape-03.jpg",
+        "work-portrait-02.jpg",
+        "work-landscape-01.jpg"
+      ]
+    },
+    {
+      "slug": "warm-material",
+      "title": "WARM MATERIAL",
+      "category": "Residential",
+      "type": "아파트",
+      "area": "198㎡ (60평)",
+      "location": "서울",
+      "year": "2024",
+      "cover": "work-landscape-01.jpg",
+      "images": [
+        "work-landscape-01.jpg",
+        "work-portrait-02.jpg",
+        "work-landscape-03.jpg",
+        "work-portrait-01.jpg"
+      ]
+    }
+  ]
+}
