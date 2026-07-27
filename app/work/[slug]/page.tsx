@@ -1,0 +1,3 @@
+import { notFound } from "next/navigation"; import MenuOverlay from "@/components/MenuOverlay"; import ProjectGallery from "@/components/ProjectGallery"; import ProjectInfo from "@/components/ProjectInfo"; import { getProject,projects } from "@/content/data";
+export function generateStaticParams(){return projects.map(p=>({slug:p.slug}))}
+export default async function ProjectPage({params}:{params:Promise<{slug:string}>}){const {slug}=await params; const project=getProject(slug); if(!project) notFound(); const index=projects.findIndex(p=>p.slug===slug); return <><ProjectInfo project={project} previous={projects[index-1]} next={projects[index+1]}/><MenuOverlay/><main className="detailPage"><ProjectGallery title={project.title} gallery={project.gallery}/></main></>}

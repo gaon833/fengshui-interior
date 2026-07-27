@@ -1,0 +1,1 @@
+import SiteChrome from "@/components/SiteChrome"; import about from "@/content/about.json"; export default function Page(){return <><SiteChrome/><main className="singleImagePage"><img src={about.image} alt="About us"/></main></>}

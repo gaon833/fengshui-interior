@@ -1,0 +1,1 @@
+import SiteChrome from "@/components/SiteChrome"; import contact from "@/content/contact.json"; export default function Page(){return <><SiteChrome/><main className="singleImagePage"><img src={contact.image} alt="Contact us"/></main></>}
