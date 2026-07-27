@@ -512,3 +512,31 @@ button{font:inherit}
 .drawer nav a.active:focus{
   color:#111 !important;
 }
+
+
+/* ===== V13: 메인 열린 메뉴 위치 통일 ===== */
+.drawer{
+  width:min(400px,90vw) !important;
+  padding:25px 20px 24px !important;
+}
+
+.drawer::before{
+  left:20px !important;
+  top:25px !important;
+}
+
+.side-nav,
+.drawer nav{
+  left:20px !important;
+  top:118px !important;
+  gap:38px !important;
+  margin:0 !important;
+}
+
+.side-nav a,
+.drawer nav a{
+  font-size:18px !important;
+  font-weight:200 !important;
+  line-height:1 !important;
+  letter-spacing:.055em !important;
+}

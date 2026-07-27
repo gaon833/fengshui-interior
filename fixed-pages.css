@@ -243,3 +243,32 @@
 .fixed-page-nav a.active:focus{
   color:#111 !important;
 }
+
+
+/* ===== V13: 서브페이지 고정 메뉴 위치를 메인 열린 메뉴와 동일하게 ===== */
+.fixed-page-sidebar{
+  width:400px !important;
+  padding:25px 20px 24px !important;
+}
+
+.fixed-page-logo{
+  margin:0 !important;
+  font-size:12px !important;
+  line-height:1 !important;
+  letter-spacing:.12em !important;
+}
+
+.fixed-page-nav{
+  position:absolute !important;
+  left:20px !important;
+  top:118px !important;
+  margin:0 !important;
+  gap:38px !important;
+}
+
+.fixed-page-nav a{
+  font-size:18px !important;
+  font-weight:200 !important;
+  line-height:1 !important;
+  letter-spacing:.055em !important;
+}
