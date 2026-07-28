@@ -21,3 +21,61 @@
   .project-grid { grid-template-columns: 1fr; }
   .project-grid-column { display: contents; }
 }
+
+/* Mobile refinement: independent from desktop layout */
+@media (max-width:900px){
+  :root{
+    --mobile-ui-color:#777;
+    --sidebar-width:63vw;
+    --logo-width:98px;
+  }
+
+  .brand-logo{width:98px;}
+  .menu-drawer{width:63vw;max-width:280px;min-width:238px;}
+  .menu-toggle span,.drawer-close span{background:var(--mobile-ui-color);}
+  .navigation-link,
+  .navigation-link:hover,
+  .navigation-link:focus,
+  .navigation-link:active{color:var(--mobile-ui-color);}
+  .navigation-link.is-active,
+  .navigation-link.is-active:hover,
+  .navigation-link.is-active:focus{color:#555;}
+  .navigation-divider{background:var(--mobile-ui-color);opacity:1;}
+  .drawer-info,.sidebar-info{color:var(--mobile-ui-color);}
+
+  .project-index{padding:145px 18px 80px;}
+  .project-filter{min-height:0;padding:0 0 16px;gap:22px;line-height:1;}
+  .project-grid{row-gap:18px;}
+  .project-cover-desktop{display:none !important;}
+  .project-cover-mobile{display:block !important;width:100%;height:auto;object-fit:contain;}
+
+  .detail-info{padding:320px 18px 34px;}
+  .detail-meta h1{font-size:34px;line-height:1.05;margin-bottom:12px;}
+  .detail-meta .project-type{font-size:16px;margin-bottom:54px;}
+  .detail-meta dl{gap:42px 28px;}
+  .detail-meta dt{font-size:12px;}
+  .detail-meta dd{font-size:16px;}
+  .detail-social{margin-top:42px;}
+  .detail-gallery{padding:0 18px 56px;gap:24px;}
+  .detail-cover.project-cover-mobile,.detail-cover .project-cover-mobile{width:100%;}
+
+  .project-navigation{
+    margin-left:0;
+    padding:72px 20px 90px;
+    min-height:220px;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:18px;
+    font-size:10px;
+    overflow:hidden;
+  }
+  .project-navigation > div{min-width:0;}
+  .project-navigation a{gap:7px;max-width:100%;white-space:nowrap;}
+  .project-navigation .prev::before,
+  .project-navigation .next::after{width:30px;flex:0 0 30px;}
+  .project-navigation .prev::after{
+    width:6px;height:6px;margin-left:-37px;
+  }
+  .project-navigation .next::before{
+    width:6px;height:6px;margin-right:-37px;
+  }
+}

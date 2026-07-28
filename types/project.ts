@@ -34,6 +34,7 @@ export type Project = {
   year: number;
   tags: string[];
   coverImage: string;
+  mobileCoverImage?: string;
   images: ProjectImage[];
   order: number;
   status: ProjectStatus;

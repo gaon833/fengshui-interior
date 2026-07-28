@@ -36,3 +36,4 @@
 .project-navigation .prev::after { content:""; width:7px; height:7px; border-left:1px solid #8f8f8f; border-bottom:1px solid #8f8f8f; transform:rotate(45deg); margin-left:-110px; }
 .project-navigation .next::before { content:""; width:7px; height:7px; border-top:1px solid #8f8f8f; border-right:1px solid #8f8f8f; transform:rotate(45deg); margin-right:-110px; }
 .project-filter button { appearance:none; border:0; padding:0; background:transparent; color:inherit; font:inherit; cursor:pointer; }
+.project-cover-mobile { display:none !important; }

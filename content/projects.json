@@ -65,7 +65,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "20-project-02",
@@ -133,7 +134,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "20-project-03",
@@ -201,7 +203,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "20-project-04",
@@ -269,7 +272,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "20-project-05",
@@ -337,7 +341,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "20-project-06",
@@ -405,7 +410,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "20-project-07",
@@ -473,7 +479,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "20-project-08",
@@ -541,7 +548,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "20-project-09",
@@ -609,7 +617,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "20-project-10",
@@ -677,7 +686,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "30-project-01",
@@ -745,7 +755,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "30-project-02",
@@ -813,7 +824,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "30-project-03",
@@ -881,7 +893,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "30-project-04",
@@ -949,7 +962,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "30-project-05",
@@ -1017,7 +1031,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "30-project-06",
@@ -1085,7 +1100,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "30-project-07",
@@ -1153,7 +1169,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "30-project-08",
@@ -1221,7 +1238,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "30-project-09",
@@ -1289,7 +1307,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "30-project-10",
@@ -1357,7 +1376,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "40-project-01",
@@ -1425,7 +1445,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "40-project-02",
@@ -1493,7 +1514,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "40-project-03",
@@ -1561,7 +1583,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "40-project-04",
@@ -1629,7 +1652,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "40-project-05",
@@ -1697,7 +1721,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "40-project-06",
@@ -1765,7 +1790,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "40-project-07",
@@ -1833,7 +1859,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "40-project-08",
@@ -1901,7 +1928,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "40-project-09",
@@ -1969,7 +1997,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "40-project-10",
@@ -2037,7 +2066,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "50-project-01",
@@ -2105,7 +2135,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "50-project-02",
@@ -2173,7 +2204,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "50-project-03",
@@ -2241,7 +2273,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "50-project-04",
@@ -2309,7 +2342,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "50-project-05",
@@ -2377,7 +2411,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "50-project-06",
@@ -2445,7 +2480,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "50-project-07",
@@ -2513,7 +2549,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "50-project-08",
@@ -2581,7 +2618,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "50-project-09",
@@ -2649,7 +2687,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "50-project-10",
@@ -2717,7 +2756,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "60-project-01",
@@ -2785,7 +2825,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "60-project-02",
@@ -2853,7 +2894,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "60-project-03",
@@ -2921,7 +2963,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "60-project-04",
@@ -2989,7 +3032,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "60-project-05",
@@ -3057,7 +3101,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "60-project-06",
@@ -3125,7 +3170,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "60-project-07",
@@ -3193,7 +3239,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "60-project-08",
@@ -3261,7 +3308,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "60-project-09",
@@ -3329,7 +3377,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "60-project-10",
@@ -3397,7 +3446,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "c-project-01",
@@ -3465,7 +3515,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "c-project-02",
@@ -3533,7 +3584,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "c-project-03",
@@ -3601,7 +3653,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "c-project-04",
@@ -3669,7 +3722,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "c-project-05",
@@ -3737,7 +3791,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "c-project-06",
@@ -3805,7 +3860,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "c-project-07",
@@ -3873,7 +3929,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "c-project-08",
@@ -3941,7 +3998,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "portrait"
+    "cardLayout": "portrait",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "c-project-09",
@@ -4009,7 +4067,8 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   },
   {
     "id": "c-project-10",
@@ -4077,6 +4136,7 @@
         "note": "예시 등록"
       }
     ],
-    "cardLayout": "wide"
+    "cardLayout": "wide",
+    "mobileCoverImage": "/projects/calm-house/02.jpg"
   }
 ]
