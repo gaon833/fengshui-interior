@@ -1155,3 +1155,22 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
     transform:translateX(0) !important;
   }
 }
+
+
+/* V30 */
+@media (min-width:901px){
+  .brand,
+  .fixed-page-logo,
+  .detail-logo,
+  .drawer-brand{
+    top:30px !important;
+    left:130px !important; /* V29보다 오른쪽 약 30px */
+  }
+
+  .fixed-page-nav,
+  .side-nav,
+  .drawer nav,
+  .drawer .nav{
+    margin-top:100px !important;
+  }
+}
