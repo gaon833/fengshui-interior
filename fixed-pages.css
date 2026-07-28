@@ -23,37 +23,6 @@
   background:#fff;
 }
 
-.fixed-page-logo{
-  color:#111;
-  font-family:var(--fixed-font);
-  font-size:12px;
-  font-weight:600;
-  line-height:1;
-  letter-spacing:.12em;
-  white-space:nowrap;
-}
-
-.fixed-page-nav{
-  margin-top:58px;
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-}
-
-.fixed-page-nav a{
-  color:#8f8f8f;
-  font-family:var(--fixed-font);
-  font-size:11px;
-  font-weight:400;
-  line-height:1;
-  letter-spacing:0;
-}
-
-.fixed-page-nav a.active,
-.fixed-page-nav a:hover{
-  color:#111;
-}
-
 .fixed-page-info{
   margin-top:auto;
   color:#8b8b8b;
@@ -84,7 +53,9 @@
 }
 
 .fixed-page-menu-button span:nth-child(1){top:6px}
+
 .fixed-page-menu-button span:nth-child(2){top:11px}
+
 .fixed-page-menu-button span:nth-child(3){top:16px}
 
 .fixed-page-main{
@@ -104,81 +75,28 @@
 }
 
 @media(max-width:900px){
-  :root{
+:root{
     --fixed-sidebar-width:300px;
     --fixed-right-gap:40px;
   }
 }
 
 @media(max-width:760px){
-  .fixed-page-sidebar{
+.fixed-page-sidebar{
     display:none;
   }
 
-  .fixed-page-main{
+.fixed-page-main{
     margin-left:0;
     padding:90px 18px 70px;
   }
 
-  .fixed-page-menu-button{
+.fixed-page-menu-button{
     top:20px !important;
     right:18px !important;
   }
 }
 
-
-/* ===== V7 메뉴 타이포 통일 ===== */
-.fixed-page-nav{
-  margin-top:92px;
-  gap:42px;
-}
-
-.fixed-page-nav a{
-  color:#a7a7a7;
-  font-size:22px;
-  font-weight:300;
-  line-height:1;
-  letter-spacing:.025em;
-  text-transform:uppercase;
-}
-
-.fixed-page-nav a.active,
-.fixed-page-nav a:hover{
-  color:#484848;
-}
-
-
-/* ===== V8: 고정 사이드바 메뉴도 동일 ===== */
-.fixed-page-nav{
-  gap:38px;
-}
-
-.fixed-page-nav a{
-  font-family:"Helvetica Neue","Nimbus Sans L","Liberation Sans",Arial,sans-serif;
-  font-size:18px;
-  font-weight:200;
-  line-height:1;
-  letter-spacing:.055em;
-  color:#9d9d9d;
-  transition:none !important;
-  transform:none !important;
-}
-
-.fixed-page-nav a.active{
-  color:#454545;
-  font-weight:200;
-}
-
-.fixed-page-nav a:hover,
-.fixed-page-nav a:active,
-.fixed-page-nav a:focus{
-  color:inherit;
-  transform:none !important;
-  opacity:1;
-  outline:none;
-}
-
-/* ABOUT / CONTACT는 좌우 여백 모두 400px */
 .fixed-content-page .fixed-page-main{
   margin-left:400px;
   margin-right:400px;
@@ -191,145 +109,25 @@
 }
 
 @media(max-width:1300px) and (min-width:761px){
-  .fixed-content-page .fixed-page-main{
+.fixed-content-page .fixed-page-main{
     margin-left:320px;
     margin-right:320px;
   }
 }
 
 @media(max-width:760px){
-  .fixed-content-page .fixed-page-main{
+.fixed-content-page .fixed-page-main{
     margin-left:0;
     margin-right:0;
     padding:90px 18px 70px;
   }
 }
 
-
-/* ===== V9: 고정 사이드바 메뉴 효과 제거 ===== */
-.fixed-page-nav a,
-.fixed-page-nav a.active,
-.fixed-page-nav a:hover,
-.fixed-page-nav a:active,
-.fixed-page-nav a:focus{
-  color:#9d9d9d !important;
-  font-weight:200 !important;
-  opacity:1 !important;
-  transform:none !important;
-  transition:none !important;
-  text-decoration:none !important;
-  outline:none !important;
-  filter:none !important;
-}
-
-
-/* ===== V10: 고정 사이드바 현재 메뉴 강조 ===== */
-.fixed-page-nav a{
-  color:#9d9d9d !important;
-}
-
-.fixed-page-nav a.active{
-  color:#111 !important;
-}
-
-.fixed-page-nav a:not(.active):hover,
-.fixed-page-nav a:not(.active):active,
-.fixed-page-nav a:not(.active):focus{
-  color:#9d9d9d !important;
-}
-
-.fixed-page-nav a.active:hover,
-.fixed-page-nav a.active:active,
-.fixed-page-nav a.active:focus{
-  color:#111 !important;
-}
-
-
-/* ===== V13: 서브페이지 고정 메뉴 위치를 메인 열린 메뉴와 동일하게 ===== */
 .fixed-page-sidebar{
   width:400px !important;
   padding:25px 20px 24px !important;
 }
 
-.fixed-page-logo{
-  margin:0 !important;
-  font-size:12px !important;
-  line-height:1 !important;
-  letter-spacing:.12em !important;
-}
-
-.fixed-page-nav{
-  position:absolute !important;
-  left:20px !important;
-  top:118px !important;
-  margin:0 !important;
-  gap:38px !important;
-}
-
-.fixed-page-nav a{
-  font-size:18px !important;
-  font-weight:200 !important;
-  line-height:1 !important;
-  letter-spacing:.055em !important;
-}
-
-
-/* ===== V16: 고정 메뉴도 동일 구성 ===== */
-.fixed-page-nav{
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:flex-start !important;
-  gap:10px !important;
-}
-
-.fixed-page-nav a{
-  font-family:"Helvetica Neue","Nimbus Sans L","Liberation Sans",Arial,sans-serif !important;
-  font-size:18px !important;
-  font-weight:200 !important;
-  line-height:1.15 !important;
-  letter-spacing:.055em !important;
-}
-
-.fixed-page-nav .channel-link{
-  text-transform:none !important;
-  letter-spacing:.04em !important;
-  color:#454545 !important;
-}
-
-
-/* ===== V17: 고정 사이드바 메뉴도 동일 ===== */
-.fixed-page-nav{
-  gap:24px !important;
-}
-
-.fixed-page-nav a,
-.fixed-page-nav .channel-link{
-  font-family:"Helvetica Neue","Nimbus Sans L","Liberation Sans",Arial,sans-serif !important;
-  font-size:18px !important;
-  font-weight:200 !important;
-  line-height:1.35 !important;
-  letter-spacing:.055em !important;
-  text-transform:uppercase !important;
-  color:#9b9b9b !important;
-  transition:none !important;
-}
-
-.fixed-page-nav a.active{
-  color:#222 !important;
-}
-
-.fixed-page-nav a:not(.active):hover,
-.fixed-page-nav a:not(.active):focus,
-.fixed-page-nav a:not(.active):active{
-  color:#9b9b9b !important;
-}
-
-.fixed-page-nav .channel-link{
-  color:#8f8f8f !important;
-}
-
-
-/* ===== V18: 사이드바도 화면과 함께 자연스럽게 축소 ===== */
 :root{
   --responsive-sidebar:clamp(220px,25vw,400px);
 }
@@ -347,11 +145,11 @@
 }
 
 @media(max-width:900px){
-  .fixed-page-sidebar{
+.fixed-page-sidebar{
     display:none !important;
   }
 
-  .fixed-content-page .fixed-page-main{
+.fixed-content-page .fixed-page-main{
     margin-left:0 !important;
   }
 }

@@ -6,11 +6,12 @@
   <title>LIGHT HALL — 풍수 인테리어</title>
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="../../project-detail.css">
-  <link rel="stylesheet" href="../../shared-menu.css">
+  <link rel="stylesheet" href="../../shared-navigation.css">
+  <link rel="stylesheet" href="../../shared-brand.css">
 </head>
 <body class="project-detail-page">
   <header class="detail-header">
-    <a class="detail-logo" href="../../index.html"><img class="brand-logo-image" src="../../assets/logo/fengshui-interior-final.png" alt="풍수 인테리어"></a>
+    <a class="detail-logo shared-brand" href="../../index.html"><img class="brand-logo-image shared-brand__image" src="../../assets/logo/fengshui-interior-final.png" alt="풍수 인테리어" data-shared-brand-image></a>
     <button class="menu-button detail-menu-button menu-button-enabled" type="button" aria-label="메뉴 열기" aria-expanded="false" data-menu-dim="false">
       <span></span><span></span><span></span>
     </button>
@@ -65,18 +66,18 @@
 
   <div class="page-dim" aria-hidden="true"></div>
   <aside class="drawer" aria-hidden="true">
-    <a class="drawer-brand" href="../../index.html"><img class="brand-logo-image" src="../../assets/logo/fengshui-interior-final.png" alt="풍수 인테리어"></a>
+    <a class="drawer-brand shared-brand" href="../../index.html"><img class="brand-logo-image shared-brand__image" src="../../assets/logo/fengshui-interior-final.png" alt="풍수 인테리어" data-shared-brand-image></a>
     <button class="drawer-close" type="button" aria-label="메뉴 닫기">
       <span></span><span></span>
     </button>
-    <nav class="side-nav" style="position:absolute !important;left:20px !important;top:133px !important;right:auto !important;bottom:auto !important;display:flex !important;flex-direction:column !important;align-items:flex-start !important;justify-content:flex-start !important;gap:24px !important;width:auto !important;height:auto !important;margin:0 !important;padding:0 !important;transform:none !important;box-sizing:border-box !important;" data-shared-menu>
-      <a class="site-menu-link active" href="../../project.html">PROJECT</a>
-      <a class="site-menu-link" href="../../service.html">SERVICE</a>
-      <a class="site-menu-link" href="../../studio.html">STUDIO</a>
-      <a class="site-menu-link" href="../../reservation.html">RESERVATION</a>
-      <span class="site-menu-divider" aria-hidden="true"></span>
-      <a class="site-menu-link site-menu-channel" data-blog-link href="#" target="_blank" rel="noopener">BLOG</a>
-      <a class="site-menu-link site-menu-channel" data-instagram-link href="#" target="_blank" rel="noopener">INSTAGRAM</a>
+    <nav class="shared-navigation" data-shared-navigation>
+      <a class="shared-navigation__link is-active" href="../../project.html">PROJECT</a>
+      <a class="shared-navigation__link" href="../../service.html">SERVICE</a>
+      <a class="shared-navigation__link" href="../../studio.html">STUDIO</a>
+      <a class="shared-navigation__link" href="../../reservation.html">RESERVATION</a>
+      <span class="shared-navigation__divider" aria-hidden="true"></span>
+      <a class="shared-navigation__link is-channel" href="#" target="_blank" rel="noopener">BLOG</a>
+      <a class="shared-navigation__link is-channel" href="#" target="_blank" rel="noopener">INSTAGRAM</a>
     </nav>
     <div class="drawer-info">
       풍수 인테리어<br>
@@ -88,6 +89,7 @@
   <script src="../../script.js"></script>
   <script src="../../content.js"></script>
   <script src="../../mobile-header.js"></script>
-  <script src="../../shared-menu.js"></script>
+  <script src="../../shared-navigation.js"></script>
+  <script src="../../shared-brand.js"></script>
 </body>
 </html>
