@@ -26,8 +26,8 @@ body, button, input, select, textarea, a, h1, h2, h3, h4, h5, h6, p, dt, dd, spa
   margin-top:auto; color:#8b8b8b; font-size:8px; font-weight:400; line-height:1.7;
 }
 .project-detail-content { min-height: 100vh; }
-.home-hero { min-height:100vh; padding:100px 120px 100px calc(var(--sidebar-width) + 120px); }
-.home-hero-image { display:block; width:100%; height:auto; max-height:calc(100vh - 200px); object-fit:contain; object-position:center; }
+.home-hero { position:relative; min-height:100vh; padding:200px 450px 100px; }
+.home-hero img { object-fit:contain; object-position:center; inset:200px 450px 100px !important; width:auto !important; height:auto !important; }
 .simple-page { min-height:100vh; margin-right:400px; padding:94px 0 110px; }
-.simple-page h1 { margin:0 0 20px; color:var(--brand-gray); font-size:32px; font-weight:500; letter-spacing:-.015em; }
-.simple-page p { max-width:600px; margin:0; color:var(--brand-gray); font-size:16px; font-weight:400; line-height:1.7; }
+.simple-page h1 { margin:0 0 20px; color:#111; font-size:32px; font-weight:500; letter-spacing:-.015em; }
+.simple-page p { max-width:600px; margin:0; color:#7d7d7d; font-size:16px; font-weight:400; line-height:1.7; }
