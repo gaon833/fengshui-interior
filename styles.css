@@ -1049,3 +1049,32 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
     left:20px;
   }
 }
+
+
+/* ===== V26: 로고 축소 + 메뉴 그레이 통일 ===== */
+.brand-logo-image,
+.fixed-page-logo .brand-logo-image,
+.detail-logo .brand-logo-image,
+.drawer-brand .brand-logo-image{
+  width:145px !important;
+  height:auto !important;
+  opacity:1 !important;
+}
+
+@media(max-width:1100px){
+  .brand-logo-image,
+  .fixed-page-logo .brand-logo-image,
+  .detail-logo .brand-logo-image,
+  .drawer-brand .brand-logo-image{
+    width:136px !important;
+  }
+}
+
+@media(max-width:760px){
+  .brand-logo-image,
+  .fixed-page-logo .brand-logo-image,
+  .detail-logo .brand-logo-image,
+  .drawer-brand .brand-logo-image{
+    width:122px !important;
+  }
+}
