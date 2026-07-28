@@ -11,12 +11,11 @@ export default function ProjectEditor({ initialProject }: ProjectEditorProps) {
   const [title, setTitle] = useState(initialProject?.title ?? "");
   const [status, setStatus] = useState(initialProject?.status ?? "draft");
   const [tags, setTags] = useState(initialProject?.tags.join(", ") ?? "");
-  const [mobileCoverImage, setMobileCoverImage] = useState(initialProject?.mobileCoverImage ?? "");
   const [saveState, setSaveState] = useState<"saved" | "saving">("saved");
 
   const snapshot = useMemo(
-    () => JSON.stringify({ title, status, tags, mobileCoverImage }),
-    [title, status, tags, mobileCoverImage]
+    () => JSON.stringify({ title, status, tags }),
+    [title, status, tags]
   );
 
   useEffect(() => {
@@ -72,20 +71,10 @@ export default function ProjectEditor({ initialProject }: ProjectEditorProps) {
         <section className="editor-panel">
           <h2>이미지 관리</h2>
           <p>일괄 업로드, 드래그 정렬, 대표 이미지 지정 기능을 연결할 영역입니다.</p>
-          <label>
-            모바일 대표 이미지
-            <input
-              value={mobileCoverImage}
-              onChange={(event) => setMobileCoverImage(event.target.value)}
-              placeholder="/assets/mobile-project-cover.jpg"
-            />
-            <small>세로 사진 경로를 지정합니다. 비어 있으면 PC 대표 이미지를 사용합니다.</small>
-          </label>
           <div className="image-manager-placeholder">
             <span>이미지 업로드</span>
             <span>드래그 순서 변경</span>
             <span>PC 대표 이미지 지정</span>
-            <span>모바일 대표 이미지 지정</span>
           </div>
         </section>
 
