@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import site from "@/content/site.json";
 import { getProjects } from "@/lib/projects";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = site.siteUrl || "https://fengshui-interior.pages.dev";
   const now = new Date();
