@@ -12,13 +12,15 @@
   --hamburger-right: 30px;
 
   --menu-left: 25px;
-  --menu-top: 204px;
   --project-filter-top: 150px;
+  --project-filter-height: 43px;
+  --content-image-top: calc(var(--project-filter-top) + var(--project-filter-height));
+  --menu-top: var(--content-image-top);
   --menu-font-family: "Helvetica Neue", "Nimbus Sans L", "Liberation Sans", Arial, sans-serif;
   --menu-font-size: 16.2px;
   --menu-font-weight: 200;
   --menu-line-height: 1.35;
-  --menu-letter-spacing: .0605em;
+  --menu-letter-spacing: .0726em;
   --menu-gap: 24px;
   --divider-width: 100px;
 
