@@ -1267,3 +1267,129 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
     line-height:1.25 !important;
   }
 }
+
+
+/* ===== V39: 상세페이지 PREV / NEXT 가독성 개선 ===== */
+.project-navigation,
+.project-nav,
+.prev-next,
+.detail-pagination{
+  --project-nav-color:#8f8f8f;
+}
+
+/* 실제 링크 클래스가 어떤 형태여도 적용되도록 폭넓게 지정 */
+.project-navigation a,
+.project-nav a,
+.prev-next a,
+.detail-pagination a,
+a.prev-project,
+a.next-project,
+a.project-prev,
+a.project-next{
+  color:var(--project-nav-color) !important;
+  font-size:calc(1em + 2px) !important;
+  font-weight:400 !important;
+  text-decoration:none !important;
+}
+
+/* 기존 텍스트 화살표를 숨기지 않고, CSS 선형 화살표를 추가해 더 길게 표현 */
+a.prev-project,
+a.project-prev,
+.project-navigation .prev,
+.project-nav .prev,
+.prev-next .prev{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:10px !important;
+}
+
+a.next-project,
+a.project-next,
+.project-navigation .next,
+.project-nav .next,
+.prev-next .next{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:10px !important;
+}
+
+a.prev-project::before,
+a.project-prev::before,
+.project-navigation .prev::before,
+.project-nav .prev::before,
+.prev-next .prev::before{
+  content:"";
+  width:34px;
+  height:1px;
+  background:var(--project-nav-color);
+  display:inline-block;
+  position:relative;
+}
+
+a.next-project::after,
+a.project-next::after,
+.project-navigation .next::after,
+.project-nav .next::after,
+.prev-next .next::after{
+  content:"";
+  width:34px;
+  height:1px;
+  background:var(--project-nav-color);
+  display:inline-block;
+  position:relative;
+}
+
+/* 화살촉 */
+a.prev-project::after,
+a.project-prev::after,
+.project-navigation .prev::after,
+.project-nav .prev::after,
+.prev-next .prev::after{
+  content:"";
+  width:7px;
+  height:7px;
+  border-left:1px solid var(--project-nav-color);
+  border-bottom:1px solid var(--project-nav-color);
+  transform:rotate(45deg);
+  margin-left:-44px;
+}
+
+a.next-project::before,
+a.project-next::before,
+.project-navigation .next::before,
+.project-nav .next::before,
+.prev-next .next::before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-top:1px solid var(--project-nav-color);
+  border-right:1px solid var(--project-nav-color);
+  transform:rotate(45deg);
+  margin-right:-44px;
+}
+
+@media(max-width:760px){
+  .project-navigation a,
+  .project-nav a,
+  .prev-next a,
+  .detail-pagination a,
+  a.prev-project,
+  a.next-project,
+  a.project-prev,
+  a.project-next{
+    font-size:calc(1em + 1px) !important;
+  }
+
+  a.prev-project::before,
+  a.project-prev::before,
+  .project-navigation .prev::before,
+  .project-nav .prev::before,
+  .prev-next .prev::before,
+  a.next-project::after,
+  a.project-next::after,
+  .project-navigation .next::after,
+  .project-nav .next::after,
+  .prev-next .next::after{
+    width:26px;
+  }
+}

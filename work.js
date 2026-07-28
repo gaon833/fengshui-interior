@@ -8,11 +8,9 @@
 
   if (!leftColumn || !rightColumn || !tiles.length) return;
 
-  // ALL 화면으로 돌아갈 때 원래 좌·우 배치를 정확히 복원하기 위한 위치 저장
-  const originalLayout = tiles.map((tile, index) => ({
+  const originalLayout = tiles.map(tile => ({
     tile,
-    parent: tile.parentElement,
-    index
+    parent: tile.parentElement
   }));
 
   function restoreOriginalLayout() {
@@ -29,14 +27,14 @@
     const isMobile = window.matchMedia('(max-width: 600px)').matches;
 
     if (isMobile) {
-      // 모바일은 한 줄이므로 선택된 이미지를 오른쪽 열에 순서대로 모아 바로 표시
-      matches.forEach(tile => rightColumn.appendChild(tile));
+      matches.forEach(tile => leftColumn.appendChild(tile));
       return;
     }
 
-    // PC/태블릿: 첫 이미지가 항상 오른쪽부터 시작하고 이후 오른쪽 → 왼쪽 순서로 배치
+    // 필터 화면은 첫 이미지가 왼쪽에서 시작하고,
+    // 왼쪽 → 오른쪽 → 왼쪽 → 오른쪽 순서로 채움
     matches.forEach((tile, index) => {
-      const targetColumn = index % 2 === 0 ? rightColumn : leftColumn;
+      const targetColumn = index % 2 === 0 ? leftColumn : rightColumn;
       targetColumn.appendChild(tile);
     });
   }
@@ -75,8 +73,7 @@
   let resizeTimer;
   window.addEventListener('resize', () => {
     if (activeSize === 'all') return;
-
-    window.clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(applyFilters, 120);
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(applyFilters, 120);
   });
 })();
