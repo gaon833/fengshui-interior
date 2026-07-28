@@ -1,4 +1,0 @@
-fengshui-interior
-Version: v1.0.1
-Date: 2026-07-29
-Status: Stable UI patch

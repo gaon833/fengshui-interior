@@ -84,20 +84,3 @@
   font-size: 8px;
   line-height: 1.45;
 }
-
-/* v1.0.1 — center the social/contact block inside the sidebar width. */
-.desktop-sidebar > .sidebar-social-footer {
-  width: max-content;
-  max-width: calc(var(--sidebar-width) - 40px);
-  margin-left: auto;
-  margin-right: auto;
-  justify-items: start;
-}
-
-.menu-drawer > .sidebar-social-footer {
-  width: max-content;
-  max-width: calc(100% - 16px);
-  margin-left: auto;
-  margin-right: auto;
-  justify-items: start;
-}
