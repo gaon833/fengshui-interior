@@ -1241,3 +1241,24 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
   }
 
 }
+
+
+/* ===== V35: 열린 메뉴 페이지 전체를 30px 아래로 이동 ===== */
+@media (min-width:901px){
+  .drawer .side-nav,
+  .drawer nav,
+  .drawer .nav{
+    transform:translateY(30px) !important;
+  }
+}
+
+
+/* V36: 열린 메뉴(오버레이) 글씨만 30px 아래 */
+@media (min-width:901px){
+  .drawer nav,
+  .drawer .nav,
+  .drawer .menu,
+  .drawer .menu-list{
+    transform: translateY(30px) !important;
+  }
+}
