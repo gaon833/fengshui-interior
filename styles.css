@@ -1143,3 +1143,15 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
   content:none !important;
   display:none !important;
 }
+
+
+/* V29: 로고를 기존 위치에서 왼쪽으로 100px 이동 */
+@media (min-width:901px){
+  .brand,
+  .fixed-page-logo,
+  .detail-logo,
+  .drawer-brand{
+    left:100px !important; /* 기존 200px -> 100px */
+    transform:translateX(0) !important;
+  }
+}
