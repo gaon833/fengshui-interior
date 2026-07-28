@@ -120,3 +120,22 @@
   background: #fff;
   cursor: pointer;
 }
+
+.admin-nav-group {
+  display: grid;
+  gap: 12px;
+}
+.admin-nav-divider {
+  height: 1px;
+  margin: 6px 0;
+  background: #e5e5e1;
+}
+.admin-nav a {
+  color: #8d8d8d;
+  text-decoration: none;
+  font-weight: 400;
+}
+.admin-nav a:focus-visible {
+  outline: 1px solid #8d8d8d;
+  outline-offset: 4px;
+}
