@@ -930,3 +930,54 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
     pointer-events:auto !important;
   }
 }
+
+
+/* ===== V24: 선택 로고 적용 ===== */
+.brand,
+.fixed-page-logo,
+.detail-logo{
+  display:inline-flex !important;
+  align-items:center;
+  text-decoration:none !important;
+  line-height:0 !important;
+}
+
+.brand-logo-image{
+  display:block;
+  width:190px;
+  max-width:none;
+  height:auto;
+  object-fit:contain;
+}
+
+.fixed-page-logo .brand-logo-image{
+  width:180px;
+}
+
+.detail-logo .brand-logo-image{
+  width:180px;
+}
+
+@media(max-width:1100px){
+  .brand-logo-image,
+  .fixed-page-logo .brand-logo-image,
+  .detail-logo .brand-logo-image{
+    width:clamp(130px,21vw,165px);
+  }
+}
+
+@media(max-width:760px){
+  .brand-logo-image,
+  .fixed-page-logo .brand-logo-image,
+  .detail-logo .brand-logo-image{
+    width:clamp(118px,34vw,150px);
+  }
+}
+
+/* ===== V24: 상세페이지 페이드 아웃·인 제거 ===== */
+.project-detail-page,
+.project-detail-page.page-ready,
+.project-detail-page.page-leaving{
+  opacity:1 !important;
+  transition:none !important;
+}
