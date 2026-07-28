@@ -8,6 +8,7 @@ export type ProjectImage = {
   alt: string;
   order: number;
   isCover?: boolean;
+  orientation?: "landscape" | "portrait";
 };
 
 export type ProjectSeo = {

@@ -15,14 +15,16 @@
         "src": "/projects/calm-house/01.jpg",
         "alt": "CALM HOUSE interior 1",
         "order": 1,
-        "isCover": false
+        "isCover": false,
+        "orientation": "landscape"
       },
       {
         "id": "calm-house-image-2",
         "src": "/projects/calm-house/02.jpg",
         "alt": "CALM HOUSE interior 2",
         "order": 2,
-        "isCover": false
+        "isCover": false,
+        "orientation": "portrait"
       }
     ],
     "order": 1,
@@ -65,14 +67,16 @@
         "src": "/projects/soft-living/01.jpg",
         "alt": "SOFT LIVING interior 1",
         "order": 1,
-        "isCover": false
+        "isCover": false,
+        "orientation": "landscape"
       },
       {
         "id": "soft-living-image-2",
         "src": "/projects/soft-living/02.jpg",
         "alt": "SOFT LIVING interior 2",
         "order": 2,
-        "isCover": false
+        "isCover": false,
+        "orientation": "portrait"
       }
     ],
     "order": 2,

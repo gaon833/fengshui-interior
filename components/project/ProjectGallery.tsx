@@ -1,20 +1,5 @@
 import Image from "next/image";
 import type { ProjectImage } from "@/types/project";
-
-export default function ProjectGallery({ images }: { images: ProjectImage[] }) {
-  return (
-    <section className="project-gallery">
-      {images.map((image, index) => (
-        <figure key={`${image.src}-${index}`}>
-          <Image
-            src={image.src}
-            alt={image.alt}
-            width={1600}
-            height={1100}
-            sizes="(max-width: 900px) 100vw, 70vw"
-          />
-        </figure>
-      ))}
-    </section>
-  );
+export default function ProjectGallery({images}:{images:ProjectImage[]}){
+ return <>{images.map((image,index)=><figure className={`detail-photo ${image.orientation === "portrait" ? "portrait" : "landscape"}`} key={`${image.src}-${index}`}><Image src={image.src} alt={image.alt} width={image.orientation === "portrait" ? 900 : 1600} height={image.orientation === "portrait" ? 1300 : 1050} sizes="(max-width:900px) 100vw, 70vw"/></figure>)}</>;
 }
