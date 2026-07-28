@@ -1450,3 +1450,42 @@ a.project-next::before,
   opacity:1 !important;
   filter:none !important;
 }
+
+
+/* ===== V41: 열린 메뉴 페이지에 축소 설정 강제 적용 ===== */
+@media (min-width:901px){
+
+  /* 실제 햄버거 메뉴의 nav 자체를 세로 flex로 고정 */
+  .drawer > nav.side-nav{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:15px !important;
+  }
+
+  /* 메뉴 페이지 링크만 20% 축소 */
+  .drawer > nav.side-nav > a{
+    font-size:14px !important;
+    line-height:1.15 !important;
+    margin:0 !important;
+    padding:0 !important;
+    height:auto !important;
+    min-height:0 !important;
+    letter-spacing:0.05em !important;
+    color:#6e6e6e !important;
+  }
+
+  /* 구분선 위아래 간격도 함께 축소 */
+  .drawer > nav.side-nav > .menu-divider{
+    display:block !important;
+    width:100% !important;
+    margin:12px 0 10px !important;
+  }
+
+  /* 열린 메뉴의 채널 링크도 같은 크기와 색상 */
+  .drawer > nav.side-nav > a.channel-link{
+    font-size:14px !important;
+    line-height:1.15 !important;
+    color:#6e6e6e !important;
+  }
+}
