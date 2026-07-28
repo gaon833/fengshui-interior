@@ -1,13 +1,6 @@
 import type { ReactNode } from "react";
-import BrandLogo from "@/components/brand/BrandLogo";
-import MenuDrawer from "@/components/layout/MenuDrawer";
+import ProjectDetailShell from "@/components/layout/ProjectDetailShell";
 
 export default function ProjectDetailLayout({ children }: { children: ReactNode }) {
-  return (
-    <div className="project-detail-shell">
-      <BrandLogo className="project-detail-logo" />
-      <MenuDrawer variant="detail" useBackdrop={false} />
-      <main className="project-detail-content">{children}</main>
-    </div>
-  );
+  return <ProjectDetailShell>{children}</ProjectDetailShell>;
 }

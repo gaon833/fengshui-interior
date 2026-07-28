@@ -113,3 +113,19 @@
   .sidebar-company-info strong{font-size:9px;}
   .sidebar-company-info small{font-size:7px;margin-top:10px;}
 }
+
+/* Final mobile refinements */
+@media (max-width:900px){
+  /* Logo bottom + 80px breathing room before detail title. */
+  .detail-info{padding-top:202px;}
+
+  .project-navigation{
+    padding:58px 20px 74px;
+    min-height:180px;
+    column-gap:12px;
+    overflow:visible;
+  }
+  .project-navigation a{gap:9px;font-size:10px;}
+  .project-navigation .nav-arrow{width:38px;flex-basis:38px;}
+  .project-navigation .nav-arrow::after{width:7px;height:7px;}
+}

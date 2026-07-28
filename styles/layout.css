@@ -49,3 +49,8 @@ body, button, input, select, textarea, a, h1, h2, h3, h4, h5, h6, p, dt, dd, spa
 .home-main__image--mobile { display:none; }
 .scroll-aware-header { transition:opacity .22s ease, transform .22s ease; }
 .site-shell--header-hidden .scroll-aware-header { opacity:0; transform:translateY(-18px); pointer-events:none; }
+.project-detail-shell--header-hidden .scroll-aware-header {
+  opacity: 0;
+  transform: translateY(-18px);
+  pointer-events: none;
+}
