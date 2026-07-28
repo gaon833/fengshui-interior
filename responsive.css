@@ -16,8 +16,3 @@
   .project-index{padding:90px 18px 90px}.project-filter{min-height:118px;overflow-x:auto;width:max-content;gap:23px}.project-grid{grid-template-columns:1fr;row-gap:18px}
   .project-detail-logo{left:20px;top:24px}.detail-info{position:relative;width:auto;height:auto;padding:88px 18px 30px}.detail-meta{position:static;width:auto}.detail-social{position:static;margin-top:30px}.detail-gallery{margin-left:0;padding:0 18px 70px;gap:24px}.detail-photo.portrait img{max-width:72%}.project-navigation{margin-left:0;padding:0 18px 45px;min-height:100px;font-size:11px}.project-navigation .prev::before,.project-navigation .next::after{width:26px}
 }
-
-@media (max-width: 900px) {
-  .project-grid { grid-template-columns: 1fr; }
-  .project-grid-column { display: contents; }
-}

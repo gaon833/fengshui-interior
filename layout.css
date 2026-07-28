@@ -30,7 +30,7 @@ body, button, input, select, textarea, a, h1, h2, h3, h4, h5, h6, p, dt, dd, spa
 .home-main {
   min-height: 100vh;
   box-sizing: border-box;
-  padding: 100px 350px 100px;
+  padding: 200px 450px 100px;
 }
 .home-main__frame {
   width: 100%;

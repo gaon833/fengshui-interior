@@ -1,0 +1,40 @@
+:root {
+  --sidebar-width: 400px;
+  --page-right-gap: 35px;
+  --page-top: 94px;
+  --grid-gap: 35px;
+
+  --logo-width: 145px;
+  --logo-top: 30px;
+  --logo-left: 130px;
+
+  --hamburger-top: 30px;
+  --hamburger-right: 30px;
+
+  --menu-left: 20px;
+  --menu-top: 150px;
+  --menu-font-family: "Helvetica Neue", "Nimbus Sans L", "Liberation Sans", Arial, sans-serif;
+  --menu-font-size: 18px;
+  --menu-font-weight: 200;
+  --menu-line-height: 1.35;
+  --menu-letter-spacing: .055em;
+  --menu-gap: 24px;
+  --divider-width: 100px;
+
+  --site-font-family: "Helvetica Neue", "Nimbus Sans L", "Liberation Sans", Arial, sans-serif;
+  --site-font-size: 14px;
+  --site-font-weight: 300;
+  --site-line-height: 1.45;
+  --site-letter-spacing: 0;
+  --site-text-color: #8f8f8f;
+  --site-strong-color: #111111;
+  --site-muted-color: #9d9d9d;
+  --site-border-color: #666666;
+
+  --page-bg: #ffffff;
+  --text-color: var(--site-text-color);
+  --muted-color: var(--site-muted-color);
+  --menu-color: var(--site-muted-color);
+  --menu-active-color: var(--site-strong-color);
+  --divider-color: var(--site-border-color);
+}
