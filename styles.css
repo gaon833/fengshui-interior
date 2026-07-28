@@ -1222,3 +1222,22 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
     letter-spacing:0.06em !important;
   }
 }
+
+
+/* ===== V33: 사이드바 메뉴 높이를 메인 메뉴와 동일하게 ===== */
+@media (min-width:901px){
+
+  /* 메인 메뉴와 사이드바 메뉴의 행 높이 통일 */
+  .fixed-page-nav a,
+  .side-nav a,
+  .drawer nav a,
+  .drawer .nav a{
+    height:42px !important;
+    line-height:42px !important;
+    margin:8px 0 !important;
+    padding:0 !important;
+    display:flex !important;
+    align-items:center !important;
+  }
+
+}
