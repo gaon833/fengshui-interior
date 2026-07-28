@@ -10,7 +10,7 @@
   .detail-meta{left:40px;bottom:120px;width:240px}.detail-meta h1{font-size:24px}.detail-meta .project-type{font-size:14px}.detail-meta dd{font-size:13px}.detail-social{left:40px;bottom:50px}
 }
 @media (max-width:900px){
-  :root{--sidebar-width:min(90vw,400px);--logo-width:122px;--logo-left:20px;--logo-top:24px;--hamburger-top:20px;--hamburger-right:18px;--menu-top:108px;--menu-font-size:17px;--menu-gap:22px;}
+  :root{--sidebar-width:min(90vw,400px);--logo-width:122px;--logo-left:20px;--logo-top:24px;--hamburger-top:20px;--hamburger-right:18px;--menu-top:108px;--menu-font-size:15.3px;--menu-gap:22px;}
   .desktop-sidebar{display:none}.site-shell--fixed .site-content{margin-left:0}.site-shell--fixed .site-floating-logo{display:inline-flex}
   .simple-page{margin-right:0;padding:90px 18px 70px}.home-main{padding:100px 18px 40px}
   .project-index{padding:90px 18px 90px}.project-filter{min-height:118px;overflow-x:auto;width:max-content;gap:23px}.project-grid{grid-template-columns:1fr;row-gap:18px}

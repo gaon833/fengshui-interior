@@ -11,11 +11,11 @@
   --hamburger-top: 30px;
   --hamburger-right: 30px;
 
-  --menu-left: 20px;
+  --menu-left: 25px;
   --menu-top: 204px;
   --project-filter-top: 150px;
   --menu-font-family: "Helvetica Neue", "Nimbus Sans L", "Liberation Sans", Arial, sans-serif;
-  --menu-font-size: 18px;
+  --menu-font-size: 16.2px;
   --menu-font-weight: 200;
   --menu-line-height: 1.35;
   --menu-letter-spacing: .055em;
@@ -37,5 +37,5 @@
   --muted-color: var(--site-muted-color);
   --menu-color: var(--site-muted-color);
   --menu-active-color: var(--site-strong-color);
-  --divider-color: var(--site-border-color);
+  --divider-color: var(--menu-color);
 }
