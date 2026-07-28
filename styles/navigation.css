@@ -5,9 +5,17 @@
 .navigation-link {
   font-size:var(--menu-font-size); font-weight:var(--menu-font-weight); line-height:var(--menu-line-height);
   letter-spacing:var(--menu-letter-spacing); color:var(--menu-color); text-transform:uppercase; white-space:nowrap;
+  text-decoration:none; opacity:1; border:0; transition:none; transform:none;
 }
-.navigation-link.is-active { color:var(--menu-active-color); font-weight:var(--menu-font-weight); }
-.navigation-link:hover, .navigation-link:focus { color:inherit; outline:none; }
+.navigation-link:hover, .navigation-link:focus, .navigation-link:active {
+  color:var(--menu-color); font-weight:var(--menu-font-weight); text-decoration:none; outline:none; transform:none;
+}
+.navigation-link.is-active,
+.navigation-link.is-active:hover,
+.navigation-link.is-active:focus,
+.navigation-link.is-active:active {
+  color:var(--menu-active-color); font-weight:var(--menu-font-weight);
+}
 .navigation-divider { display:block; width:var(--divider-width); height:1px; margin:22px 0 18px; background:var(--divider-color); opacity:.75; }
 .menu-toggle {
   position:fixed; top:var(--hamburger-top); right:var(--hamburger-right); z-index:60;
