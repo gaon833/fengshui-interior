@@ -1,3 +1,34 @@
+html,
+body {
+  font-family: var(--site-font-family);
+  font-size: var(--site-font-size);
+  font-weight: var(--site-font-weight);
+  line-height: var(--site-line-height);
+  letter-spacing: var(--site-letter-spacing);
+  color: var(--site-text-color);
+  background: var(--page-bg);
+}
+
+body,
+button,
+input,
+select,
+textarea,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dt,
+dd,
+span {
+  font-family: inherit;
+  color: inherit;
+}
+
 .site-shell,
 .project-detail-shell { min-height: 100vh; }
 
@@ -51,5 +82,6 @@
   min-height: 100vh;
   padding: 180px 10vw;
 }
-.simple-page h1 { font-size: 32px; font-weight: 400; }
-.simple-page p { color: var(--muted-color); }
+.simple-page h1,
+.simple-page p { font-weight: var(--site-font-weight); color: var(--site-text-color); }
+.simple-page h1 { font-size: 32px; }
