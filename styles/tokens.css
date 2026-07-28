@@ -3,7 +3,7 @@
   --logo-width:145px; --logo-top:30px; --logo-left:calc((var(--sidebar-width) - var(--logo-width))/2);
   --hamburger-top:30px; --hamburger-right:30px;
   --menu-left:20px; --menu-top:150px; --menu-font-family:"Helvetica Neue","Nimbus Sans L","Liberation Sans",Arial,sans-serif;
-  --menu-font-size:18px; --menu-font-weight:300; --menu-active-weight:600; --menu-line-height:1.35; --menu-letter-spacing:.055em; --menu-gap:24px; --divider-width:100px;
+  --menu-font-size:18px; --menu-font-weight:300; --menu-active-weight:300; --menu-line-height:1.35; --menu-letter-spacing:.055em; --menu-gap:24px; --divider-width:100px;
   --brand-gray:#888888; --brand-gray-active:#5f5f5f;
   --site-font-family:"Helvetica Neue","Nimbus Sans L","Liberation Sans",Arial,sans-serif; --site-font-size:14px; --site-font-weight:300; --site-line-height:1.45; --site-letter-spacing:0;
   --site-text-color:var(--brand-gray); --site-strong-color:var(--brand-gray-active); --site-muted-color:var(--brand-gray); --site-border-color:var(--brand-gray);
