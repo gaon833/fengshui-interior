@@ -1,29 +1,14 @@
+
 .sub-page{background:#f7f6f2;min-height:100vh}
-
 .sub-header{height:74px;display:flex;justify-content:space-between;align-items:center;padding:0 28px}
-
 .sub-brand{font-size:14px;letter-spacing:.15em;font-weight:600}
-
 .sub-back{font-size:12px;color:#666}
-
 .editorial-page{padding:clamp(60px,10vw,150px) clamp(28px,10vw,180px)}
-
 .section-label{font-size:10px;letter-spacing:.25em;color:#777;margin:0 0 22px}
-
 .editorial-page h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(58px,10vw,150px);margin:0 0 60px}
-
 .lead{max-width:760px;font-size:clamp(19px,2.2vw,32px);line-height:1.7;font-weight:300}
-
 .lead.small{font-size:16px;margin-top:70px;color:#666}
-
 .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;max-width:1000px}
-
 .contact-grid span{font-size:10px;letter-spacing:.2em;color:#888}
-
 .contact-grid p{font-size:17px;margin-top:12px}
-
-@media(max-width:720px){
-.contact-grid{grid-template-columns:1fr}
-
-.editorial-page h1{margin-bottom:42px}
-}
+@media(max-width:720px){.contact-grid{grid-template-columns:1fr}.editorial-page h1{margin-bottom:42px}}

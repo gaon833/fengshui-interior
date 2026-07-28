@@ -1,3 +1,4 @@
+
 :root{
   --detail-left:800px;
   --detail-right:300px;
@@ -22,6 +23,19 @@
   z-index:40;
   height:72px;
   pointer-events:none;
+}
+
+.detail-logo{
+  position:absolute;
+  left:20px;
+  top:25px;
+  pointer-events:auto;
+  color:#111;
+  font-size:12px;
+  font-weight:600;
+  line-height:1;
+  letter-spacing:.12em;
+  text-decoration:none;
 }
 
 .detail-menu-button{
@@ -119,6 +133,11 @@
   font-weight:300;
 }
 
+/*
+  가로 사진 기준:
+  왼쪽 800px + 오른쪽 300px + 상단 200px
+  남는 영역 안에서 가로사진이 100% 표시됨
+*/
 .detail-gallery{
   margin-left:var(--detail-left);
   padding:var(--detail-top) var(--detail-right) 110px 0;
@@ -140,6 +159,7 @@
   height:auto;
 }
 
+/* 세로 사진은 같은 사진 영역 안에서 중앙 정렬 */
 .detail-photo.portrait img{
   display:block;
   width:auto;
@@ -148,7 +168,7 @@
 }
 
 @media(max-width:1600px) and (min-width:1101px){
-:root{
+  :root{
     --detail-left:560px;
     --detail-right:160px;
     --detail-top:150px;
@@ -156,7 +176,7 @@
 }
 
 @media(max-width:1100px) and (min-width:761px){
-:root{
+  :root{
     --detail-left:320px;
     --detail-right:40px;
     --detail-gap:40px;
@@ -165,44 +185,46 @@
 }
 
 @media(max-width:760px){
-:root{
+  :root{
     --detail-left:0px;
     --detail-right:18px;
     --detail-gap:24px;
     --detail-top:88px;
   }
 
-.detail-info{
+  .detail-info{
     position:relative;
     width:auto;
     height:auto;
     padding:88px 18px 30px;
   }
 
-.detail-social{margin-bottom:30px}
+  .detail-social{margin-bottom:30px}
 
-.detail-meta{
+  .detail-meta{
     position:static;
     width:auto;
   }
 
-.detail-meta dl{
+  .detail-meta dl{
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
 
-.detail-gallery{
+  .detail-gallery{
     margin-left:0;
     padding:0 18px 70px;
   }
 
-.detail-photo.portrait img{
+  .detail-photo.portrait img{
     max-width:72%;
   }
 }
 
+
+/* ===== V13: 상세페이지 정보 블록 재정렬 ===== */
 .detail-meta{
-  left:120px !important;          
-  bottom:228px !important;        
+  left:120px !important;          /* 기존보다 오른쪽 100px */
+  bottom:228px !important;        /* 기존보다 위로 약 200px */
   width:360px !important;
 }
 
@@ -243,6 +265,7 @@
   color:#4d4d4d !important;
 }
 
+/* SNS를 프로젝트 정보 아래로 이동 */
 .detail-social{
   position:absolute !important;
   left:120px !important;
@@ -257,74 +280,76 @@
 }
 
 @media(max-width:1600px) and (min-width:1101px){
-.detail-meta{
+  .detail-meta{
     left:80px !important;
     bottom:170px !important;
     width:330px !important;
   }
 
-.detail-social{
+  .detail-social{
     left:80px !important;
     bottom:110px !important;
   }
 
-.detail-meta h1{
+  .detail-meta h1{
     font-size:28px !important;
   }
 }
 
 @media(max-width:1100px) and (min-width:761px){
-.detail-meta{
+  .detail-meta{
     left:40px !important;
     bottom:120px !important;
     width:250px !important;
   }
 
-.detail-social{
+  .detail-social{
     left:40px !important;
     bottom:70px !important;
   }
 
-.detail-meta h1{
+  .detail-meta h1{
     font-size:24px !important;
   }
 
-.detail-meta p,
+  .detail-meta p,
   .detail-meta dd{
     font-size:14px !important;
   }
 }
 
 @media(max-width:760px){
-.detail-meta{
+  .detail-meta{
     left:auto !important;
     bottom:auto !important;
     width:auto !important;
   }
 
-.detail-social{
+  .detail-social{
     position:static !important;
     margin:0 0 28px !important;
   }
 
-.detail-meta h1{
+  .detail-meta h1{
     font-size:26px !important;
   }
 }
 
+
+/* ===== V18: 상세페이지 사이드 영역도 자연스럽게 축소 ===== */
 @media(min-width:901px){
-:root{
+  :root{
     --detail-left:clamp(320px,42vw,800px);
     --detail-right:clamp(70px,15vw,300px);
     --detail-top:clamp(120px,10vw,200px);
   }
 
-.detail-info{
+  .detail-info{
     width:var(--detail-left) !important;
     transition:width .32s cubic-bezier(.22,1,.36,1) !important;
   }
 
-.detail-gallery{
+  .detail-gallery{
     margin-left:var(--detail-left) !important;
     padding-top:var(--detail-top) !important;
     padding-right:var(--detail-right) !important;
@@ -336,53 +361,45 @@
 }
 
 @media(max-width:900px){
-.detail-info{
+  .detail-info{
     position:relative !important;
     width:auto !important;
     height:auto !important;
   }
 
-.detail-gallery{
+  .detail-gallery{
     margin-left:0 !important;
   }
 }
 
+
+/* ===== V19: 프로젝트 상세 SNS 아이콘 제거 ===== */
 .detail-social{
   display:none !important;
 }
 
 .detail-meta h1{margin-bottom:22px!important;}
-
 .detail-meta p{margin-bottom:64px!important;}
-
 .detail-meta dl{row-gap:62px!important;column-gap:48px!important;}
-
 .detail-meta dt{margin-bottom:14px!important;}
-
 @media(max-width:1600px) and (min-width:1101px){
-.detail-meta h1{margin-bottom:18px!important;}
-
-.detail-meta p{margin-bottom:52px!important;}
-
-.detail-meta dl{row-gap:50px!important;}
+  .detail-meta h1{margin-bottom:18px!important;}
+  .detail-meta p{margin-bottom:52px!important;}
+  .detail-meta dl{row-gap:50px!important;}
 }
-
 @media(max-width:1100px) and (min-width:761px){
-.detail-meta h1{margin-bottom:15px!important;}
-
-.detail-meta p{margin-bottom:42px!important;}
-
-.detail-meta dl{row-gap:38px!important;column-gap:30px!important;}
+  .detail-meta h1{margin-bottom:15px!important;}
+  .detail-meta p{margin-bottom:42px!important;}
+  .detail-meta dl{row-gap:38px!important;column-gap:30px!important;}
 }
-
 @media(max-width:760px){
-.detail-meta h1{margin-bottom:14px!important;}
-
-.detail-meta p{margin-bottom:38px!important;}
-
-.detail-meta dl{row-gap:34px!important;}
+  .detail-meta h1{margin-bottom:14px!important;}
+  .detail-meta p{margin-bottom:38px!important;}
+  .detail-meta dl{row-gap:34px!important;}
 }
 
+
+/* ===== V21: 상세페이지 PREV / NEXT ===== */
 .project-pagination{
   width:100%;
   margin-top:70px;
@@ -419,11 +436,11 @@
 }
 
 @media(max-width:760px){
-.project-pagination{
+  .project-pagination{
     margin-top:46px;
   }
 
-.project-pagination-link{
+  .project-pagination-link{
     min-height:48px;
     font-size:11px;
     gap:7px;

@@ -1,0 +1,190 @@
+
+/* ==========================================================
+   FINAL SHARED UI
+   기존 HTML/JS 동작은 그대로 유지하고,
+   메뉴와 로고의 시각 속성만 이 파일 한 곳에서 통합 관리한다.
+   ========================================================== */
+
+:root {
+  /* 메뉴 공통값 */
+  --shared-nav-left: 38px;
+  --shared-nav-top: 300px;
+  --shared-nav-font-family: "Helvetica Neue", "Nimbus Sans L", "Liberation Sans", Arial, sans-serif;
+  --shared-nav-font-size: 18px;
+  --shared-nav-font-weight: 200;
+  --shared-nav-line-height: 1.28;
+  --shared-nav-letter-spacing: 0.045em;
+  --shared-nav-color: #9a9a9a;
+  --shared-nav-active-color: #222222;
+  --shared-nav-gap: 62px;
+
+  /* 구분선 공통값 */
+  --shared-divider-width: 190px;
+  --shared-divider-color: #777777;
+  --shared-divider-top: 16px;
+  --shared-divider-bottom: 16px;
+
+  /* 로고 공통값: 400px 영역 중앙 */
+  --shared-brand-center-x: 200px;
+  --shared-brand-top: 30px;
+  --shared-brand-width: 145px;
+}
+
+/* PC 메뉴: 기본 페이지와 X 사이드바가 완전히 같은 값 사용 */
+@media (min-width: 901px) {
+  nav.shared-navigation {
+    position: absolute !important;
+    left: var(--shared-nav-left) !important;
+    top: var(--shared-nav-top) !important;
+    right: auto !important;
+    bottom: auto !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: var(--shared-nav-gap) !important;
+
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+
+  nav.shared-navigation > a.site-menu-link,
+  nav.shared-navigation > a.site-menu-link:link,
+  nav.shared-navigation > a.site-menu-link:visited,
+  nav.shared-navigation > a.site-menu-link:hover,
+  nav.shared-navigation > a.site-menu-link:focus,
+  nav.shared-navigation > a.site-menu-link:active {
+    display: block !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-family: var(--shared-nav-font-family) !important;
+    font-size: var(--shared-nav-font-size) !important;
+    font-style: normal !important;
+    font-weight: var(--shared-nav-font-weight) !important;
+    line-height: var(--shared-nav-line-height) !important;
+    letter-spacing: var(--shared-nav-letter-spacing) !important;
+    word-spacing: normal !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+
+    color: var(--shared-nav-color) !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: color .18s ease !important;
+
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 활성 메뉴는 두께를 바꾸지 않고 색만 진하게 */
+  nav.shared-navigation > a.site-menu-link.active,
+  nav.shared-navigation > a.site-menu-link.active:hover,
+  nav.shared-navigation > a.site-menu-link.active:focus {
+    font-weight: var(--shared-nav-font-weight) !important;
+    color: var(--shared-nav-active-color) !important;
+  }
+
+  /* BLOG / INSTAGRAM도 일반 메뉴와 같은 얇기와 색 */
+  nav.shared-navigation > a.site-menu-channel,
+  nav.shared-navigation > a.site-menu-channel:hover,
+  nav.shared-navigation > a.site-menu-channel:focus {
+    font-weight: var(--shared-nav-font-weight) !important;
+    color: var(--shared-nav-color) !important;
+  }
+
+  /* RESERVATION 아래 구분선 */
+  nav.shared-navigation > .site-menu-divider {
+    display: block !important;
+    visibility: visible !important;
+    flex: 0 0 auto !important;
+
+    width: var(--shared-divider-width) !important;
+    min-width: var(--shared-divider-width) !important;
+    max-width: var(--shared-divider-width) !important;
+    height: 0 !important;
+
+    margin: var(--shared-divider-top) 0 var(--shared-divider-bottom) !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+    border-top: 1px solid var(--shared-divider-color) !important;
+    background: transparent !important;
+    opacity: 1 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 모든 기존 로고 요소를 그대로 재사용해 같은 위치/크기로 통합 */
+  a.shared-brand {
+    position: absolute !important;
+    left: var(--shared-brand-center-x) !important;
+    top: var(--shared-brand-top) !important;
+    right: auto !important;
+    bottom: auto !important;
+
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    line-height: 0 !important;
+    transform: translateX(-50%) !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    z-index: 12 !important;
+  }
+
+  /* 상세페이지의 fixed 위치 특성만 유지 */
+  a.detail-logo.shared-brand {
+    position: fixed !important;
+  }
+
+  a.shared-brand > img.shared-brand__image {
+    display: block !important;
+    width: var(--shared-brand-width) !important;
+    max-width: none !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    object-fit: contain !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+}
+
+/* 모바일은 기존 레이아웃 동작을 보존하고 폰트/로고 모양만 통일 */
+@media (max-width: 900px) {
+  nav.shared-navigation > a.site-menu-link {
+    font-family: var(--shared-nav-font-family) !important;
+    font-style: normal !important;
+    font-weight: var(--shared-nav-font-weight) !important;
+    letter-spacing: var(--shared-nav-letter-spacing) !important;
+    text-transform: uppercase !important;
+  }
+
+  a.shared-brand > img.shared-brand__image {
+    display: block !important;
+    width: 122px !important;
+    max-width: none !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+}
