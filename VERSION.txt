@@ -1,2 +1,2 @@
-v1.0.2
-Sharp high-resolution logo replacement
+v1.0.4
+Balanced logo and menu gray
