@@ -9,6 +9,7 @@
     "area": "102㎡ (31평)",
     "year": 2026,
     "coverImage": "/projects/calm-house/cover.jpg",
+    "coverOrientation": "landscape",
     "images": [
       {
         "id": "calm-house-image-1",
@@ -25,6 +26,30 @@
         "order": 2,
         "isCover": false,
         "orientation": "portrait"
+      },
+      {
+        "id": "calm-house-image-3",
+        "src": "/projects/calm-house/03.jpg",
+        "alt": "CALM HOUSE interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "calm-house-image-4",
+        "src": "/projects/calm-house/04.jpg",
+        "alt": "CALM HOUSE interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "calm-house-image-5",
+        "src": "/projects/calm-house/05.jpg",
+        "alt": "CALM HOUSE interior 5",
+        "order": 5,
+        "isCover": false,
+        "orientation": "landscape"
       }
     ],
     "order": 1,
@@ -46,40 +71,219 @@
       {
         "id": "calm-house-revision-1",
         "createdAt": "2026-07-28T00:00:00.000Z",
-        "note": "초기 등록"
+        "note": "예시 프로젝트 등록"
       }
     ],
     "cardLayout": "wide"
   },
   {
-    "id": "soft-living",
-    "slug": "soft-living",
-    "title": "SOFT LIVING",
-    "category": "40",
+    "id": "white-balance",
+    "slug": "white-balance",
+    "title": "WHITE BALANCE",
+    "category": "30",
     "useType": "Residential",
-    "location": "경기",
-    "area": "132㎡ (40평)",
+    "location": "서울",
+    "area": "112㎡ (34평)",
     "year": 2026,
-    "coverImage": "/projects/soft-living/cover.jpg",
+    "coverImage": "/projects/white-balance/cover.jpg",
+    "coverOrientation": "portrait",
     "images": [
       {
-        "id": "soft-living-image-1",
-        "src": "/projects/soft-living/01.jpg",
-        "alt": "SOFT LIVING interior 1",
+        "id": "white-balance-image-1",
+        "src": "/projects/white-balance/01.jpg",
+        "alt": "WHITE BALANCE interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "white-balance-image-2",
+        "src": "/projects/white-balance/02.jpg",
+        "alt": "WHITE BALANCE interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "white-balance-image-3",
+        "src": "/projects/white-balance/03.jpg",
+        "alt": "WHITE BALANCE interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "white-balance-image-4",
+        "src": "/projects/white-balance/04.jpg",
+        "alt": "WHITE BALANCE interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "white-balance-image-5",
+        "src": "/projects/white-balance/05.jpg",
+        "alt": "WHITE BALANCE interior 5",
+        "order": 5,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 2,
+    "tags": [
+      "모던",
+      "미니멀",
+      "112㎡ (34평)"
+    ],
+    "status": "published",
+    "featured": true,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "WHITE BALANCE | 풍수 인테리어",
+      "description": "서울 112㎡ (34평) 인테리어 포트폴리오",
+      "ogImage": "/projects/white-balance/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "white-balance-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 프로젝트 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "modern-oak",
+    "slug": "modern-oak",
+    "title": "MODERN OAK",
+    "category": "20",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "79㎡ (24평)",
+    "year": 2025,
+    "coverImage": "/projects/modern-oak/cover.jpg",
+    "coverOrientation": "landscape",
+    "images": [
+      {
+        "id": "modern-oak-image-1",
+        "src": "/projects/modern-oak/01.jpg",
+        "alt": "MODERN OAK interior 1",
         "order": 1,
         "isCover": false,
         "orientation": "landscape"
       },
       {
-        "id": "soft-living-image-2",
-        "src": "/projects/soft-living/02.jpg",
-        "alt": "SOFT LIVING interior 2",
+        "id": "modern-oak-image-2",
+        "src": "/projects/modern-oak/02.jpg",
+        "alt": "MODERN OAK interior 2",
         "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "modern-oak-image-3",
+        "src": "/projects/modern-oak/03.jpg",
+        "alt": "MODERN OAK interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "modern-oak-image-4",
+        "src": "/projects/modern-oak/04.jpg",
+        "alt": "MODERN OAK interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "modern-oak-image-5",
+        "src": "/projects/modern-oak/05.jpg",
+        "alt": "MODERN OAK interior 5",
+        "order": 5,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 3,
+    "tags": [
+      "모던",
+      "미니멀",
+      "79㎡ (24평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "MODERN OAK | 풍수 인테리어",
+      "description": "경기 79㎡ (24평) 인테리어 포트폴리오",
+      "ogImage": "/projects/modern-oak/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "modern-oak-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 프로젝트 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "beige-mood",
+    "slug": "beige-mood",
+    "title": "BEIGE MOOD",
+    "category": "40",
+    "useType": "Residential",
+    "location": "인천",
+    "area": "132㎡ (40평)",
+    "year": 2025,
+    "coverImage": "/projects/beige-mood/cover.jpg",
+    "coverOrientation": "portrait",
+    "images": [
+      {
+        "id": "beige-mood-image-1",
+        "src": "/projects/beige-mood/01.jpg",
+        "alt": "BEIGE MOOD interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "beige-mood-image-2",
+        "src": "/projects/beige-mood/02.jpg",
+        "alt": "BEIGE MOOD interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "beige-mood-image-3",
+        "src": "/projects/beige-mood/03.jpg",
+        "alt": "BEIGE MOOD interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "beige-mood-image-4",
+        "src": "/projects/beige-mood/04.jpg",
+        "alt": "BEIGE MOOD interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "beige-mood-image-5",
+        "src": "/projects/beige-mood/05.jpg",
+        "alt": "BEIGE MOOD interior 5",
+        "order": 5,
         "isCover": false,
         "orientation": "portrait"
       }
     ],
-    "order": 2,
+    "order": 4,
     "tags": [
       "모던",
       "미니멀",
@@ -90,17 +294,479 @@
     "createdAt": "2026-07-28T00:00:00.000Z",
     "updatedAt": "2026-07-28T00:00:00.000Z",
     "seo": {
-      "title": "SOFT LIVING | 풍수 인테리어",
-      "description": "경기 132㎡ (40평) 인테리어 포트폴리오",
-      "ogImage": "/projects/soft-living/cover.jpg"
+      "title": "BEIGE MOOD | 풍수 인테리어",
+      "description": "인천 132㎡ (40평) 인테리어 포트폴리오",
+      "ogImage": "/projects/beige-mood/cover.jpg"
     },
     "revisions": [
       {
-        "id": "soft-living-revision-1",
+        "id": "beige-mood-revision-1",
         "createdAt": "2026-07-28T00:00:00.000Z",
-        "note": "초기 등록"
+        "note": "예시 프로젝트 등록"
       }
     ],
     "cardLayout": "portrait"
+  },
+  {
+    "id": "minimal-living",
+    "slug": "minimal-living",
+    "title": "MINIMAL LIVING",
+    "category": "20",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "89㎡ (27평)",
+    "year": 2026,
+    "coverImage": "/projects/minimal-living/cover.jpg",
+    "coverOrientation": "landscape",
+    "images": [
+      {
+        "id": "minimal-living-image-1",
+        "src": "/projects/minimal-living/01.jpg",
+        "alt": "MINIMAL LIVING interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "minimal-living-image-2",
+        "src": "/projects/minimal-living/02.jpg",
+        "alt": "MINIMAL LIVING interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "minimal-living-image-3",
+        "src": "/projects/minimal-living/03.jpg",
+        "alt": "MINIMAL LIVING interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "minimal-living-image-4",
+        "src": "/projects/minimal-living/04.jpg",
+        "alt": "MINIMAL LIVING interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "minimal-living-image-5",
+        "src": "/projects/minimal-living/05.jpg",
+        "alt": "MINIMAL LIVING interior 5",
+        "order": 5,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 5,
+    "tags": [
+      "모던",
+      "미니멀",
+      "89㎡ (27평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "MINIMAL LIVING | 풍수 인테리어",
+      "description": "서울 89㎡ (27평) 인테리어 포트폴리오",
+      "ogImage": "/projects/minimal-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "minimal-living-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 프로젝트 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "urban-residence",
+    "slug": "urban-residence",
+    "title": "URBAN RESIDENCE",
+    "category": "50",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "149㎡ (45평)",
+    "year": 2024,
+    "coverImage": "/projects/urban-residence/cover.jpg",
+    "coverOrientation": "portrait",
+    "images": [
+      {
+        "id": "urban-residence-image-1",
+        "src": "/projects/urban-residence/01.jpg",
+        "alt": "URBAN RESIDENCE interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "urban-residence-image-2",
+        "src": "/projects/urban-residence/02.jpg",
+        "alt": "URBAN RESIDENCE interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "urban-residence-image-3",
+        "src": "/projects/urban-residence/03.jpg",
+        "alt": "URBAN RESIDENCE interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "urban-residence-image-4",
+        "src": "/projects/urban-residence/04.jpg",
+        "alt": "URBAN RESIDENCE interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "urban-residence-image-5",
+        "src": "/projects/urban-residence/05.jpg",
+        "alt": "URBAN RESIDENCE interior 5",
+        "order": 5,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 6,
+    "tags": [
+      "모던",
+      "미니멀",
+      "149㎡ (45평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "URBAN RESIDENCE | 풍수 인테리어",
+      "description": "경기 149㎡ (45평) 인테리어 포트폴리오",
+      "ogImage": "/projects/urban-residence/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "urban-residence-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 프로젝트 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "soft-interior",
+    "slug": "soft-interior",
+    "title": "SOFT INTERIOR",
+    "category": "30",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "96㎡ (29평)",
+    "year": 2025,
+    "coverImage": "/projects/soft-interior/cover.jpg",
+    "coverOrientation": "landscape",
+    "images": [
+      {
+        "id": "soft-interior-image-1",
+        "src": "/projects/soft-interior/01.jpg",
+        "alt": "SOFT INTERIOR interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "soft-interior-image-2",
+        "src": "/projects/soft-interior/02.jpg",
+        "alt": "SOFT INTERIOR interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "soft-interior-image-3",
+        "src": "/projects/soft-interior/03.jpg",
+        "alt": "SOFT INTERIOR interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "soft-interior-image-4",
+        "src": "/projects/soft-interior/04.jpg",
+        "alt": "SOFT INTERIOR interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "soft-interior-image-5",
+        "src": "/projects/soft-interior/05.jpg",
+        "alt": "SOFT INTERIOR interior 5",
+        "order": 5,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 7,
+    "tags": [
+      "모던",
+      "미니멀",
+      "96㎡ (29평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT INTERIOR | 풍수 인테리어",
+      "description": "서울 96㎡ (29평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-interior/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "soft-interior-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 프로젝트 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "natural-house",
+    "slug": "natural-house",
+    "title": "NATURAL HOUSE",
+    "category": "40",
+    "useType": "Residential",
+    "location": "부산",
+    "area": "125㎡ (38평)",
+    "year": 2024,
+    "coverImage": "/projects/natural-house/cover.jpg",
+    "coverOrientation": "portrait",
+    "images": [
+      {
+        "id": "natural-house-image-1",
+        "src": "/projects/natural-house/01.jpg",
+        "alt": "NATURAL HOUSE interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "natural-house-image-2",
+        "src": "/projects/natural-house/02.jpg",
+        "alt": "NATURAL HOUSE interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "natural-house-image-3",
+        "src": "/projects/natural-house/03.jpg",
+        "alt": "NATURAL HOUSE interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "natural-house-image-4",
+        "src": "/projects/natural-house/04.jpg",
+        "alt": "NATURAL HOUSE interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "natural-house-image-5",
+        "src": "/projects/natural-house/05.jpg",
+        "alt": "NATURAL HOUSE interior 5",
+        "order": 5,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 8,
+    "tags": [
+      "모던",
+      "미니멀",
+      "125㎡ (38평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "NATURAL HOUSE | 풍수 인테리어",
+      "description": "부산 125㎡ (38평) 인테리어 포트폴리오",
+      "ogImage": "/projects/natural-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "natural-house-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 프로젝트 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "clean-space",
+    "slug": "clean-space",
+    "title": "CLEAN SPACE",
+    "category": "30",
+    "useType": "Residential",
+    "location": "대전",
+    "area": "109㎡ (33평)",
+    "year": 2026,
+    "coverImage": "/projects/clean-space/cover.jpg",
+    "coverOrientation": "landscape",
+    "images": [
+      {
+        "id": "clean-space-image-1",
+        "src": "/projects/clean-space/01.jpg",
+        "alt": "CLEAN SPACE interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "clean-space-image-2",
+        "src": "/projects/clean-space/02.jpg",
+        "alt": "CLEAN SPACE interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "clean-space-image-3",
+        "src": "/projects/clean-space/03.jpg",
+        "alt": "CLEAN SPACE interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "clean-space-image-4",
+        "src": "/projects/clean-space/04.jpg",
+        "alt": "CLEAN SPACE interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "clean-space-image-5",
+        "src": "/projects/clean-space/05.jpg",
+        "alt": "CLEAN SPACE interior 5",
+        "order": 5,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 9,
+    "tags": [
+      "모던",
+      "미니멀",
+      "109㎡ (33평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CLEAN SPACE | 풍수 인테리어",
+      "description": "대전 109㎡ (33평) 인테리어 포트폴리오",
+      "ogImage": "/projects/clean-space/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "clean-space-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 프로젝트 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "warm-residence",
+    "slug": "warm-residence",
+    "title": "WARM RESIDENCE",
+    "category": "50",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "172㎡ (52평)",
+    "year": 2025,
+    "coverImage": "/projects/warm-residence/cover.jpg",
+    "coverOrientation": "landscape",
+    "images": [
+      {
+        "id": "warm-residence-image-1",
+        "src": "/projects/warm-residence/01.jpg",
+        "alt": "WARM RESIDENCE interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "warm-residence-image-2",
+        "src": "/projects/warm-residence/02.jpg",
+        "alt": "WARM RESIDENCE interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "warm-residence-image-3",
+        "src": "/projects/warm-residence/03.jpg",
+        "alt": "WARM RESIDENCE interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "warm-residence-image-4",
+        "src": "/projects/warm-residence/04.jpg",
+        "alt": "WARM RESIDENCE interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "warm-residence-image-5",
+        "src": "/projects/warm-residence/05.jpg",
+        "alt": "WARM RESIDENCE interior 5",
+        "order": 5,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 10,
+    "tags": [
+      "모던",
+      "미니멀",
+      "172㎡ (52평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "WARM RESIDENCE | 풍수 인테리어",
+      "description": "서울 172㎡ (52평) 인테리어 포트폴리오",
+      "ogImage": "/projects/warm-residence/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "warm-residence-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 프로젝트 등록"
+      }
+    ],
+    "cardLayout": "wide"
   }
 ]
