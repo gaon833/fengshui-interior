@@ -239,21 +239,6 @@ button{font:inherit}
   font-family:Arial,"Noto Sans KR",sans-serif;
 }
 
-/* 열린 메뉴에서도 로고가 고정 사이드바와 같은 위치·모양 */
-.drawer::before{
-  content:"풍수 인테리어";
-  position:absolute;
-  left:20px;
-  top:25px;
-  color:#111;
-  font-family:Arial,"Noto Sans KR",sans-serif;
-  font-size:12px;
-  font-weight:600;
-  line-height:1;
-  letter-spacing:.12em;
-  white-space:nowrap;
-}
-
 /* 닫기 버튼은 메인 햄버거와 동일한 우측 상단 기준 */
 .drawer-close{
   position:absolute;
@@ -328,20 +313,6 @@ button{font:inherit}
   width:min(400px, 90vw);
   padding:25px 20px 24px;
   font-family:Arial,"Noto Sans KR",sans-serif;
-}
-
-.drawer::before{
-  content:"풍수 인테리어";
-  position:absolute;
-  left:20px;
-  top:25px;
-  color:#111;
-  font-family:Arial,"Noto Sans KR",sans-serif;
-  font-size:12px;
-  font-weight:600;
-  line-height:1;
-  letter-spacing:.12em;
-  white-space:nowrap;
 }
 
 .side-nav,
@@ -1163,4 +1134,12 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
   .drawer-brand .brand-logo-image{
     width:122px !important;
   }
+}
+
+
+/* ===== V28: 기존 사이드바 텍스트 로고 완전 제거 ===== */
+.drawer::before,
+.drawer::after{
+  content:none !important;
+  display:none !important;
 }
