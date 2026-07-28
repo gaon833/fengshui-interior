@@ -1,6 +1,23 @@
 {
-  "site_name": "풍수 인테리어",
-  "hero_image": "/assets/hero.jpg",
-  "blog_url": "https://kr.pinterest.com/",
-  "instagram_url": "https://kr.pinterest.com/"
+  "brandName": "풍수 인테리어",
+  "logo": "/logo/brand-logo.png",
+  "blogUrl": "#",
+  "instagramUrl": "#",
+  "reservationUrl": "/reservation",
+  "mainImage": "/projects/calm-house/cover.jpg",
+  "contact": {
+    "phone": "",
+    "sms": "",
+    "kakaoUrl": "#",
+    "naverTalkUrl": "#"
+  },
+  "seo": {
+    "title": "풍수 인테리어",
+    "description": "모던 인테리어 포트폴리오",
+    "ogImage": "/projects/calm-house/cover.jpg"
+  },
+  "admin": {
+    "autosaveDelayMs": 1000,
+    "trashRetentionDays": 30
+  }
 }

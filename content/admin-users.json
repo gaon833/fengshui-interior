@@ -1,0 +1,14 @@
+[
+  {
+    "id": "owner-1",
+    "name": "관리자",
+    "email": "owner@example.com",
+    "role": "owner"
+  },
+  {
+    "id": "editor-1",
+    "name": "편집자 예시",
+    "email": "editor@example.com",
+    "role": "editor"
+  }
+]

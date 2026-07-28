@@ -1,0 +1,97 @@
+.navigation-list {
+  position: absolute;
+  top: var(--menu-top);
+  left: var(--menu-left);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--menu-gap);
+}
+.navigation-link {
+  font-family: var(--menu-font-family);
+  font-size: var(--menu-font-size);
+  font-weight: var(--menu-font-weight);
+  line-height: var(--menu-line-height);
+  letter-spacing: var(--menu-letter-spacing);
+  color: var(--menu-color);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.navigation-link.is-active {
+  color: var(--menu-active-color);
+  font-weight: var(--menu-font-weight);
+}
+.navigation-divider {
+  display: block;
+  width: var(--divider-width);
+  border-top: 1px solid var(--divider-color);
+}
+.menu-toggle {
+  position: fixed;
+  top: 21px;
+  right: 19px;
+  z-index: 55;
+  display: grid;
+  gap: 4px;
+  width: 24px;
+  padding: 6px 2px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform-origin: center;
+  transition: transform var(--drawer-duration) ease;
+}
+.menu-toggle.is-open { transform: rotate(90deg); }
+.menu-toggle span { display: block; height: 1px; background: #888; }
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(0,0,0,.30);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--drawer-duration) ease;
+  z-index: 49;
+  cursor: default;
+}
+.drawer-backdrop.is-open { opacity: 1; pointer-events: auto; }
+.menu-drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--sidebar-width);
+  max-width: 100vw;
+  background: #fff;
+  transform: translateX(-100%);
+  transition: transform var(--drawer-duration) ease;
+  z-index: 50;
+  box-shadow: 10px 0 28px rgba(0,0,0,.035);
+}
+.menu-drawer.is-open { transform: translateX(0); }
+.drawer-close {
+  position: absolute;
+  top: 18px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.drawer-close span {
+  position: absolute;
+  top: 11px;
+  left: 0;
+  width: 16px;
+  height: 1px;
+  background: #888;
+}
+.drawer-close span:first-child { transform: rotate(45deg); }
+.drawer-close span:last-child { transform: rotate(-45deg); }
+.navigation-link.is-disabled {
+  color: var(--muted-color);
+  cursor: not-allowed;
+  opacity: .55;
+}

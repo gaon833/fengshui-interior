@@ -1,40 +1,102 @@
-{
-  "projects": [
-    {
-      "title": "CALM HOUSE",
-      "category": "Residential",
-      "year": "2026",
-      "image": "/assets/hero.jpg",
-      "style": "Modern",
-      "sizeGroup": "30",
-      "area": "102㎡ (31평)"
+[
+  {
+    "id": "calm-house",
+    "slug": "calm-house",
+    "title": "CALM HOUSE",
+    "category": "30",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "102㎡ (31평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "calm-house-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM HOUSE interior 1",
+        "order": 1,
+        "isCover": false
+      },
+      {
+        "id": "calm-house-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM HOUSE interior 2",
+        "order": 2,
+        "isCover": false
+      }
+    ],
+    "order": 1,
+    "tags": [
+      "모던",
+      "미니멀",
+      "102㎡ (31평)"
+    ],
+    "status": "published",
+    "featured": true,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM HOUSE | 풍수 인테리어",
+      "description": "서울 102㎡ (31평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
     },
-    {
-      "title": "WARM MOOD",
-      "category": "Residential",
-      "year": "2026",
-      "image": "/assets/hero.jpg",
-      "style": "Unique",
-      "sizeGroup": "40",
-      "area": "138㎡ (42평)"
+    "revisions": [
+      {
+        "id": "calm-house-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "초기 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "soft-living",
+    "slug": "soft-living",
+    "title": "SOFT LIVING",
+    "category": "40",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "132㎡ (40평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "soft-living-image-1",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT LIVING interior 1",
+        "order": 1,
+        "isCover": false
+      },
+      {
+        "id": "soft-living-image-2",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT LIVING interior 2",
+        "order": 2,
+        "isCover": false
+      }
+    ],
+    "order": 2,
+    "tags": [
+      "모던",
+      "미니멀",
+      "132㎡ (40평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT LIVING | 풍수 인테리어",
+      "description": "경기 132㎡ (40평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
     },
-    {
-      "title": "LINE & LIGHT",
-      "category": "Residential",
-      "year": "2025",
-      "image": "/assets/hero.jpg",
-      "style": "Modern",
-      "sizeGroup": "C",
-      "area": "Commercial"
-    },
-    {
-      "title": "BOUTIQUE OFFICE",
-      "category": "Office",
-      "year": "2025",
-      "image": "/assets/hero.jpg",
-      "style": "Unique",
-      "sizeGroup": "30",
-      "area": "102㎡ (31평)"
-    }
-  ]
-}
+    "revisions": [
+      {
+        "id": "soft-living-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "초기 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  }
+]

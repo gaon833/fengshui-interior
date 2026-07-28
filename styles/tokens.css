@@ -1,15 +1,24 @@
 :root {
-  --header-height: 86px;
-  --page-gutter: 30px;
-  --sidebar-width: 230px;
-  --panel-width: 400px;
-  --page-bg: #ffffff;
-  --text: #2e2e2e;
-  --muted: #969696;
-  --menu-text: #555555;
-  --hairline: 1px;
-  --landscape-width: 82%;
-  --portrait-width: 36%;
-  --gallery-gap: 105px;
-  --font: "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
+  --sidebar-width: 400px;
+  --logo-width: 145px;
+  --logo-top: 30px;
+  --logo-center-x: 200px;
+
+  --menu-left: 38px;
+  --menu-top: 300px;
+  --menu-font-family: "Helvetica Neue", Arial, sans-serif;
+  --menu-font-size: 18px;
+  --menu-font-weight: 300;
+  --menu-line-height: 1.3;
+  --menu-letter-spacing: .045em;
+  --menu-gap: 62px;
+  --menu-color: #9a9a9a;
+  --menu-active-color: #222;
+  --divider-width: 190px;
+  --divider-color: #888;
+
+  --page-bg: #fff;
+  --text-color: #222;
+  --muted-color: #929292;
+  --drawer-duration: 320ms;
 }
