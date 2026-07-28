@@ -67,12 +67,3 @@ body, button, input, select, textarea, a, h1, h2, h3, h4, h5, h6, p, dt, dd, spa
     transition-duration: 0.01ms !important;
   }
 }
-
-/* v1.0.1: center the brand logo precisely within the 400px desktop menu panel. */
-@media (min-width: 901px) {
-  .desktop-sidebar .sidebar-logo,
-  .menu-drawer .drawer-logo {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
