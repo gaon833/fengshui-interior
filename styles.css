@@ -1203,3 +1203,22 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
     letter-spacing:0.08em;
   }
 }
+
+
+/* V32: 메뉴 미세 조정 */
+@media (min-width:901px){
+  .fixed-page-nav,
+  .side-nav,
+  .drawer nav,
+  .drawer .nav{
+    margin-top:30px !important; /* V31보다 30px 아래 */
+  }
+
+  .fixed-page-nav a,
+  .side-nav a,
+  .drawer nav a,
+  .drawer .nav a{
+    margin:12px 0 !important; /* 간격 축소 */
+    letter-spacing:0.06em !important;
+  }
+}
