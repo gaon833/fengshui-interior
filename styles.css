@@ -1393,3 +1393,60 @@ a.project-next::before,
     width:26px;
   }
 }
+
+
+/* ===== V40: 메뉴 페이지 20% 축소 + 전체 톤 통일 ===== */
+:root{
+  --brand-ui-gray:#6e6e6e;
+}
+
+@media(min-width:901px){
+  /* 햄버거를 눌렀을 때 열리는 메뉴 페이지 글씨만 약 20% 축소 */
+  .drawer .side-nav a,
+  .drawer nav a{
+    font-size:14.4px !important; /* 기존 18px의 80% */
+    line-height:1.2 !important;
+  }
+
+  /* 메뉴 페이지의 항목 간격 약 20% 축소 */
+  .drawer .side-nav,
+  .drawer nav{
+    gap:19px !important; /* 기존 약 24px의 80% */
+  }
+
+  .drawer .menu-divider{
+    margin-top:30px !important;
+    margin-bottom:26px !important;
+  }
+}
+
+/* 사이드바와 열린 메뉴의 글자 색상 통일 */
+.fixed-page-nav a,
+.side-nav a,
+.drawer nav a,
+.fixed-page-nav .channel-link,
+.side-nav .channel-link,
+.drawer nav .channel-link{
+  color:var(--brand-ui-gray) !important;
+}
+
+/* 활성 메뉴만 한 단계 더 진하게 */
+.fixed-page-nav a.active,
+.side-nav a.active,
+.drawer nav a.active{
+  color:#555 !important;
+}
+
+/* 햄버거 및 닫기 아이콘 색상 통일 */
+.menu-button span,
+.drawer-close span,
+.fixed-page-menu-button span,
+.detail-menu-button span{
+  background:var(--brand-ui-gray) !important;
+}
+
+/* 로고 이미지의 표시 톤 안정화 */
+.brand-logo-image{
+  opacity:1 !important;
+  filter:none !important;
+}
