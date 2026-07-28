@@ -8,10 +8,6 @@ async function loadJSON(path) {
   try {
     const data = await loadJSON('/content/site.json');
 
-    document.querySelectorAll('[data-site-name]').forEach(el => {
-      el.textContent = data.site_name || '풍수 인테리어';
-    });
-
     const hero = document.getElementById('heroImage');
     if (hero && data.hero_image) hero.src = data.hero_image;
 

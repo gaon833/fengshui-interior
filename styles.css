@@ -1078,3 +1078,89 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
     width:122px !important;
   }
 }
+
+
+/* ===== V27: 400px 사이드바 중앙 로고 ===== */
+
+/* 이전 이동값 초기화 */
+.brand,
+.fixed-page-logo,
+.detail-logo,
+.drawer-brand{
+  transform:none !important;
+}
+
+/* 메인 및 고정 사이드바: 400px 영역의 정중앙 */
+@media(min-width:901px){
+  .brand,
+  .fixed-page-logo{
+    position:absolute !important;
+    left:200px !important;
+    right:auto !important;
+    transform:translateX(-50%) !important;
+    display:flex !important;
+    justify-content:center !important;
+    width:auto !important;
+    margin:0 !important;
+  }
+
+  /* 상세페이지 로고도 왼쪽 400px 기준 중앙 */
+  .detail-logo{
+    position:fixed !important;
+    left:200px !important;
+    right:auto !important;
+    transform:translateX(-50%) !important;
+    display:flex !important;
+    justify-content:center !important;
+    width:auto !important;
+    margin:0 !important;
+  }
+
+  /* 열린 사이드 메뉴도 400px 폭의 중앙 */
+  .drawer-brand{
+    position:absolute !important;
+    left:200px !important;
+    right:auto !important;
+    transform:translateX(-50%) !important;
+    display:flex !important;
+    justify-content:center !important;
+    width:auto !important;
+    margin:0 !important;
+  }
+}
+
+/* 로고 크기는 V26 기준 유지 */
+.brand-logo-image,
+.fixed-page-logo .brand-logo-image,
+.detail-logo .brand-logo-image,
+.drawer-brand .brand-logo-image{
+  width:145px !important;
+  height:auto !important;
+}
+
+/* 로고 아래 메뉴의 시작 위치에 약간의 여유 추가 */
+@media(min-width:901px){
+  .fixed-page-nav,
+  .side-nav{
+    margin-top:20px !important;
+  }
+}
+
+/* 태블릿과 모바일은 화면 구조에 맞게 기존 좌측 여백 유지 */
+@media(max-width:900px){
+  .brand,
+  .fixed-page-logo,
+  .detail-logo,
+  .drawer-brand{
+    transform:none !important;
+  }
+}
+
+@media(max-width:760px){
+  .brand-logo-image,
+  .fixed-page-logo .brand-logo-image,
+  .detail-logo .brand-logo-image,
+  .drawer-brand .brand-logo-image{
+    width:122px !important;
+  }
+}
