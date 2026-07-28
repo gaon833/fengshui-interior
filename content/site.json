@@ -4,7 +4,7 @@
   "blogUrl": "#",
   "instagramUrl": "#",
   "reservationUrl": "/reservation",
-  "mainImage": "/projects/calm-house/cover.jpg",
+  "mainImage": "/projects/calm-house/cover.webp",
   "contact": {
     "phone": "02-0000-0000",
     "sms": "",
@@ -16,11 +16,12 @@
   "seo": {
     "title": "풍수 인테리어",
     "description": "모던 인테리어 포트폴리오",
-    "ogImage": "/projects/calm-house/cover.jpg"
+    "ogImage": "/projects/calm-house/cover.webp"
   },
   "admin": {
     "autosaveDelayMs": 1000,
     "trashRetentionDays": 30
   },
-  "mobileMainImage": "/projects/calm-house/mobile-main-portrait.jpg"
+  "mobileMainImage": "/projects/calm-house/mobile-main-portrait.webp",
+  "siteUrl": "https://fengshui-interior.pages.dev"
 }

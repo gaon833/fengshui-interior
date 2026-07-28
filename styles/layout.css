@@ -54,3 +54,14 @@ body, button, input, select, textarea, a, h1, h2, h3, h4, h5, h6, p, dt, dd, spa
   transform: translateY(-18px);
   pointer-events: none;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -68,3 +68,14 @@
   right:0;
   transform:translateY(-50%) rotate(45deg);
 }
+
+/* Rendering optimization for long portfolio pages */
+.project-card,
+.detail-photo {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px 650px;
+}
+
+.detail-photo.portrait {
+  contain-intrinsic-size: 720px 1040px;
+}

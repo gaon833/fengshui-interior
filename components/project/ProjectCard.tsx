@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/types/project";
 
-export default function ProjectCard({ project }: { project: Project; index: number }) {
+export default function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <article className="project-card">
       <Link href={`/project/${project.slug}`}>
@@ -12,7 +12,10 @@ export default function ProjectCard({ project }: { project: Project; index: numb
             alt={project.title}
             width={1600}
             height={1100}
-            sizes="(max-width:900px) 100vw, 50vw"
+            loading={index < 2 ? "eager" : "lazy"}
+            fetchPriority={index < 2 ? "high" : "auto"}
+            quality={80}
+            sizes="(max-width:900px) calc(100vw - 36px), 50vw"
           />
         </div>
         <div className="project-card-meta">

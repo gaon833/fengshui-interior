@@ -1,3 +1,7 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "CONSULTATION", description: "풍수 인테리어 방문 상담을 신청하고 안내를 확인하세요." };
+
 export default function Page() {
   return (
     <section className="simple-page">

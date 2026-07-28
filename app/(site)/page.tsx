@@ -12,6 +12,7 @@ export default function HomePage() {
           width={1196}
           height={668}
           priority
+          quality={82}
           sizes="calc(100vw - 800px)"
         />
         <Image
@@ -21,6 +22,7 @@ export default function HomePage() {
           width={900}
           height={1300}
           priority
+          quality={82}
           sizes="calc(100vw - 36px)"
         />
       </div>
