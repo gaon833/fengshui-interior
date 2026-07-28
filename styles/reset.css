@@ -8,3 +8,22 @@ body {
 a { color: inherit; text-decoration: none; }
 button { font: inherit; }
 img { max-width: 100%; }
+
+/* Public portfolio protection. Admin pages are outside this wrapper. */
+.public-content-protection,
+.public-content-protection *:not(input):not(textarea):not(select):not([contenteditable="true"]):not([role="textbox"]) {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.public-content-protection img,
+.public-content-protection picture,
+.public-content-protection svg {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+.public-content-protection img {
+  pointer-events: none;
+}
