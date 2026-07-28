@@ -1553,3 +1553,11 @@ a.project-next::before,
     color:#6e6e6e !important;
   }
 }
+
+
+/* ===== V43: 메뉴 스타일은 menu-style-sync.js가 실제 계산값으로 동기화 ===== */
+@media (min-width:901px){
+  .drawer > nav.side-nav{
+    transition:none !important;
+  }
+}
