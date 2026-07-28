@@ -5,6 +5,8 @@ import ProjectGallery from "@/components/project/ProjectGallery";
 import ProjectNavigation from "@/components/project/ProjectNavigation";
 import { getAdjacentProjects, getProjectBySlug, getProjects } from "@/lib/projects";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getProjects().map((project) => ({ slug: project.slug }));
 }

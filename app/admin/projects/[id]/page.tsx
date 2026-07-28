@@ -1,6 +1,12 @@
 import { notFound } from "next/navigation";
 import ProjectEditor from "@/components/admin/ProjectEditor";
-import { getProjectById } from "@/lib/projects";
+import { getAdminProjects, getProjectById } from "@/lib/projects";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return getAdminProjects().map((project) => ({ id: project.id }));
+}
 
 export default async function EditProjectPage({
   params,

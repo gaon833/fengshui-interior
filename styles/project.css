@@ -100,3 +100,13 @@
   font-size: 10px;
 }
 .project-navigation > div:last-child { text-align: right; }
+
+.project-filter button {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
