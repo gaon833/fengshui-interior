@@ -6,10 +6,12 @@
   "reservationUrl": "/reservation",
   "mainImage": "/projects/calm-house/cover.jpg",
   "contact": {
-    "phone": "",
+    "phone": "02-0000-0000",
     "sms": "",
     "kakaoUrl": "#",
-    "naverTalkUrl": "#"
+    "naverTalkUrl": "#",
+    "address": "서울특별시 마포구 양화로 17-9",
+    "copyright": "© Copyright 2026 풍수 인테리어. All rights reserved."
   },
   "seo": {
     "title": "풍수 인테리어",

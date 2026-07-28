@@ -139,3 +139,11 @@
   outline: 1px solid #8d8d8d;
   outline-offset: 4px;
 }
+.admin-save-message {
+  margin: -15px 0 22px;
+  padding: 12px 14px;
+  border: 1px solid #d9dfd3;
+  background: #f7faf5;
+  color: #52604c;
+  font-size: 13px;
+}

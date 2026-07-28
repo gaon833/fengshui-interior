@@ -104,3 +104,12 @@
   .project-navigation .prev::after{width:7px;height:7px;margin-left:-42px;}
   .project-navigation .next::before{width:7px;height:7px;margin-right:-42px;}
 }
+
+@media (max-width:900px){
+  .sidebar-social-footer{gap:15px;padding-bottom:4px;}
+  .sidebar-social-icons{gap:10px;}
+  .social-icon-link{width:25px;height:25px;}
+  .sidebar-company-info{font-size:8px;line-height:1.5;}
+  .sidebar-company-info strong{font-size:9px;}
+  .sidebar-company-info small{font-size:7px;margin-top:10px;}
+}

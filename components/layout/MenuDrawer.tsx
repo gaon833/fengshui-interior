@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import BrandLogo from "@/components/brand/BrandLogo";
 import NavigationList from "@/components/navigation/NavigationList";
-import site from "@/content/site.json";
+import SocialFooter from "@/components/site/SocialFooter";
 
 type MenuDrawerProps = {
   variant?: "site" | "detail";
@@ -104,7 +104,7 @@ export default function MenuDrawer({ variant = "site", useBackdrop = false }: Me
           <span />
         </button>
         <NavigationList onNavigate={() => setOpen(false)} />
-        <div className="drawer-info">{site.brandName}<br/>Seoul, Republic of Korea<br/>{site.contact.phone || "02-0000-0000"}</div>
+        <SocialFooter />
       </aside>
     </div>
   );

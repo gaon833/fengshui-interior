@@ -36,3 +36,51 @@
 .drawer-close span { position:absolute; left:2px; top:11px; width:20px; height:1px; background:#707070; }
 .drawer-close span:first-child{transform:rotate(45deg)}.drawer-close span:last-child{transform:rotate(-45deg)}
 .navigation-link.is-disabled { opacity:.55; cursor:not-allowed; }
+
+/* Social footer: replaces BLOG / INSTAGRAM text links and divider. */
+.sidebar-social-footer {
+  margin-top: auto;
+  display: grid;
+  gap: 18px;
+  color: var(--menu-color);
+}
+.sidebar-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.social-icon-link {
+  display: inline-flex;
+  width: 27px;
+  height: 27px;
+  color: var(--menu-color);
+  text-decoration: none;
+}
+.social-icon-link:hover,
+.social-icon-link:focus,
+.social-icon-link:active { color: var(--menu-active-color); }
+.social-icon-link.is-disabled { opacity: .65; }
+.social-icon { display: block; width: 100%; height: 100%; }
+.sidebar-company-info {
+  display: grid;
+  gap: 2px;
+  color: var(--menu-color);
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+.sidebar-company-info strong {
+  margin-bottom: 2px;
+  color: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.sidebar-company-info span { display: block; }
+.sidebar-company-info small {
+  display: block;
+  margin-top: 12px;
+  color: inherit;
+  font-size: 8px;
+  line-height: 1.45;
+}
