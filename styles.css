@@ -1489,3 +1489,67 @@ a.project-next::before,
     color:#6e6e6e !important;
   }
 }
+
+
+/* ===== V42: 기본 메뉴와 햄버거 사이드바 메뉴 완전 동일화 ===== */
+@media (min-width:901px){
+
+  /* 두 메뉴의 컨테이너 위치·간격을 같은 기준으로 통일 */
+  .fixed-page-nav,
+  .drawer > nav.side-nav{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:0 !important;
+    margin-top:30px !important;
+    transform:translateY(15px) !important;
+  }
+
+  /* 두 메뉴의 글자 크기·행간·자간·간격 완전 동일 */
+  .fixed-page-nav > a,
+  .drawer > nav.side-nav > a{
+    display:flex !important;
+    align-items:center !important;
+    width:auto !important;
+    height:42px !important;
+    min-height:42px !important;
+    margin:6px 0 !important;
+    padding:0 !important;
+
+    font-size:18px !important;
+    font-weight:400 !important;
+    line-height:42px !important;
+    letter-spacing:0.06em !important;
+
+    color:#6e6e6e !important;
+    text-decoration:none !important;
+  }
+
+  /* 활성 메뉴도 동일한 규칙 안에서 색상만 한 단계 진하게 */
+  .fixed-page-nav > a.active,
+  .drawer > nav.side-nav > a.active{
+    color:#555 !important;
+  }
+
+  /* 구분선의 폭과 위아래 간격도 동일 */
+  .fixed-page-nav > .menu-divider,
+  .drawer > nav.side-nav > .menu-divider{
+    display:block !important;
+    width:170px !important;
+    height:1px !important;
+    margin:16px 0 14px !important;
+    padding:0 !important;
+  }
+
+  /* BLOG / INSTAGRAM도 같은 크기와 행 높이 */
+  .fixed-page-nav > a.channel-link,
+  .drawer > nav.side-nav > a.channel-link{
+    font-size:18px !important;
+    line-height:42px !important;
+    height:42px !important;
+    min-height:42px !important;
+    margin:6px 0 !important;
+    letter-spacing:0.06em !important;
+    color:#6e6e6e !important;
+  }
+}
