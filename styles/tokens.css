@@ -2,7 +2,9 @@
   --sidebar-width: 400px;
   --logo-width: 145px;
   --logo-top: 30px;
-  --logo-center-x: 200px;
+  --logo-left: 30px;
+  --hamburger-top: 30px;
+  --hamburger-right: 30px;
 
   --menu-left: 38px;
   --menu-top: 300px;

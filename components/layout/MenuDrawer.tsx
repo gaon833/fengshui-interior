@@ -6,12 +6,13 @@ import NavigationList from "@/components/navigation/NavigationList";
 
 type MenuDrawerProps = {
   variant?: "site" | "detail";
+  useBackdrop?: boolean;
 };
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export default function MenuDrawer({ variant = "site" }: MenuDrawerProps) {
+export default function MenuDrawer({ variant = "site", useBackdrop = false }: MenuDrawerProps) {
   const [open, setOpen] = useState(false);
   const reactId = useId().replace(/:/g, "");
   const drawerId = `${variant}-drawer-${reactId}`;
@@ -73,7 +74,7 @@ export default function MenuDrawer({ variant = "site" }: MenuDrawerProps) {
         <span />
       </button>
 
-      {open && (
+      {open && useBackdrop && (
         <button
           className="drawer-backdrop is-open"
           type="button"

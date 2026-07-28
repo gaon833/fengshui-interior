@@ -22,16 +22,15 @@
 .drawer-logo {
   position: absolute;
   top: var(--logo-top);
-  left: var(--logo-center-x);
-  transform: translateX(-50%);
+  left: var(--logo-left);
 }
 .site-floating-logo,
 .project-detail-logo {
   position: fixed;
-  top: 24px;
-  left: 55px;
+  top: var(--logo-top);
+  left: var(--logo-left);
   z-index: 44;
-  width: 96px;
+  width: var(--logo-width);
 }
 
 .project-detail-content { min-height: 100vh; }

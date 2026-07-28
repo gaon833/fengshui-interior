@@ -2,7 +2,9 @@
   :root {
     --sidebar-width: min(86vw, 400px);
     --logo-width: 122px;
-    --logo-center-x: 50%;
+    --logo-left: 30px;
+    --hamburger-top: 30px;
+    --hamburger-right: 30px;
     --menu-top: 270px;
     --menu-font-size: 17px;
     --menu-gap: 45px;
@@ -11,11 +13,14 @@
   .site-shell--project-index .site-content { margin-left: 0; }
   .site-floating-logo,
   .project-detail-logo {
-    top: 17px;
-    left: 20px;
-    width: 105px;
+    top: var(--logo-top);
+    left: var(--logo-left);
+    width: var(--logo-width);
   }
-  .menu-toggle { top: 20px; right: 18px; }
+  .menu-toggle {
+    top: var(--hamburger-top);
+    right: var(--hamburger-right);
+  }
   .home-hero { padding: 90px 20px 40px; }
   .home-hero img {
     inset: 90px 20px 40px !important;

@@ -6,7 +6,7 @@ export default function ProjectDetailLayout({ children }: { children: ReactNode 
   return (
     <div className="project-detail-shell">
       <BrandLogo className="project-detail-logo" />
-      <MenuDrawer variant="detail" />
+      <MenuDrawer variant="detail" useBackdrop={false} />
       <main className="project-detail-content">{children}</main>
     </div>
   );
