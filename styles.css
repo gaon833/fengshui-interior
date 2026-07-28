@@ -1174,3 +1174,32 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
     margin-top:100px !important;
   }
 }
+
+
+/* V31 layout tuning */
+@media (min-width:901px){
+  /* 로고를 왼쪽으로 10px */
+  .brand,
+  .fixed-page-logo,
+  .detail-logo,
+  .drawer-brand{
+    left:120px !important;
+  }
+
+  /* 메뉴를 100px 위로 올리고 항목 간격 확대 */
+  .fixed-page-nav,
+  .side-nav,
+  .drawer nav,
+  .drawer .nav{
+    margin-top:0 !important;
+  }
+
+  .fixed-page-nav a,
+  .side-nav a,
+  .drawer nav a,
+  .drawer .nav a{
+    display:block;
+    margin:18px 0 !important;
+    letter-spacing:0.08em;
+  }
+}
