@@ -37,7 +37,7 @@ export default function ContactSettingsForm() {
     <form onSubmit={submit}>
       <div className="admin-heading">
         <div>
-          <h1>CONTACT 관리</h1>
+          <h1>CONSULTATION 관리</h1>
           <p>메뉴 하단에 표시되는 회사 정보와 블로그·인스타그램 주소를 관리합니다.</p>
         </div>
         <button type="submit" className="admin-primary-button">저장</button>

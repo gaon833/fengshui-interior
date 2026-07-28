@@ -1,8 +1,8 @@
 export default function Page() {
   return (
     <section className="simple-page">
-      <h1>SERVICE</h1>
-      <p>풍수 인테리어의 서비스 내용을 등록하는 페이지입니다.</p>
+      <h1>PROCESS</h1>
+      <p>방문 상담부터 현장 실측, 디자인, 시공과 완료까지의 진행 과정을 안내합니다.</p>
     </section>
   );
 }

@@ -7,7 +7,7 @@ export default function AdminProjectsPage() {
     <>
       <div className="admin-heading">
         <div>
-          <h1>프로젝트 관리</h1>
+          <h1>PROJECTS 관리</h1>
           <p>공개·작성 중·비공개·휴지통 프로젝트를 한 목록에서 조회합니다.</p>
         </div>
         <Link className="admin-primary-button" href="/admin/projects/new">새 프로젝트</Link>

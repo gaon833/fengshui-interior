@@ -3,7 +3,7 @@ export default function AdminStudioPage() {
     <>
       <div className="admin-heading">
         <div>
-          <h1>STUDIO 관리</h1>
+          <h1>OUR STORY 관리</h1>
           <p>회사 소개, 브랜드 철학, 인사말과 스튜디오 이미지를 관리하는 화면입니다.</p>
         </div>
         <button type="button" className="admin-primary-button">저장</button>
@@ -12,7 +12,7 @@ export default function AdminStudioPage() {
       <div className="editor-grid">
         <section className="editor-panel">
           <h2>회사 소개</h2>
-          <label>페이지 제목<input defaultValue="STUDIO" /></label>
+          <label>페이지 제목<input defaultValue="OUR STORY" /></label>
           <label>브랜드 소개<textarea defaultValue="공간의 흐름과 사람의 생활을 함께 고려하는 인테리어 스튜디오입니다." /></label>
           <label>대표 이미지 경로<input placeholder="/images/studio-cover.jpg" /></label>
         </section>

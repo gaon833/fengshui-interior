@@ -1,8 +1,8 @@
 export default function Page() {
   return (
     <section className="simple-page">
-      <h1>STUDIO</h1>
-      <p>브랜드와 스튜디오 소개 내용을 등록하는 페이지입니다.</p>
+      <h1>OUR STORY</h1>
+      <p>우리가 어떤 회사인지, 브랜드 철학과 풍수 인테리어의 이야기를 소개합니다.</p>
     </section>
   );
 }

@@ -3,7 +3,7 @@ export default function AdminServicePage() {
     <>
       <div className="admin-heading">
         <div>
-          <h1>SERVICE 관리</h1>
+          <h1>PROCESS 관리</h1>
           <p>상담 과정, 풍수 컨설팅, 시공 프로세스 내용을 관리하는 화면입니다.</p>
         </div>
         <button type="button" className="admin-primary-button">저장</button>
@@ -12,7 +12,7 @@ export default function AdminServicePage() {
       <div className="editor-grid">
         <section className="editor-panel">
           <h2>페이지 기본 정보</h2>
-          <label>페이지 제목<input defaultValue="SERVICE" /></label>
+          <label>페이지 제목<input defaultValue="PROCESS" /></label>
           <label>소개 문구<textarea defaultValue="풍수 인테리어 상담과 시공 과정을 안내합니다." /></label>
           <label>대표 이미지 경로<input placeholder="/images/service-cover.jpg" /></label>
         </section>

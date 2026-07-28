@@ -2,10 +2,10 @@ import Link from "next/link";
 
 const primaryItems = [
   { href: "/admin", label: "대시보드" },
-  { href: "/admin/projects", label: "PROJECT 관리" },
-  { href: "/admin/service", label: "SERVICE 관리" },
-  { href: "/admin/studio", label: "STUDIO 관리" },
-  { href: "/admin/contact", label: "CONTACT 관리" },
+  { href: "/admin/studio", label: "OUR STORY 관리" },
+  { href: "/admin/service", label: "PROCESS 관리" },
+  { href: "/admin/projects", label: "PROJECTS 관리" },
+  { href: "/admin/contact", label: "CONSULTATION 관리" },
 ];
 
 const systemItems = [
