@@ -1250,3 +1250,20 @@ body.menu-open-no-dim .drawer{box-shadow:8px 0 28px rgba(0,0,0,.035);}
     transform:none !important;
   }
 }
+
+
+/* V38: 사이드바/메뉴 페이지 메뉴 15px 아래 + 간격 소폭 축소 */
+@media (min-width:901px){
+  .fixed-page-nav,
+  .side-nav,
+  .drawer .side-nav{
+    transform: translateY(15px) !important;
+  }
+
+  .fixed-page-nav a,
+  .side-nav a,
+  .drawer .side-nav a{
+    margin:6px 0 !important;
+    line-height:1.25 !important;
+  }
+}
