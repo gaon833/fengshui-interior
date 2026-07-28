@@ -1,88 +1,1412 @@
 [
   {
-    "id": "calm-house",
-    "slug": "calm-house",
-    "title": "CALM HOUSE",
-    "category": "30",
+    "id": "20-project-01",
+    "slug": "20-project-01",
+    "title": "COMPACT 01",
+    "category": "20",
     "useType": "Residential",
     "location": "서울",
-    "area": "102㎡ (31평)",
+    "area": "59㎡ (18평)",
     "year": 2026,
     "coverImage": "/projects/calm-house/cover.jpg",
     "images": [
       {
-        "id": "calm-house-image-1",
+        "id": "20-project-01-image-1",
         "src": "/projects/calm-house/01.jpg",
-        "alt": "CALM HOUSE interior 1",
+        "alt": "COMPACT 01 interior 1",
         "order": 1,
         "isCover": false,
         "orientation": "landscape"
       },
       {
-        "id": "calm-house-image-2",
+        "id": "20-project-01-image-2",
         "src": "/projects/calm-house/02.jpg",
-        "alt": "CALM HOUSE interior 2",
+        "alt": "COMPACT 01 interior 2",
         "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-01-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMPACT 01 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-01-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMPACT 01 interior 4",
+        "order": 4,
         "isCover": false,
         "orientation": "portrait"
       }
     ],
     "order": 1,
     "tags": [
-      "모던",
-      "미니멀",
-      "102㎡ (31평)"
+      "예시 프로젝트",
+      "20",
+      "59㎡ (18평)"
     ],
     "status": "published",
     "featured": true,
     "createdAt": "2026-07-28T00:00:00.000Z",
     "updatedAt": "2026-07-28T00:00:00.000Z",
     "seo": {
-      "title": "CALM HOUSE | 풍수 인테리어",
-      "description": "서울 102㎡ (31평) 인테리어 포트폴리오",
+      "title": "COMPACT 01 | 풍수 인테리어",
+      "description": "서울 59㎡ (18평) 인테리어 포트폴리오",
       "ogImage": "/projects/calm-house/cover.jpg"
     },
     "revisions": [
       {
-        "id": "calm-house-revision-1",
+        "id": "20-project-01-revision-1",
         "createdAt": "2026-07-28T00:00:00.000Z",
-        "note": "초기 등록"
+        "note": "예시 등록"
       }
     ],
     "cardLayout": "wide"
   },
   {
-    "id": "soft-living",
-    "slug": "soft-living",
-    "title": "SOFT LIVING",
-    "category": "40",
+    "id": "20-project-02",
+    "slug": "20-project-02",
+    "title": "COMPACT 02",
+    "category": "20",
     "useType": "Residential",
     "location": "경기",
-    "area": "132㎡ (40평)",
+    "area": "66㎡ (20평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "20-project-02-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMPACT 02 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-02-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMPACT 02 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-02-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMPACT 02 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-02-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMPACT 02 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 2,
+    "tags": [
+      "예시 프로젝트",
+      "20",
+      "66㎡ (20평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMPACT 02 | 풍수 인테리어",
+      "description": "경기 66㎡ (20평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "20-project-02-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "20-project-03",
+    "slug": "20-project-03",
+    "title": "COMPACT 03",
+    "category": "20",
+    "useType": "Residential",
+    "location": "인천",
+    "area": "72㎡ (22평)",
     "year": 2026,
     "coverImage": "/projects/soft-living/cover.jpg",
     "images": [
       {
-        "id": "soft-living-image-1",
-        "src": "/projects/soft-living/01.jpg",
-        "alt": "SOFT LIVING interior 1",
+        "id": "20-project-03-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMPACT 03 interior 1",
         "order": 1,
         "isCover": false,
         "orientation": "landscape"
       },
       {
-        "id": "soft-living-image-2",
-        "src": "/projects/soft-living/02.jpg",
-        "alt": "SOFT LIVING interior 2",
+        "id": "20-project-03-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMPACT 03 interior 2",
         "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-03-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMPACT 03 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-03-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMPACT 03 interior 4",
+        "order": 4,
         "isCover": false,
         "orientation": "portrait"
       }
     ],
-    "order": 2,
+    "order": 3,
     "tags": [
-      "모던",
-      "미니멀",
+      "예시 프로젝트",
+      "20",
+      "72㎡ (22평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMPACT 03 | 풍수 인테리어",
+      "description": "인천 72㎡ (22평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "20-project-03-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "20-project-04",
+    "slug": "20-project-04",
+    "title": "COMPACT 04",
+    "category": "20",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "76㎡ (23평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "20-project-04-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMPACT 04 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-04-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMPACT 04 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-04-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMPACT 04 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-04-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMPACT 04 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 4,
+    "tags": [
+      "예시 프로젝트",
+      "20",
+      "76㎡ (23평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMPACT 04 | 풍수 인테리어",
+      "description": "서울 76㎡ (23평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "20-project-04-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "20-project-05",
+    "slug": "20-project-05",
+    "title": "COMPACT 05",
+    "category": "20",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "79㎡ (24평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/02.jpg",
+    "images": [
+      {
+        "id": "20-project-05-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMPACT 05 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-05-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMPACT 05 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-05-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMPACT 05 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-05-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMPACT 05 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 5,
+    "tags": [
+      "예시 프로젝트",
+      "20",
+      "79㎡ (24평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMPACT 05 | 풍수 인테리어",
+      "description": "경기 79㎡ (24평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "20-project-05-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "20-project-06",
+    "slug": "20-project-06",
+    "title": "COMPACT 06",
+    "category": "20",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "82㎡ (25평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "20-project-06-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMPACT 06 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-06-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMPACT 06 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-06-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMPACT 06 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-06-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMPACT 06 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 6,
+    "tags": [
+      "예시 프로젝트",
+      "20",
+      "82㎡ (25평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMPACT 06 | 풍수 인테리어",
+      "description": "서울 82㎡ (25평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "20-project-06-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "20-project-07",
+    "slug": "20-project-07",
+    "title": "COMPACT 07",
+    "category": "20",
+    "useType": "Residential",
+    "location": "부산",
+    "area": "84㎡ (25평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "20-project-07-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMPACT 07 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-07-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMPACT 07 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-07-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMPACT 07 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-07-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMPACT 07 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 7,
+    "tags": [
+      "예시 프로젝트",
+      "20",
+      "84㎡ (25평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMPACT 07 | 풍수 인테리어",
+      "description": "부산 84㎡ (25평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "20-project-07-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "20-project-08",
+    "slug": "20-project-08",
+    "title": "COMPACT 08",
+    "category": "20",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "86㎡ (26평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "20-project-08-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMPACT 08 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-08-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMPACT 08 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-08-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMPACT 08 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-08-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMPACT 08 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 8,
+    "tags": [
+      "예시 프로젝트",
+      "20",
+      "86㎡ (26평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMPACT 08 | 풍수 인테리어",
+      "description": "서울 86㎡ (26평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "20-project-08-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "20-project-09",
+    "slug": "20-project-09",
+    "title": "COMPACT 09",
+    "category": "20",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "89㎡ (27평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "20-project-09-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMPACT 09 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-09-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMPACT 09 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-09-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMPACT 09 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-09-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMPACT 09 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 9,
+    "tags": [
+      "예시 프로젝트",
+      "20",
+      "89㎡ (27평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMPACT 09 | 풍수 인테리어",
+      "description": "경기 89㎡ (27평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "20-project-09-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "20-project-10",
+    "slug": "20-project-10",
+    "title": "COMPACT 10",
+    "category": "20",
+    "useType": "Residential",
+    "location": "제주",
+    "area": "92㎡ (28평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "20-project-10-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMPACT 10 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-10-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMPACT 10 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "20-project-10-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMPACT 10 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "20-project-10-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMPACT 10 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 10,
+    "tags": [
+      "예시 프로젝트",
+      "20",
+      "92㎡ (28평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMPACT 10 | 풍수 인테리어",
+      "description": "제주 92㎡ (28평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "20-project-10-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "30-project-01",
+    "slug": "30-project-01",
+    "title": "CALM 01",
+    "category": "30",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "99㎡ (30평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "30-project-01-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM 01 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-01-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM 01 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-01-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "CALM 01 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-01-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "CALM 01 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 11,
+    "tags": [
+      "예시 프로젝트",
+      "30",
+      "99㎡ (30평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM 01 | 풍수 인테리어",
+      "description": "서울 99㎡ (30평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "30-project-01-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "30-project-02",
+    "slug": "30-project-02",
+    "title": "CALM 02",
+    "category": "30",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "102㎡ (31평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "30-project-02-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM 02 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-02-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "CALM 02 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-02-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "CALM 02 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-02-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM 02 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 12,
+    "tags": [
+      "예시 프로젝트",
+      "30",
+      "102㎡ (31평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM 02 | 풍수 인테리어",
+      "description": "경기 102㎡ (31평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "30-project-02-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "30-project-03",
+    "slug": "30-project-03",
+    "title": "CALM 03",
+    "category": "30",
+    "useType": "Residential",
+    "location": "인천",
+    "area": "105㎡ (32평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "30-project-03-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM 03 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-03-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM 03 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-03-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "CALM 03 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-03-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "CALM 03 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 13,
+    "tags": [
+      "예시 프로젝트",
+      "30",
+      "105㎡ (32평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM 03 | 풍수 인테리어",
+      "description": "인천 105㎡ (32평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "30-project-03-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "30-project-04",
+    "slug": "30-project-04",
+    "title": "CALM 04",
+    "category": "30",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "109㎡ (33평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "30-project-04-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM 04 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-04-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "CALM 04 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-04-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "CALM 04 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-04-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM 04 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 14,
+    "tags": [
+      "예시 프로젝트",
+      "30",
+      "109㎡ (33평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM 04 | 풍수 인테리어",
+      "description": "서울 109㎡ (33평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "30-project-04-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "30-project-05",
+    "slug": "30-project-05",
+    "title": "CALM 05",
+    "category": "30",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "112㎡ (34평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/02.jpg",
+    "images": [
+      {
+        "id": "30-project-05-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM 05 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-05-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM 05 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-05-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "CALM 05 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-05-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "CALM 05 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 15,
+    "tags": [
+      "예시 프로젝트",
+      "30",
+      "112㎡ (34평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM 05 | 풍수 인테리어",
+      "description": "경기 112㎡ (34평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "30-project-05-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "30-project-06",
+    "slug": "30-project-06",
+    "title": "CALM 06",
+    "category": "30",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "115㎡ (35평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "30-project-06-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM 06 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-06-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "CALM 06 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-06-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "CALM 06 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-06-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM 06 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 16,
+    "tags": [
+      "예시 프로젝트",
+      "30",
+      "115㎡ (35평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM 06 | 풍수 인테리어",
+      "description": "서울 115㎡ (35평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "30-project-06-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "30-project-07",
+    "slug": "30-project-07",
+    "title": "CALM 07",
+    "category": "30",
+    "useType": "Residential",
+    "location": "부산",
+    "area": "118㎡ (36평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "30-project-07-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM 07 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-07-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM 07 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-07-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "CALM 07 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-07-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "CALM 07 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 17,
+    "tags": [
+      "예시 프로젝트",
+      "30",
+      "118㎡ (36평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM 07 | 풍수 인테리어",
+      "description": "부산 118㎡ (36평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "30-project-07-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "30-project-08",
+    "slug": "30-project-08",
+    "title": "CALM 08",
+    "category": "30",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "122㎡ (37평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "30-project-08-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM 08 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-08-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "CALM 08 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-08-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "CALM 08 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-08-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM 08 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 18,
+    "tags": [
+      "예시 프로젝트",
+      "30",
+      "122㎡ (37평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM 08 | 풍수 인테리어",
+      "description": "서울 122㎡ (37평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "30-project-08-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "30-project-09",
+    "slug": "30-project-09",
+    "title": "CALM 09",
+    "category": "30",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "125㎡ (38평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "30-project-09-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM 09 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-09-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM 09 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-09-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "CALM 09 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-09-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "CALM 09 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 19,
+    "tags": [
+      "예시 프로젝트",
+      "30",
+      "125㎡ (38평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM 09 | 풍수 인테리어",
+      "description": "경기 125㎡ (38평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "30-project-09-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "30-project-10",
+    "slug": "30-project-10",
+    "title": "CALM 10",
+    "category": "30",
+    "useType": "Residential",
+    "location": "제주",
+    "area": "128㎡ (39평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "30-project-10-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "CALM 10 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-10-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "CALM 10 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "30-project-10-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "CALM 10 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "30-project-10-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "CALM 10 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 20,
+    "tags": [
+      "예시 프로젝트",
+      "30",
+      "128㎡ (39평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "CALM 10 | 풍수 인테리어",
+      "description": "제주 128㎡ (39평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "30-project-10-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "40-project-01",
+    "slug": "40-project-01",
+    "title": "SOFT 01",
+    "category": "40",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "132㎡ (40평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "40-project-01-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SOFT 01 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-01-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SOFT 01 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-01-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT 01 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-01-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT 01 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 21,
+    "tags": [
+      "예시 프로젝트",
+      "40",
       "132㎡ (40평)"
     ],
     "status": "published",
@@ -90,17 +1414,2669 @@
     "createdAt": "2026-07-28T00:00:00.000Z",
     "updatedAt": "2026-07-28T00:00:00.000Z",
     "seo": {
-      "title": "SOFT LIVING | 풍수 인테리어",
-      "description": "경기 132㎡ (40평) 인테리어 포트폴리오",
+      "title": "SOFT 01 | 풍수 인테리어",
+      "description": "서울 132㎡ (40평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "40-project-01-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "40-project-02",
+    "slug": "40-project-02",
+    "title": "SOFT 02",
+    "category": "40",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "135㎡ (41평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "40-project-02-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SOFT 02 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-02-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT 02 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-02-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT 02 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-02-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SOFT 02 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 22,
+    "tags": [
+      "예시 프로젝트",
+      "40",
+      "135㎡ (41평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT 02 | 풍수 인테리어",
+      "description": "경기 135㎡ (41평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "40-project-02-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "40-project-03",
+    "slug": "40-project-03",
+    "title": "SOFT 03",
+    "category": "40",
+    "useType": "Residential",
+    "location": "인천",
+    "area": "138㎡ (42평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "40-project-03-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SOFT 03 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-03-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SOFT 03 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-03-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT 03 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-03-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT 03 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 23,
+    "tags": [
+      "예시 프로젝트",
+      "40",
+      "138㎡ (42평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT 03 | 풍수 인테리어",
+      "description": "인천 138㎡ (42평) 인테리어 포트폴리오",
       "ogImage": "/projects/soft-living/cover.jpg"
     },
     "revisions": [
       {
-        "id": "soft-living-revision-1",
+        "id": "40-project-03-revision-1",
         "createdAt": "2026-07-28T00:00:00.000Z",
-        "note": "초기 등록"
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "40-project-04",
+    "slug": "40-project-04",
+    "title": "SOFT 04",
+    "category": "40",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "142㎡ (43평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "40-project-04-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SOFT 04 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-04-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT 04 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-04-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT 04 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-04-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SOFT 04 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 24,
+    "tags": [
+      "예시 프로젝트",
+      "40",
+      "142㎡ (43평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT 04 | 풍수 인테리어",
+      "description": "서울 142㎡ (43평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "40-project-04-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "40-project-05",
+    "slug": "40-project-05",
+    "title": "SOFT 05",
+    "category": "40",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "145㎡ (44평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/02.jpg",
+    "images": [
+      {
+        "id": "40-project-05-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SOFT 05 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-05-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SOFT 05 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-05-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT 05 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-05-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT 05 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 25,
+    "tags": [
+      "예시 프로젝트",
+      "40",
+      "145㎡ (44평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT 05 | 풍수 인테리어",
+      "description": "경기 145㎡ (44평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "40-project-05-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
       }
     ],
     "cardLayout": "portrait"
+  },
+  {
+    "id": "40-project-06",
+    "slug": "40-project-06",
+    "title": "SOFT 06",
+    "category": "40",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "148㎡ (45평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "40-project-06-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SOFT 06 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-06-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT 06 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-06-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT 06 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-06-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SOFT 06 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 26,
+    "tags": [
+      "예시 프로젝트",
+      "40",
+      "148㎡ (45평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT 06 | 풍수 인테리어",
+      "description": "서울 148㎡ (45평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "40-project-06-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "40-project-07",
+    "slug": "40-project-07",
+    "title": "SOFT 07",
+    "category": "40",
+    "useType": "Residential",
+    "location": "부산",
+    "area": "152㎡ (46평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "40-project-07-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SOFT 07 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-07-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SOFT 07 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-07-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT 07 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-07-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT 07 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 27,
+    "tags": [
+      "예시 프로젝트",
+      "40",
+      "152㎡ (46평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT 07 | 풍수 인테리어",
+      "description": "부산 152㎡ (46평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "40-project-07-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "40-project-08",
+    "slug": "40-project-08",
+    "title": "SOFT 08",
+    "category": "40",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "155㎡ (47평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "40-project-08-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SOFT 08 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-08-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT 08 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-08-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT 08 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-08-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SOFT 08 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 28,
+    "tags": [
+      "예시 프로젝트",
+      "40",
+      "155㎡ (47평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT 08 | 풍수 인테리어",
+      "description": "서울 155㎡ (47평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "40-project-08-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "40-project-09",
+    "slug": "40-project-09",
+    "title": "SOFT 09",
+    "category": "40",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "158㎡ (48평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "40-project-09-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SOFT 09 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-09-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SOFT 09 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-09-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT 09 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-09-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT 09 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 29,
+    "tags": [
+      "예시 프로젝트",
+      "40",
+      "158㎡ (48평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT 09 | 풍수 인테리어",
+      "description": "경기 158㎡ (48평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "40-project-09-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "40-project-10",
+    "slug": "40-project-10",
+    "title": "SOFT 10",
+    "category": "40",
+    "useType": "Residential",
+    "location": "제주",
+    "area": "162㎡ (49평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "40-project-10-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SOFT 10 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-10-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SOFT 10 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "40-project-10-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SOFT 10 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "40-project-10-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SOFT 10 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 30,
+    "tags": [
+      "예시 프로젝트",
+      "40",
+      "162㎡ (49평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SOFT 10 | 풍수 인테리어",
+      "description": "제주 162㎡ (49평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "40-project-10-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "50-project-01",
+    "slug": "50-project-01",
+    "title": "GRAND 01",
+    "category": "50",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "165㎡ (50평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "50-project-01-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "GRAND 01 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-01-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "GRAND 01 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-01-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "GRAND 01 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-01-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "GRAND 01 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 31,
+    "tags": [
+      "예시 프로젝트",
+      "50",
+      "165㎡ (50평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "GRAND 01 | 풍수 인테리어",
+      "description": "서울 165㎡ (50평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "50-project-01-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "50-project-02",
+    "slug": "50-project-02",
+    "title": "GRAND 02",
+    "category": "50",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "168㎡ (51평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "50-project-02-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "GRAND 02 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-02-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "GRAND 02 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-02-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "GRAND 02 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-02-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "GRAND 02 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 32,
+    "tags": [
+      "예시 프로젝트",
+      "50",
+      "168㎡ (51평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "GRAND 02 | 풍수 인테리어",
+      "description": "경기 168㎡ (51평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "50-project-02-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "50-project-03",
+    "slug": "50-project-03",
+    "title": "GRAND 03",
+    "category": "50",
+    "useType": "Residential",
+    "location": "인천",
+    "area": "172㎡ (52평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "50-project-03-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "GRAND 03 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-03-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "GRAND 03 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-03-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "GRAND 03 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-03-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "GRAND 03 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 33,
+    "tags": [
+      "예시 프로젝트",
+      "50",
+      "172㎡ (52평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "GRAND 03 | 풍수 인테리어",
+      "description": "인천 172㎡ (52평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "50-project-03-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "50-project-04",
+    "slug": "50-project-04",
+    "title": "GRAND 04",
+    "category": "50",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "175㎡ (53평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "50-project-04-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "GRAND 04 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-04-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "GRAND 04 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-04-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "GRAND 04 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-04-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "GRAND 04 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 34,
+    "tags": [
+      "예시 프로젝트",
+      "50",
+      "175㎡ (53평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "GRAND 04 | 풍수 인테리어",
+      "description": "서울 175㎡ (53평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "50-project-04-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "50-project-05",
+    "slug": "50-project-05",
+    "title": "GRAND 05",
+    "category": "50",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "178㎡ (54평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/02.jpg",
+    "images": [
+      {
+        "id": "50-project-05-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "GRAND 05 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-05-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "GRAND 05 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-05-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "GRAND 05 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-05-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "GRAND 05 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 35,
+    "tags": [
+      "예시 프로젝트",
+      "50",
+      "178㎡ (54평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "GRAND 05 | 풍수 인테리어",
+      "description": "경기 178㎡ (54평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "50-project-05-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "50-project-06",
+    "slug": "50-project-06",
+    "title": "GRAND 06",
+    "category": "50",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "181㎡ (55평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "50-project-06-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "GRAND 06 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-06-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "GRAND 06 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-06-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "GRAND 06 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-06-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "GRAND 06 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 36,
+    "tags": [
+      "예시 프로젝트",
+      "50",
+      "181㎡ (55평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "GRAND 06 | 풍수 인테리어",
+      "description": "서울 181㎡ (55평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "50-project-06-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "50-project-07",
+    "slug": "50-project-07",
+    "title": "GRAND 07",
+    "category": "50",
+    "useType": "Residential",
+    "location": "부산",
+    "area": "185㎡ (56평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "50-project-07-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "GRAND 07 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-07-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "GRAND 07 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-07-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "GRAND 07 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-07-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "GRAND 07 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 37,
+    "tags": [
+      "예시 프로젝트",
+      "50",
+      "185㎡ (56평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "GRAND 07 | 풍수 인테리어",
+      "description": "부산 185㎡ (56평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "50-project-07-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "50-project-08",
+    "slug": "50-project-08",
+    "title": "GRAND 08",
+    "category": "50",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "188㎡ (57평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "50-project-08-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "GRAND 08 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-08-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "GRAND 08 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-08-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "GRAND 08 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-08-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "GRAND 08 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 38,
+    "tags": [
+      "예시 프로젝트",
+      "50",
+      "188㎡ (57평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "GRAND 08 | 풍수 인테리어",
+      "description": "서울 188㎡ (57평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "50-project-08-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "50-project-09",
+    "slug": "50-project-09",
+    "title": "GRAND 09",
+    "category": "50",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "191㎡ (58평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "50-project-09-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "GRAND 09 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-09-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "GRAND 09 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-09-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "GRAND 09 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-09-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "GRAND 09 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 39,
+    "tags": [
+      "예시 프로젝트",
+      "50",
+      "191㎡ (58평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "GRAND 09 | 풍수 인테리어",
+      "description": "경기 191㎡ (58평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "50-project-09-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "50-project-10",
+    "slug": "50-project-10",
+    "title": "GRAND 10",
+    "category": "50",
+    "useType": "Residential",
+    "location": "제주",
+    "area": "195㎡ (59평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "50-project-10-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "GRAND 10 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-10-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "GRAND 10 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "50-project-10-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "GRAND 10 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "50-project-10-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "GRAND 10 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 40,
+    "tags": [
+      "예시 프로젝트",
+      "50",
+      "195㎡ (59평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "GRAND 10 | 풍수 인테리어",
+      "description": "제주 195㎡ (59평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "50-project-10-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "60-project-01",
+    "slug": "60-project-01",
+    "title": "SIGNATURE 01",
+    "category": "60",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "198㎡ (60평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "60-project-01-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SIGNATURE 01 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-01-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SIGNATURE 01 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-01-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SIGNATURE 01 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-01-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SIGNATURE 01 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 41,
+    "tags": [
+      "예시 프로젝트",
+      "60",
+      "198㎡ (60평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SIGNATURE 01 | 풍수 인테리어",
+      "description": "서울 198㎡ (60평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "60-project-01-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "60-project-02",
+    "slug": "60-project-02",
+    "title": "SIGNATURE 02",
+    "category": "60",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "201㎡ (61평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "60-project-02-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SIGNATURE 02 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-02-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SIGNATURE 02 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-02-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SIGNATURE 02 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-02-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SIGNATURE 02 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 42,
+    "tags": [
+      "예시 프로젝트",
+      "60",
+      "201㎡ (61평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SIGNATURE 02 | 풍수 인테리어",
+      "description": "경기 201㎡ (61평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "60-project-02-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "60-project-03",
+    "slug": "60-project-03",
+    "title": "SIGNATURE 03",
+    "category": "60",
+    "useType": "Residential",
+    "location": "인천",
+    "area": "205㎡ (62평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "60-project-03-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SIGNATURE 03 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-03-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SIGNATURE 03 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-03-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SIGNATURE 03 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-03-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SIGNATURE 03 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 43,
+    "tags": [
+      "예시 프로젝트",
+      "60",
+      "205㎡ (62평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SIGNATURE 03 | 풍수 인테리어",
+      "description": "인천 205㎡ (62평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "60-project-03-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "60-project-04",
+    "slug": "60-project-04",
+    "title": "SIGNATURE 04",
+    "category": "60",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "208㎡ (63평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "60-project-04-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SIGNATURE 04 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-04-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SIGNATURE 04 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-04-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SIGNATURE 04 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-04-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SIGNATURE 04 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 44,
+    "tags": [
+      "예시 프로젝트",
+      "60",
+      "208㎡ (63평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SIGNATURE 04 | 풍수 인테리어",
+      "description": "서울 208㎡ (63평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "60-project-04-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "60-project-05",
+    "slug": "60-project-05",
+    "title": "SIGNATURE 05",
+    "category": "60",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "211㎡ (64평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/02.jpg",
+    "images": [
+      {
+        "id": "60-project-05-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SIGNATURE 05 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-05-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SIGNATURE 05 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-05-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SIGNATURE 05 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-05-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SIGNATURE 05 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 45,
+    "tags": [
+      "예시 프로젝트",
+      "60",
+      "211㎡ (64평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SIGNATURE 05 | 풍수 인테리어",
+      "description": "경기 211㎡ (64평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "60-project-05-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "60-project-06",
+    "slug": "60-project-06",
+    "title": "SIGNATURE 06",
+    "category": "60",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "214㎡ (65평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "60-project-06-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SIGNATURE 06 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-06-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SIGNATURE 06 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-06-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SIGNATURE 06 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-06-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SIGNATURE 06 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 46,
+    "tags": [
+      "예시 프로젝트",
+      "60",
+      "214㎡ (65평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SIGNATURE 06 | 풍수 인테리어",
+      "description": "서울 214㎡ (65평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "60-project-06-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "60-project-07",
+    "slug": "60-project-07",
+    "title": "SIGNATURE 07",
+    "category": "60",
+    "useType": "Residential",
+    "location": "부산",
+    "area": "218㎡ (66평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "60-project-07-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SIGNATURE 07 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-07-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SIGNATURE 07 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-07-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SIGNATURE 07 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-07-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SIGNATURE 07 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 47,
+    "tags": [
+      "예시 프로젝트",
+      "60",
+      "218㎡ (66평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SIGNATURE 07 | 풍수 인테리어",
+      "description": "부산 218㎡ (66평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "60-project-07-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "60-project-08",
+    "slug": "60-project-08",
+    "title": "SIGNATURE 08",
+    "category": "60",
+    "useType": "Residential",
+    "location": "서울",
+    "area": "221㎡ (67평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "60-project-08-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SIGNATURE 08 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-08-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SIGNATURE 08 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-08-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SIGNATURE 08 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-08-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SIGNATURE 08 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 48,
+    "tags": [
+      "예시 프로젝트",
+      "60",
+      "221㎡ (67평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SIGNATURE 08 | 풍수 인테리어",
+      "description": "서울 221㎡ (67평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "60-project-08-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "60-project-09",
+    "slug": "60-project-09",
+    "title": "SIGNATURE 09",
+    "category": "60",
+    "useType": "Residential",
+    "location": "경기",
+    "area": "224㎡ (68평)",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "60-project-09-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SIGNATURE 09 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-09-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SIGNATURE 09 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-09-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SIGNATURE 09 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-09-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SIGNATURE 09 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 49,
+    "tags": [
+      "예시 프로젝트",
+      "60",
+      "224㎡ (68평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SIGNATURE 09 | 풍수 인테리어",
+      "description": "경기 224㎡ (68평) 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "60-project-09-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "60-project-10",
+    "slug": "60-project-10",
+    "title": "SIGNATURE 10",
+    "category": "60",
+    "useType": "Residential",
+    "location": "제주",
+    "area": "228㎡ (69평)",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "60-project-10-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "SIGNATURE 10 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-10-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "SIGNATURE 10 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "60-project-10-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "SIGNATURE 10 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "60-project-10-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "SIGNATURE 10 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 50,
+    "tags": [
+      "예시 프로젝트",
+      "60",
+      "228㎡ (69평)"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "SIGNATURE 10 | 풍수 인테리어",
+      "description": "제주 228㎡ (69평) 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "60-project-10-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "c-project-01",
+    "slug": "c-project-01",
+    "title": "COMMERCIAL 01",
+    "category": "C",
+    "useType": "Commercial",
+    "location": "서울",
+    "area": "42㎡ SHOP",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "c-project-01-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMMERCIAL 01 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-01-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMMERCIAL 01 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-01-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMMERCIAL 01 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-01-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMMERCIAL 01 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 51,
+    "tags": [
+      "예시 프로젝트",
+      "상업공간",
+      "42㎡ SHOP"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMMERCIAL 01 | 풍수 인테리어",
+      "description": "서울 42㎡ SHOP 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "c-project-01-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "c-project-02",
+    "slug": "c-project-02",
+    "title": "COMMERCIAL 02",
+    "category": "C",
+    "useType": "Commercial",
+    "location": "경기",
+    "area": "55㎡ CAFE",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "c-project-02-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMMERCIAL 02 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-02-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMMERCIAL 02 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-02-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMMERCIAL 02 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-02-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMMERCIAL 02 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 52,
+    "tags": [
+      "예시 프로젝트",
+      "상업공간",
+      "55㎡ CAFE"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMMERCIAL 02 | 풍수 인테리어",
+      "description": "경기 55㎡ CAFE 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "c-project-02-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "c-project-03",
+    "slug": "c-project-03",
+    "title": "COMMERCIAL 03",
+    "category": "C",
+    "useType": "Commercial",
+    "location": "인천",
+    "area": "68㎡ OFFICE",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "c-project-03-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMMERCIAL 03 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-03-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMMERCIAL 03 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-03-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMMERCIAL 03 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-03-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMMERCIAL 03 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 53,
+    "tags": [
+      "예시 프로젝트",
+      "상업공간",
+      "68㎡ OFFICE"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMMERCIAL 03 | 풍수 인테리어",
+      "description": "인천 68㎡ OFFICE 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "c-project-03-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "c-project-04",
+    "slug": "c-project-04",
+    "title": "COMMERCIAL 04",
+    "category": "C",
+    "useType": "Commercial",
+    "location": "서울",
+    "area": "74㎡ STUDIO",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "c-project-04-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMMERCIAL 04 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-04-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMMERCIAL 04 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-04-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMMERCIAL 04 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-04-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMMERCIAL 04 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 54,
+    "tags": [
+      "예시 프로젝트",
+      "상업공간",
+      "74㎡ STUDIO"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMMERCIAL 04 | 풍수 인테리어",
+      "description": "서울 74㎡ STUDIO 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "c-project-04-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "c-project-05",
+    "slug": "c-project-05",
+    "title": "COMMERCIAL 05",
+    "category": "C",
+    "useType": "Commercial",
+    "location": "경기",
+    "area": "86㎡ CLINIC",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/02.jpg",
+    "images": [
+      {
+        "id": "c-project-05-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMMERCIAL 05 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-05-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMMERCIAL 05 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-05-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMMERCIAL 05 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-05-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMMERCIAL 05 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 55,
+    "tags": [
+      "예시 프로젝트",
+      "상업공간",
+      "86㎡ CLINIC"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMMERCIAL 05 | 풍수 인테리어",
+      "description": "경기 86㎡ CLINIC 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "c-project-05-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "c-project-06",
+    "slug": "c-project-06",
+    "title": "COMMERCIAL 06",
+    "category": "C",
+    "useType": "Commercial",
+    "location": "서울",
+    "area": "93㎡ SHOWROOM",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "c-project-06-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMMERCIAL 06 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-06-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMMERCIAL 06 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-06-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMMERCIAL 06 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-06-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMMERCIAL 06 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 56,
+    "tags": [
+      "예시 프로젝트",
+      "상업공간",
+      "93㎡ SHOWROOM"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMMERCIAL 06 | 풍수 인테리어",
+      "description": "서울 93㎡ SHOWROOM 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "c-project-06-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "c-project-07",
+    "slug": "c-project-07",
+    "title": "COMMERCIAL 07",
+    "category": "C",
+    "useType": "Commercial",
+    "location": "부산",
+    "area": "108㎡ LOUNGE",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "c-project-07-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMMERCIAL 07 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-07-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMMERCIAL 07 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-07-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMMERCIAL 07 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-07-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMMERCIAL 07 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 57,
+    "tags": [
+      "예시 프로젝트",
+      "상업공간",
+      "108㎡ LOUNGE"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMMERCIAL 07 | 풍수 인테리어",
+      "description": "부산 108㎡ LOUNGE 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "c-project-07-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "c-project-08",
+    "slug": "c-project-08",
+    "title": "COMMERCIAL 08",
+    "category": "C",
+    "useType": "Commercial",
+    "location": "서울",
+    "area": "121㎡ RESTAURANT",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/02.jpg",
+    "images": [
+      {
+        "id": "c-project-08-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMMERCIAL 08 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-08-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMMERCIAL 08 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-08-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMMERCIAL 08 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-08-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMMERCIAL 08 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 58,
+    "tags": [
+      "예시 프로젝트",
+      "상업공간",
+      "121㎡ RESTAURANT"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMMERCIAL 08 | 풍수 인테리어",
+      "description": "서울 121㎡ RESTAURANT 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/02.jpg"
+    },
+    "revisions": [
+      {
+        "id": "c-project-08-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "portrait"
+  },
+  {
+    "id": "c-project-09",
+    "slug": "c-project-09",
+    "title": "COMMERCIAL 09",
+    "category": "C",
+    "useType": "Commercial",
+    "location": "경기",
+    "area": "145㎡ OFFICE",
+    "year": 2026,
+    "coverImage": "/projects/soft-living/cover.jpg",
+    "images": [
+      {
+        "id": "c-project-09-image-1",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMMERCIAL 09 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-09-image-2",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMMERCIAL 09 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-09-image-3",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMMERCIAL 09 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-09-image-4",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMMERCIAL 09 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "portrait"
+      }
+    ],
+    "order": 59,
+    "tags": [
+      "예시 프로젝트",
+      "상업공간",
+      "145㎡ OFFICE"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMMERCIAL 09 | 풍수 인테리어",
+      "description": "경기 145㎡ OFFICE 인테리어 포트폴리오",
+      "ogImage": "/projects/soft-living/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "c-project-09-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
+  },
+  {
+    "id": "c-project-10",
+    "slug": "c-project-10",
+    "title": "COMMERCIAL 10",
+    "category": "C",
+    "useType": "Commercial",
+    "location": "제주",
+    "area": "180㎡ COMMERCIAL",
+    "year": 2026,
+    "coverImage": "/projects/calm-house/cover.jpg",
+    "images": [
+      {
+        "id": "c-project-10-image-1",
+        "src": "/projects/calm-house/02.jpg",
+        "alt": "COMMERCIAL 10 interior 1",
+        "order": 1,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-10-image-2",
+        "src": "/projects/soft-living/01.jpg",
+        "alt": "COMMERCIAL 10 interior 2",
+        "order": 2,
+        "isCover": false,
+        "orientation": "landscape"
+      },
+      {
+        "id": "c-project-10-image-3",
+        "src": "/projects/soft-living/02.jpg",
+        "alt": "COMMERCIAL 10 interior 3",
+        "order": 3,
+        "isCover": false,
+        "orientation": "portrait"
+      },
+      {
+        "id": "c-project-10-image-4",
+        "src": "/projects/calm-house/01.jpg",
+        "alt": "COMMERCIAL 10 interior 4",
+        "order": 4,
+        "isCover": false,
+        "orientation": "landscape"
+      }
+    ],
+    "order": 60,
+    "tags": [
+      "예시 프로젝트",
+      "상업공간",
+      "180㎡ COMMERCIAL"
+    ],
+    "status": "published",
+    "featured": false,
+    "createdAt": "2026-07-28T00:00:00.000Z",
+    "updatedAt": "2026-07-28T00:00:00.000Z",
+    "seo": {
+      "title": "COMMERCIAL 10 | 풍수 인테리어",
+      "description": "제주 180㎡ COMMERCIAL 인테리어 포트폴리오",
+      "ogImage": "/projects/calm-house/cover.jpg"
+    },
+    "revisions": [
+      {
+        "id": "c-project-10-revision-1",
+        "createdAt": "2026-07-28T00:00:00.000Z",
+        "note": "예시 등록"
+      }
+    ],
+    "cardLayout": "wide"
   }
 ]

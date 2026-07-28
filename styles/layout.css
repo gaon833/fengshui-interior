@@ -26,8 +26,23 @@ body, button, input, select, textarea, a, h1, h2, h3, h4, h5, h6, p, dt, dd, spa
   margin-top:auto; color:#8b8b8b; font-size:8px; font-weight:400; line-height:1.7;
 }
 .project-detail-content { min-height: 100vh; }
-.home-hero { position:relative; min-height:100vh; padding:200px 450px 100px; }
-.home-hero img { object-fit:contain; object-position:center; inset:200px 450px 100px !important; width:auto !important; height:auto !important; }
+/* Home: isolated from sidebar/page layout rules. */
+.home-main {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 200px 450px 100px;
+}
+.home-main__frame {
+  width: 100%;
+  margin: 0 auto;
+}
+.home-main__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  object-fit: initial;
+}
 .simple-page { min-height:100vh; margin-right:400px; padding:94px 0 110px; }
 .simple-page h1 { margin:0 0 20px; color:#111; font-size:32px; font-weight:500; letter-spacing:-.015em; }
 .simple-page p { max-width:600px; margin:0; color:#7d7d7d; font-size:16px; font-weight:400; line-height:1.7; }
