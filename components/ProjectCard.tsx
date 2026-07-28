@@ -1,2 +1,0 @@
-import Link from "next/link"; import type { Project } from "@/content/data";
-export default function ProjectCard({project}:{project:Project}){return <Link className="projectCard" href={`/work/${project.slug}/`}><div className="cardImage"><img src={project.cover} alt={project.title} loading="lazy"/></div><div className="cardMeta"><div><strong>{project.title}</strong><span>{project.category}{project.area?` · ${project.area}`:""}</span></div><time>{project.year}</time></div></Link>}

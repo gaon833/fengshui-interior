@@ -1,2 +1,0 @@
-import type { GalleryImage } from "@/content/data";
-export default function ProjectGallery({title,gallery}:{title:string;gallery:GalleryImage[]}){return <section className="detailGallery">{gallery.map((item,index)=><figure className={`galleryImage ${item.orientation}`} key={`${item.image}-${index}`}><img src={item.image} alt={`${title} ${index+1}`} loading={index===0?"eager":"lazy"}/></figure>)}</section>}
