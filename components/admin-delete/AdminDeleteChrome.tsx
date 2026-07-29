@@ -2,6 +2,7 @@
 
 import type { CSSProperties } from "react";
 import { leaveAdminDeleteMode } from "@/lib/admin-delete-mode";
+import styles from "./AdminDeleteChrome.module.css";
 
 const deleteButtonStyle: CSSProperties = {
   position: "absolute",
@@ -18,7 +19,7 @@ const deleteButtonStyle: CSSProperties = {
   padding: 0,
   border: "1px solid rgba(255,255,255,.94)",
   borderRadius: 12,
-  background: "rgba(255,255,255,.88)",
+  background: "rgba(255,255,255,.9)",
   color: "#333",
   boxShadow: "0 8px 24px rgba(0,0,0,.12)",
   backdropFilter: "blur(14px)",
@@ -31,18 +32,31 @@ const deleteButtonStyle: CSSProperties = {
 };
 
 function DoneIcon() {
-  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.2 4.2L19 7" /></svg>;
+  return (
+    <svg className={styles.doneIcon} viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m5 12.5 4.2 4.2L19 7" />
+    </svg>
+  );
 }
 
 export function AdminDeleteChrome({ label = "이미지 삭제" }: { label?: string }) {
-  const title = label.includes("PROJECT") ? "PROJECTS 이미지 삭제" : label.includes("GALLERY") ? "GALLERY 이미지 삭제" : label;
+  const title = label.includes("PROJECT")
+    ? "PROJECTS 이미지 삭제"
+    : label.includes("GALLERY")
+      ? "GALLERY 이미지 삭제"
+      : label;
+
+  const description = title.startsWith("PROJECTS")
+    ? "프로젝트에서 삭제할 이미지를 선택한 후 완료를 눌러주세요."
+    : "홈페이지에서 삭제할 이미지를 선택한 후 완료를 눌러주세요.";
+
   return (
-    <header className="admin-delete-chrome" aria-label={title}>
-      <div className="admin-delete-chrome__copy">
-        <h1>{title}</h1>
-        <p>홈페이지에서 삭제할 이미지를 선택한 후 완료를 눌러주세요.</p>
+    <header className={styles.header} aria-label={title}>
+      <div className={styles.copy}>
+        <h1 className={styles.title}>{title}</h1>
+        <p className={styles.description}>{description}</p>
       </div>
-      <button className="admin-delete-chrome__done" type="button" onClick={leaveAdminDeleteMode}>
+      <button className={styles.done} type="button" onClick={leaveAdminDeleteMode}>
         <DoneIcon />
         <span>완료</span>
       </button>
