@@ -129,7 +129,7 @@ export default function GalleryBoard() {
   }, [items, query, remoteResults]);
 
   return (
-    <>
+    <div className={deleteMode.active ? "admin-delete-page-shell is-gallery-delete" : undefined}>
       {deleteMode.active && <AdminDeleteChrome label="GALLERY 이미지 삭제" />}
       {!deleteMode.active && <div className="gallery-search-wrap">
         <label className="gallery-search" aria-label="AI 갤러리 검색">
@@ -160,6 +160,6 @@ export default function GalleryBoard() {
       ) : null}
 
       {!deleteMode.active && <ImageLightbox item={selected ? { id: `gallery:${selected.id}`, src: selected.src, alt: selected.title, projectSlug: selected.projectSlug, projectTitle: selected.projectTitle || selected.title } : null} onClose={() => setSelected(null)} />}
-    </>
+    </div>
   );
 }

@@ -43,5 +43,5 @@ export default function ProjectStoreView({ projects }: { projects: Project[] }) 
     }).catch(() => undefined);
   };
 
-  return <>{deleteSessionActive && <AdminDeleteChrome label="PROJECTS 이미지 삭제" />}<ProjectFilterView projects={items} adminDeleteActive={deleteSessionActive} onDeleteProject={removeProject} /></>;
+  return <div className={deleteSessionActive ? "admin-delete-page-shell is-project-delete" : undefined}>{deleteSessionActive && <AdminDeleteChrome label="PROJECTS 이미지 삭제" />}<ProjectFilterView projects={items} adminDeleteActive={deleteSessionActive} onDeleteProject={removeProject} /></div>;
 }

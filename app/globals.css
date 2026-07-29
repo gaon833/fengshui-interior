@@ -196,3 +196,44 @@ textarea{
   .project-card-image>.admin-delete-x{top:9px!important;right:9px!important}
   .admin-delete-chrome{top:12px!important;right:12px!important}
 }
+
+
+/* v6.8.1: 완료 버튼을 삭제 대상 그리드의 오른쪽 위에 정렬 */
+.admin-delete-page-shell{position:relative;min-width:0}
+.admin-delete-page-shell.is-project-delete,
+.admin-delete-page-shell.is-gallery-delete{padding-top:64px}
+.admin-delete-page-shell .admin-delete-chrome{
+  position:absolute!important;
+  top:8px!important;
+  right:0!important;
+  left:auto!important;
+  z-index:1200!important;
+}
+.admin-delete-page-shell .admin-delete-chrome__done{
+  min-width:74px!important;
+  min-height:42px!important;
+  padding:0 20px!important;
+  border-radius:14px!important;
+}
+@media(max-width:900px){
+  .admin-delete-page-shell.is-project-delete,
+  .admin-delete-page-shell.is-gallery-delete{padding-top:56px}
+  .admin-delete-page-shell .admin-delete-chrome{top:6px!important;right:0!important}
+}
+
+/* v6.9: GALLERY 최대 10장 배치 업로드 */
+.admin-gallery-batch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0 22px}
+.admin-gallery-batch-item{display:grid;grid-template-columns:118px minmax(0,1fr);gap:14px;min-width:0;padding:12px;border:1px solid rgba(100,100,100,.14);border-radius:14px;background:rgba(255,255,255,.72)}
+.admin-gallery-batch-image{position:relative;display:grid;place-items:center;min-height:132px;overflow:hidden;border-radius:12px;background:#f3f3f1;color:#999;font-size:12px}
+.admin-gallery-batch-image img{width:100%;height:132px;object-fit:cover}
+.admin-gallery-batch-meta{display:flex;min-width:0;flex-direction:column;align-items:flex-start;gap:7px;padding:4px 0}
+.admin-gallery-batch-meta strong{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#555;font-size:13px;font-weight:500}
+.admin-gallery-batch-meta>span{display:inline-flex;padding:5px 8px;border-radius:999px;background:rgba(95,95,95,.08);color:#777;font-size:10px}
+.admin-gallery-batch-meta small{display:-webkit-box;overflow:hidden;color:#888;line-height:1.5;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.admin-gallery-batch-warning{color:#a27662!important}
+.admin-gallery-batch-meta .admin-secondary-button{min-height:34px!important;padding:0 12px!important;margin-top:auto;font-size:11px!important}
+.admin-gallery-batch-note{display:block;margin-top:10px;color:#8a8a8a;line-height:1.6}
+.admin-gallery-batch-item.is-ready{border-color:rgba(82,126,92,.24)}
+.admin-gallery-batch-item.is-warning{border-color:rgba(171,130,82,.28)}
+.admin-gallery-batch-item.is-failed{border-color:rgba(160,84,84,.26)}
+@media(max-width:850px){.admin-gallery-batch{grid-template-columns:1fr}.admin-gallery-batch-item{grid-template-columns:96px minmax(0,1fr)}.admin-gallery-batch-image,.admin-gallery-batch-image img{height:112px;min-height:112px}}

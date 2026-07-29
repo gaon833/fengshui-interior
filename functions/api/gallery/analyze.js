@@ -47,12 +47,53 @@ function validateDataUrl(dataUrl) {
   return dataUrl;
 }
 
-function extractJson(text) {
-  const cleaned = String(text || "").replace(/```json|```/gi, "").trim();
+function unwrapText(value) {
+  if (typeof value === "string") return value;
+  if (!value || typeof value !== "object") return "";
+  for (const key of ["answer", "response", "text", "content", "caption", "result", "output"]) {
+    const found = unwrapText(value[key]);
+    if (found) return found;
+  }
+  try { return JSON.stringify(value); } catch { return ""; }
+}
+
+function tryParseJson(text) {
+  const cleaned = String(text || "")
+    .replace(/```(?:json)?/gi, "")
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .trim();
+  const candidates = [cleaned];
   const start = cleaned.indexOf("{");
   const end = cleaned.lastIndexOf("}");
-  if (start < 0 || end <= start) throw new Error("AI가 JSON 분석 결과를 반환하지 않았습니다.");
-  return JSON.parse(cleaned.slice(start, end + 1));
+  if (start >= 0 && end > start) candidates.push(cleaned.slice(start, end + 1));
+  for (const candidate of candidates) {
+    try { return JSON.parse(candidate); } catch {}
+    try { return JSON.parse(candidate.replace(/,\s*([}\]])/g, "$1")); } catch {}
+  }
+  return null;
+}
+
+function recoverAnalysisFromText(text) {
+  const source = String(text || "").replace(/```(?:json)?/gi, " ").replace(/\s+/g, " ").trim();
+  const dictionary = {
+    space: ["거실","주방","침실","욕실","현관","복도","다이닝","서재","드레스룸","발코니"],
+    styles: ["모던","미니멀","내추럴","호텔","클래식","북유럽","럭셔리","빈티지","우드","화이트"],
+    colors: ["화이트","아이보리","베이지","크림","그레이","브라운","블랙","우드톤","오프화이트"],
+    materials: ["우드","대리석","타일","패브릭","유리","금속","스톤","세라믹","원목"],
+    features: ["간접조명","매립등","아일랜드","아트월","대형창","수납장","소파","TV","커튼","팬던트조명"],
+  };
+  const pick = (words) => words.filter((word) => source.toLowerCase().includes(word.toLowerCase()));
+  const tokens = source.match(/[가-힣A-Za-z0-9]{2,}/g) || [];
+  return normalizeAnalysis({
+    caption: source.slice(0, 500) || "인테리어 공간 이미지",
+    space: pick(dictionary.space),
+    styles: pick(dictionary.styles),
+    colors: pick(dictionary.colors),
+    materials: pick(dictionary.materials),
+    features: pick(dictionary.features),
+    keywords: [...new Set(tokens)].slice(0, 16),
+  });
 }
 
 function list(value, max = 8) {
@@ -133,8 +174,10 @@ export async function onRequestPost(context) {
       max_tokens: 1200,
       temperature: 0.1,
     });
-    const rawText = result?.answer || result?.response || result?.caption || result;
-    const analysis = normalizeAnalysis(extractJson(rawText));
+    const rawText = unwrapText(result);
+    const parsed = tryParseJson(rawText);
+    const recovered = !parsed;
+    const analysis = parsed ? normalizeAnalysis(parsed) : recoverAnalysisFromText(rawText);
 
     await context.env.DB.prepare(`INSERT INTO gallery_ai_analysis
       (gallery_id, description, space_type, styles, colors, materials, lighting, keywords, raw_result, analysis_status, model, error_message, analyzed_at)
@@ -148,7 +191,7 @@ export async function onRequestPost(context) {
         JSON.stringify(analysis.colors), JSON.stringify(analysis.materials), JSON.stringify(analysis.features),
         JSON.stringify(analysis.keywords), JSON.stringify(analysis), MODEL).run();
 
-    return json({ ok: true, analysis, model: MODEL, galleryId, storedInD1: true });
+    return json({ ok: true, analysis, model: MODEL, galleryId, storedInD1: true, recovered, warning: recovered ? "AI 응답을 자동 보정해 저장했습니다. 필요하면 다시 분석해 주세요." : undefined });
   } catch (error) {
     const message = error instanceof Error ? error.message : "AI 분석에 실패했습니다.";
     try {

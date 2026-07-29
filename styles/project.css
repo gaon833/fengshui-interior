@@ -257,3 +257,18 @@
 @media(max-width:900px){.gallery-search-wrap{margin-bottom:18px;padding:0}.gallery-search{height:43px;border-radius:22px;padding:0 14px}.gallery-search input{font-size:11px}.gallery-card-image{border-radius:14px}.gallery-card-share{right:9px;bottom:9px}}
 .gallery-searching{font-size:8px;letter-spacing:.12em;color:#888;border:1px solid rgba(120,120,120,.2);border-radius:10px;padding:3px 6px;animation:galleryAiPulse 1.1s ease-in-out infinite}.gallery-search-meta{min-height:18px;margin:8px 18px 0;font-size:9px;letter-spacing:.02em;color:#aaa}.gallery-search button{flex:0 0 auto}@keyframes galleryAiPulse{0%,100%{opacity:.45}50%{opacity:1}}
 @media(max-width:900px){.gallery-search-meta{margin:7px 14px 0;font-size:8px}}
+
+/* v6.9.1 SCRAP 안내 및 빈 화면 */
+.scrap-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;max-width:1600px;margin:0 auto 36px;padding-bottom:20px;border-bottom:1px solid rgba(80,80,80,.09)}
+.scrap-intro h1{margin:0 0 13px;font-size:22px;font-weight:500;letter-spacing:.08em}
+.scrap-intro p{margin:0;color:#666;font-size:12px;line-height:1.7;letter-spacing:.01em}
+.scrap-intro .scrap-device-note{color:#999}
+.scrap-count{flex:none;min-width:54px;padding:9px 13px;border:1px solid rgba(80,80,80,.12);border-radius:12px;background:rgba(255,255,255,.72);color:#666;font-size:11px;text-align:center;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.scrap-empty-state{min-height:48vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:64px 24px;color:#777}
+.scrap-empty-heart{display:block;margin-bottom:20px;color:#aaa;font-size:42px;font-weight:200;line-height:1}
+.scrap-empty-state h2{margin:0 0 14px;color:#555;font-size:17px;font-weight:500}
+.scrap-empty-state p{max-width:440px;margin:0 0 10px;font-size:12px;line-height:1.8}
+.scrap-empty-state small{margin-bottom:26px;color:#aaa;font-size:11px}
+.scrap-gallery-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border:1px solid rgba(70,70,70,.14);border-radius:12px;background:#222;color:#fff;font-size:12px;letter-spacing:.04em;transition:transform .2s ease,background .2s ease}
+.scrap-gallery-link:hover{background:#333;transform:translateY(-1px)}
+@media(max-width:900px){.scrap-intro{margin-bottom:24px;gap:14px;padding-bottom:16px}.scrap-intro h1{font-size:19px}.scrap-intro p{font-size:11px}.scrap-count{min-width:48px;padding:8px 10px}.scrap-empty-state{min-height:44vh;padding:48px 12px}.scrap-empty-state h2{font-size:15px}}

@@ -20,7 +20,7 @@ export default function ScrapButton({ item, className = "", label }: Props) {
     event.preventDefault(); event.stopPropagation();
     const saved = toggleScrap(item);
     setActive(saved);
-    setMessage(saved ? "스크랩되었습니다." : "스크랩이 해제되었습니다.");
+    setMessage(saved ? "스크랩 메뉴에 저장되었습니다." : "스크랩에서 삭제되었습니다.");
     window.setTimeout(() => setMessage(""), 1700);
   };
 

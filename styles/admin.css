@@ -188,3 +188,29 @@
 .admin-heading .admin-filter-button[href*="adminDelete"]{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 18px;border:1px solid #cfcfcf;border-radius:10px;background:#fff;color:#555;box-shadow:0 5px 16px rgba(0,0,0,.04);text-decoration:none;transition:border-color .18s ease,color .18s ease,transform .18s ease}
 .admin-heading-actions .admin-filter-button[href*="adminDelete"]:hover,
 .admin-heading .admin-filter-button[href*="adminDelete"]:hover{border-color:#8b8b8b;color:#222;transform:translateY(-1px)}
+
+
+/* v6.8.1 관리자 전체 버튼 모서리 및 버튼 간격 통일 */
+.admin-content button,
+.admin-content input[type="button"],
+.admin-content input[type="submit"],
+.admin-content input[type="reset"],
+.admin-content .admin-primary-button,
+.admin-content .admin-filter-button,
+.admin-content .editor-actions a,
+.admin-content .row-actions a,
+.admin-content [role="button"]{
+  border-radius:14px!important;
+}
+.admin-heading-actions{gap:18px!important}
+.admin-heading-actions>a{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:46px!important;padding:0 24px!important;border-radius:14px!important;text-decoration:none!important;box-sizing:border-box!important}
+.admin-toolbar input,
+.admin-toolbar select,
+.admin-toolbar button,
+.editor-panel input,
+.editor-panel select,
+.editor-panel textarea,
+.editor-panel button{border-radius:12px!important}
+.order-buttons button,.row-actions button,.row-actions a{border-radius:10px!important}
+.admin-login-card,.admin-security-panel,.editor-panel,.admin-toast{border-radius:16px}
+@media(max-width:760px){.admin-heading-actions{gap:10px!important}.admin-heading-actions>a{min-height:42px!important;padding:0 18px!important}}
