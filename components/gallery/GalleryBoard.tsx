@@ -58,14 +58,6 @@ function tagValues(tags?: GalleryTags) {
   return [tags.space, ...tags.structures, ...tags.styles, ...tags.colors, ...tags.materials, ...tags.features].filter(Boolean);
 }
 
-function itemMatchesFilters(item: GalleryItem, filters: ActiveFilters) {
-  const tags = item.tags;
-  if (!tags) return Object.values(filters).every((values) => values.length === 0);
-  return filters.spaces.every((value) => tags.space === value)
-    && filters.styles.every((value) => tags.styles.includes(value))
-    && filters.colors.every((value) => tags.colors.includes(value));
-}
-
 function localScore(item: GalleryItem, query: string) {
   if (!query.trim()) return 1;
   const tags = item.tags;
