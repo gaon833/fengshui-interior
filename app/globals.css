@@ -651,3 +651,33 @@ textarea{
   .admin-delete-page-shell.is-gallery-delete .gallery-masonry{columns:2!important;column-gap:12px!important;}
   .admin-delete-page-shell.is-gallery-delete .gallery-card{margin-bottom:12px!important;}
 }
+
+
+/* v7.3.8 — visual delete pages: grid-only chrome */
+body.visual-delete-mode .desktop-sidebar,
+body.visual-delete-mode .site-floating-logo,
+body.visual-delete-mode .site-shell > .scroll-aware-header,
+body.visual-delete-mode .menu-drawer-controller,
+body.visual-delete-mode .drawer-backdrop,
+body.visual-delete-mode .menu-drawer {
+  display:none!important;
+}
+body.visual-delete-mode .site-shell--fixed .site-content,
+body.visual-delete-mode .site-content {
+  margin-left:0!important;
+  width:100%!important;
+  max-width:none!important;
+}
+body.visual-delete-mode .site-shell {
+  display:block!important;
+}
+body.visual-delete-mode .admin-delete-page-shell .admin-delete-chrome {
+  padding-left:0!important;
+  padding-right:0!important;
+}
+body.visual-delete-mode .admin-delete-page-shell .admin-delete-chrome__done {
+  margin-left:auto!important;
+}
+body.visual-delete-mode .admin-delete-page-shell.is-gallery-delete .gallery-masonry {
+  margin-top:0!important;
+}

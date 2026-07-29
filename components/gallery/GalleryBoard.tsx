@@ -118,9 +118,6 @@ export default function GalleryBoard() {
   return (
     <div className={deleteMode.active ? "admin-delete-page-shell is-gallery-delete" : undefined}>
       {deleteMode.active && <AdminDeleteChrome label="GALLERY 이미지 삭제" />}
-      {deleteMode.active && <nav className="project-filter" aria-label="갤러리 필터">
-        {(["ALL", "20", "30", "40", "50", "60", "C"] as const).map((item) => <button key={item} type="button" className={deleteCategory === item ? "is-active" : undefined} aria-pressed={deleteCategory === item} onClick={() => setDeleteCategory(item)}>{item}</button>)}
-      </nav>}
       {!deleteMode.active && <div className="gallery-discovery-wrap">
         <form className="gallery-search-wrap" onSubmit={submitSearch}>
           <label className="gallery-search" aria-label="갤러리 검색">

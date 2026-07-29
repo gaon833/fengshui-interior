@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useEffect, type CSSProperties } from "react";
 import { leaveAdminDeleteMode } from "@/lib/admin-delete-mode";
 import styles from "./AdminDeleteChrome.module.css";
 
@@ -40,6 +40,11 @@ function DoneIcon() {
 }
 
 export function AdminDeleteChrome({ label = "이미지 삭제" }: { label?: string }) {
+  useEffect(() => {
+    document.body.classList.add("visual-delete-mode");
+    return () => document.body.classList.remove("visual-delete-mode");
+  }, []);
+
   const title = label.includes("PROJECT")
     ? "PROJECTS 이미지 삭제"
     : label.includes("GALLERY")
