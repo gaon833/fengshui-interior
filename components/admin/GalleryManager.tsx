@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { addGalleryItems, GALLERY_EVENT, readGalleryItems, type GalleryItem } from "@/lib/gallery-store";
 import { optimizeImageFile } from "@/lib/image-optimizer";
 import { showAdminToast } from "@/lib/admin-toast";
@@ -31,8 +31,20 @@ const cloneTags = (tags: GalleryTags): GalleryTags => ({
   features: [...tags.features],
 });
 
-function statusText(status: UploadStatus) {
-  return ({ queued: "대기", optimizing: "이미지 최적화 중", ready: "태그 확인 필요", failed: "처리 실패" } as const)[status];
+function allTags(tags: GalleryTags) {
+  return [tags.space, ...tags.structures, ...tags.styles, ...tags.colors, ...tags.materials, ...tags.features].filter(Boolean);
+}
+
+function removeTag(tags: GalleryTags, tag: string): GalleryTags {
+  if (tags.space === tag) return { ...tags, space: "" };
+  return {
+    ...tags,
+    structures: tags.structures.filter((value) => value !== tag),
+    styles: tags.styles.filter((value) => value !== tag),
+    colors: tags.colors.filter((value) => value !== tag),
+    materials: tags.materials.filter((value) => value !== tag),
+    features: tags.features.filter((value) => value !== tag),
+  };
 }
 
 async function runPool<T>(items: T[], limit: number, worker: (item: T, index: number) => Promise<void>) {
@@ -78,11 +90,21 @@ function TagEditor({ tags, onChange, compact = false }: { tags: GalleryTags; onC
   </div>;
 }
 
+function TrashIcon() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3m-8 0 1 13h8l1-13M10 11v5m4-5v5" /></svg>;
+}
+
+function UploadIcon() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM7 15l3-3 2 2 2-2 3 3M9 9h.01" /></svg>;
+}
+
 export default function GalleryManager() {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [tasks, setTasks] = useState<UploadTask[]>([]);
   const [processing, setProcessing] = useState(false);
   const [commonTags, setCommonTags] = useState<GalleryTags>(() => cloneTags(EMPTY_GALLERY_TAGS));
+  const [commonOpen, setCommonOpen] = useState(false);
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
   const sync = () => setItems(readGalleryItems());
 
@@ -100,11 +122,24 @@ export default function GalleryManager() {
     setTasks((current) => current.map((task) => task.id === id ? { ...task, ...patch } : task));
   };
 
+  const removeTask = (id: string) => {
+    setTasks((current) => current.filter((task) => task.id !== id));
+    setEditingTaskId((current) => current === id ? null : current);
+  };
+
+  const clearTasks = () => {
+    setTasks([]);
+    setEditingTaskId(null);
+    setCommonTags(cloneTags(EMPTY_GALLERY_TAGS));
+    if (inputRef.current) inputRef.current.value = "";
+  };
+
   const onFiles = async (files?: FileList | null) => {
     const selected = Array.from(files || []);
     if (!selected.length) return;
     if (selected.length > MAX_BATCH) {
       showAdminToast(`한 번에 최대 ${MAX_BATCH}장까지 선택할 수 있습니다.`, "error");
+      if (inputRef.current) inputRef.current.value = "";
       return;
     }
 
@@ -118,6 +153,7 @@ export default function GalleryManager() {
     setTasks(nextTasks);
     setEditingTaskId(null);
     setCommonTags(cloneTags(EMPTY_GALLERY_TAGS));
+    setCommonOpen(false);
     setProcessing(true);
 
     try {
@@ -160,45 +196,72 @@ export default function GalleryManager() {
       tags: cloneTags(task.tags),
       searchText: [task.fileName, galleryTagsToSearchText(task.tags)].filter(Boolean).join(" "),
     })));
-    setTasks([]);
-    setEditingTaskId(null);
-    setCommonTags(cloneTags(EMPTY_GALLERY_TAGS));
-    showAdminToast(`${readyTasks.length}장이 저장되었습니다.`);
+    const savedCount = readyTasks.length;
+    clearTasks();
+    showAdminToast(`${savedCount}장이 저장되었습니다.`);
   };
 
-  return <div className="admin-stack">
-    <section className="admin-card admin-form">
-      <div className="admin-heading"><div><h1>GALLERY 관리</h1><p>사진을 선택하고 공간·스타일 태그를 직접 확정한 뒤 저장합니다.</p></div></div>
-      <label>이미지 <small>한 번에 최대 10장 · 원본 비율 유지</small><input type="file" accept="image/*" multiple disabled={processing} onChange={(event) => void onFiles(event.target.files)} /></label>
+  return <div className="admin-stack gallery-manager-modern">
+    <section className="admin-card gallery-manager-card">
+      <header className="gallery-manager-heading">
+        <h1>GALLERY 관리</h1>
+        <p>사진을 선택하고 공간·스타일 태그를 직접 확정한 뒤 저장합니다.</p>
+      </header>
 
-      {readyTasks.length > 0 && <section className="gallery-common-tags">
-        <div className="gallery-tag-section-heading"><div><h2>전체 사진 공통 태그</h2><p>여기서 고른 태그를 선택한 모든 사진에 한 번에 적용할 수 있습니다.</p></div><button type="button" className="admin-secondary-button" onClick={applyCommonTags}>전체 {readyTasks.length}장에 적용</button></div>
-        <TagEditor tags={commonTags} onChange={setCommonTags} compact />
+      <section className="gallery-upload-section">
+        <h2>사진 선택</h2>
+        <label className={`gallery-upload-dropzone${processing ? " is-processing" : ""}`}>
+          <input ref={inputRef} type="file" accept="image/*" multiple disabled={processing} onChange={(event) => void onFiles(event.target.files)} />
+          <UploadIcon />
+          <strong>{processing ? "이미지 준비 중…" : "파일 선택"}</strong>
+          <span>이미지 한 번에 최대 10장 · 원본 비율 유지</span>
+        </label>
+      </section>
+
+      {readyTasks.length > 0 && <section className="gallery-common-tags-modern">
+        <div className="gallery-section-title-row">
+          <div><h2>공통 태그</h2><p>선택한 사진에 동일한 태그를 적용합니다.</p></div>
+          <button type="button" className="gallery-outline-button" aria-expanded={commonOpen} onClick={() => setCommonOpen((open) => !open)}>태그 선택 <span aria-hidden="true">⌄</span></button>
+        </div>
+        {allTags(commonTags).length > 0 && <div className="gallery-common-chip-row">{allTags(commonTags).map((tag) => <button key={tag} type="button" onClick={() => setCommonTags((current) => removeTag(current, tag))}>{tag}<span>×</span></button>)}</div>}
+        {commonOpen && <div className="gallery-common-editor"><TagEditor tags={commonTags} onChange={setCommonTags} compact /><button type="button" className="gallery-apply-button" onClick={applyCommonTags}>전체 {readyTasks.length}장에 적용</button></div>}
       </section>}
 
-      {tasks.length > 0 && <div className="admin-gallery-batch" aria-live="polite">
-        {tasks.map((task, index) => {
-          const isEditing = editingTaskId === task.id;
-          const selectedTags = [task.tags.space, ...task.tags.structures, ...task.tags.styles, ...task.tags.colors, ...task.tags.materials, ...task.tags.features].filter(Boolean);
-          return <article className={`admin-gallery-batch-item is-${task.status}${!task.tags.space && task.status === "ready" ? " is-unconfirmed" : ""}`} key={task.id}>
-            <div className="admin-gallery-batch-index">{index + 1}</div>
-            <div className="admin-gallery-batch-image">{task.src ? <Image src={task.src} alt={task.fileName} width={300} height={360} unoptimized /> : <span>{task.status === "optimizing" ? "최적화 중" : "대기"}</span>}</div>
-            <div className="admin-gallery-batch-meta">
-              <strong>{task.fileName}</strong>
-              <span>{task.status === "ready" && task.tags.space ? "태그 확정" : statusText(task.status)}</span>
-              {selectedTags.length > 0 && <div className="admin-gallery-selected-tags">{selectedTags.map((tag) => <em key={tag}>{tag}</em>)}</div>}
-              {task.error && <small className="admin-gallery-batch-warning">{task.error}</small>}
-              {task.status === "ready" && <button type="button" className="admin-secondary-button" onClick={() => setEditingTaskId(isEditing ? null : task.id)}>{isEditing ? "태그 닫기" : task.tags.space ? "개별 태그 수정" : "태그 선택"}</button>}
-            </div>
-            {isEditing && <div className="admin-gallery-individual-tags"><TagEditor tags={task.tags} onChange={(tags) => patchTask(task.id, { tags })} /></div>}
-          </article>;
-        })}
-      </div>}
+      {tasks.length > 0 && <section className="gallery-preview-section" aria-live="polite">
+        <div className="gallery-section-title-row">
+          <h2>사진 미리보기</h2>
+          <button type="button" className="gallery-clear-button" onClick={clearTasks}><TrashIcon /> 전체 해제</button>
+        </div>
 
-      {readyTasks.length > 0 && <div className="gallery-save-summary"><span>{confirmedCount}장 태그 확정</span>{missingCount > 0 && <strong>{missingCount}장 공간 태그 필요</strong>}</div>}
-      <div className="gallery-admin-actions"><button type="button" className="admin-primary-button" disabled={processing || readyTasks.length === 0} onClick={saveAll}>{processing ? "처리 중…" : readyTasks.length ? `${readyTasks.length}장 저장` : "사진 저장"}</button><a className="admin-filter-button" href="/gallery/?adminDelete=1&returnTo=%2Fadmin%2Fgallery">이미지 삭제</a></div>
+        <div className="gallery-preview-grid">
+          {tasks.map((task, index) => {
+            const isEditing = editingTaskId === task.id;
+            const selectedTags = allTags(task.tags);
+            return <article className={`gallery-preview-card is-${task.status}${!task.tags.space && task.status === "ready" ? " is-unconfirmed" : ""}`} key={task.id}>
+              <div className="gallery-preview-image">
+                {task.src ? <Image src={task.src} alt={task.fileName} width={420} height={520} unoptimized /> : <span>{task.status === "optimizing" ? "최적화 중" : "대기"}</span>}
+                <button type="button" className="gallery-preview-remove" aria-label={`${index + 1}번 사진 제거`} onClick={() => removeTask(task.id)}>×</button>
+              </div>
+              {selectedTags.length > 0 && <div className="gallery-selected-chip-row">{selectedTags.map((tag) => <button key={tag} type="button" onClick={() => patchTask(task.id, { tags: removeTag(task.tags, tag) })}>{tag}<span>×</span></button>)}</div>}
+              {task.error && <small className="gallery-preview-error">{task.error}</small>}
+              {task.status === "ready" && <button type="button" className="gallery-card-tag-button" onClick={() => setEditingTaskId(isEditing ? null : task.id)}>{isEditing ? "태그 닫기" : "태그 선택"}</button>}
+              {isEditing && <div className="gallery-card-editor"><TagEditor tags={task.tags} onChange={(tags) => patchTask(task.id, { tags })} /></div>}
+            </article>;
+          })}
+        </div>
+
+        <div className="gallery-preview-status"><span>{confirmedCount}장 태그 확정</span>{missingCount > 0 && <strong>{missingCount}장 공간 태그 필요</strong>}</div>
+        <div className="gallery-modern-actions">
+          <button type="button" className="gallery-outline-action" onClick={() => setEditingTaskId(readyTasks[0]?.id || null)}>태그 선택</button>
+          <button type="button" className="gallery-save-action" disabled={processing || readyTasks.length === 0} onClick={saveAll}>{processing ? "처리 중…" : `${readyTasks.length}장 저장`}</button>
+          <a className="gallery-delete-action" href="/gallery/?adminDelete=1&returnTo=%2Fadmin%2Fgallery"><TrashIcon /> 이미지 삭제</a>
+        </div>
+      </section>}
     </section>
 
-    <section className="admin-card"><h2>등록된 GALLERY</h2>{items.length === 0 ? <p>추가한 이미지가 없습니다.</p> : <div className="admin-gallery-list">{items.map((item) => <article key={item.id}><Image src={item.src} alt={item.title} width={220} height={280} unoptimized /><div><strong>{item.title}</strong>{item.tags?.space && <span>{[item.tags.space, ...item.tags.styles, ...item.tags.colors].slice(0, 5).join(" · ")}</span>}<a href="/gallery/?adminDelete=1&returnTo=%2Fadmin%2Fgallery">이미지 삭제</a></div></article>)}</div>}</section>
+    <section className="admin-card gallery-registered-card">
+      <h2>등록된 GALLERY</h2>
+      {items.length === 0 ? <p>추가한 이미지가 없습니다.</p> : <div className="admin-gallery-list">{items.map((item) => <article key={item.id}><Image src={item.src} alt={item.title} width={220} height={280} unoptimized /><div><strong>{item.title}</strong>{item.tags?.space && <span>{[item.tags.space, ...item.tags.styles, ...item.tags.colors].slice(0, 5).join(" · ")}</span>}<a href="/gallery/?adminDelete=1&returnTo=%2Fadmin%2Fgallery">이미지 삭제</a></div></article>)}</div>}
+    </section>
   </div>;
 }
