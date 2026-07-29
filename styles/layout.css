@@ -15,7 +15,7 @@ body, button, input, select, textarea, a, h1, h2, h3, h4, h5, h6, p, dt, dd, spa
 }
 .site-content { min-height: 100vh; }
 .site-shell--fixed .site-content { margin-left: var(--sidebar-width); }
-.site-shell--fixed .site-floating-logo { display: none; }
+.site-shell--fixed .site-floating-logo { display: inline-flex; }
 .brand-logo { display: inline-flex; align-items: flex-start; width: var(--logo-width); line-height: 0; }
 .brand-logo img { display:block; width:100%; height:auto; object-fit:contain; }
 @media (min-width:901px) {

@@ -37,10 +37,19 @@ export default function ProjectClientDetail({ defaults }: { defaults: Project[] 
         </figure>
         <ProjectGallery images={project.images} />
       </section>
-      <nav className="project-navigation" aria-label="프로젝트 이동">
-        <Link href={`/project/view/?slug=${encodeURIComponent(prev.slug)}`} aria-label="이전 프로젝트">←</Link>
-        <Link href="/project/" aria-label="프로젝트 목록">PROJECTS</Link>
-        <Link href={`/project/view/?slug=${encodeURIComponent(next.slug)}`} aria-label="다음 프로젝트">→</Link>
+      <nav className="project-navigation" aria-label="이전·다음 프로젝트">
+        <div>
+          <Link className="prev" href={`/project/view/?slug=${encodeURIComponent(prev.slug)}`} aria-label="이전 프로젝트">
+            <span className="nav-arrow nav-arrow--prev" aria-hidden="true" />
+            <span>PREV</span>
+          </Link>
+        </div>
+        <div>
+          <Link className="next" href={`/project/view/?slug=${encodeURIComponent(next.slug)}`} aria-label="다음 프로젝트">
+            <span>NEXT</span>
+            <span className="nav-arrow nav-arrow--next" aria-hidden="true" />
+          </Link>
+        </div>
       </nav>
     </article>
   );
