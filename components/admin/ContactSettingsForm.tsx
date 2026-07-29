@@ -2,34 +2,53 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import {
-  defaultSiteContact,
-  SITE_CONTACT_STORAGE_KEY,
-  SITE_CONTACT_UPDATED_EVENT,
-  SiteContactSettings,
-} from "@/components/site/SocialFooter";
+  defaultSiteSettings,
+  mergeSiteSettings,
+  SITE_SETTINGS_EVENT,
+  SITE_SETTINGS_KEY,
+  type SiteSettings,
+} from "@/lib/site-settings";
+
+function readSettings(): SiteSettings {
+  try {
+    const raw = window.localStorage.getItem(SITE_SETTINGS_KEY);
+    return raw
+      ? mergeSiteSettings(JSON.parse(raw))
+      : mergeSiteSettings(defaultSiteSettings);
+  } catch {
+    return mergeSiteSettings(defaultSiteSettings);
+  }
+}
 
 export default function ContactSettingsForm() {
-  const [form, setForm] = useState<SiteContactSettings>(defaultSiteContact);
+  const [form, setForm] = useState<SiteSettings>(() =>
+    mergeSiteSettings(defaultSiteSettings),
+  );
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    try {
-      const current = window.localStorage.getItem(SITE_CONTACT_STORAGE_KEY);
-      if (current) setForm({ ...defaultSiteContact, ...JSON.parse(current) });
-    } catch {
-      setForm(defaultSiteContact);
-    }
+    setForm(readSettings());
   }, []);
 
-  const update = (key: keyof SiteContactSettings, value: string) => {
+  const update = (path: string, value: string) => {
     setSaved(false);
-    setForm((current) => ({ ...current, [key]: value }));
+    setForm((current) => {
+      const next = structuredClone(current) as SiteSettings;
+      const keys = path.split(".");
+      let target: Record<string, unknown> = next as unknown as Record<string, unknown>;
+
+      keys.slice(0, -1).forEach((key) => {
+        target = target[key] as Record<string, unknown>;
+      });
+      target[keys[keys.length - 1]] = value;
+      return next;
+    });
   };
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    window.localStorage.setItem(SITE_CONTACT_STORAGE_KEY, JSON.stringify(form));
-    window.dispatchEvent(new Event(SITE_CONTACT_UPDATED_EVENT));
+    window.localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(form));
+    window.dispatchEvent(new Event(SITE_SETTINGS_EVENT));
     setSaved(true);
   };
 
@@ -48,10 +67,10 @@ export default function ContactSettingsForm() {
       <div className="editor-grid">
         <section className="editor-panel">
           <h2>회사 정보</h2>
-          <label>회사명<input value={form.companyName} onChange={(e) => update("companyName", e.target.value)} /></label>
-          <label>주소<input value={form.address} onChange={(e) => update("address", e.target.value)} /></label>
-          <label>전화번호<input value={form.phone} onChange={(e) => update("phone", e.target.value)} /></label>
-          <label>저작권 문구<textarea value={form.copyright} onChange={(e) => update("copyright", e.target.value)} /></label>
+          <label>회사명<input value={form.company?.name || form.brandName} onChange={(e) => update("company.name", e.target.value)} /></label>
+          <label>주소<input value={form.contact.address} onChange={(e) => update("contact.address", e.target.value)} /></label>
+          <label>전화번호<input value={form.contact.phone} onChange={(e) => update("contact.phone", e.target.value)} /></label>
+          <label>저작권 문구<textarea value={form.contact.copyright} onChange={(e) => update("contact.copyright", e.target.value)} /></label>
         </section>
 
         <section className="editor-panel">
