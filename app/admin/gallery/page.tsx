@@ -1,2 +1,2 @@
-import GalleryManager from "@/components/admin/GalleryManager";
-export default function AdminGalleryPage(){return <GalleryManager/>}
+import GalleryManagerV7 from "@/components/admin/GalleryManagerV7";
+export default function AdminGalleryPage(){return <GalleryManagerV7/>}
