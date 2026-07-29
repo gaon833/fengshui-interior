@@ -25,14 +25,12 @@ export default function ContactSettingsForm() {
   const [form, setForm] = useState<SiteSettings>(() =>
     mergeSiteSettings(defaultSiteSettings),
   );
-  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     setForm(readSettings());
   }, []);
 
   const update = (path: string, value: string) => {
-    setSaved(false);
     setForm((current) => {
       const next = structuredClone(current) as SiteSettings;
       const keys = path.split(".");
@@ -50,7 +48,6 @@ export default function ContactSettingsForm() {
     event.preventDefault();
     window.localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(form));
     window.dispatchEvent(new Event(SITE_SETTINGS_EVENT));
-    setSaved(true);
     showAdminToast("상담 정보가 저장되었습니다.", "success");
   };
 
@@ -64,7 +61,6 @@ export default function ContactSettingsForm() {
         <button type="submit" className="admin-primary-button">저장</button>
       </div>
 
-      {saved && <p className="admin-save-message" role="status">현재 브라우저에 저장했습니다.</p>}
 
       <div className="editor-grid">
         <section className="editor-panel">
