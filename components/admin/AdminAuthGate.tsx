@@ -1,18 +1,7 @@
 "use client";
 
 import { FormEvent, ReactNode, useEffect, useState } from "react";
-import {
-  ADMIN_AUTH_EVENT,
-  LOCK_DURATION_MS,
-  MAX_FAILURES,
-  clearFailures,
-  createSession,
-  ensurePasswordHash,
-  getFailureState,
-  hasValidSession,
-  hashPassword,
-  saveFailureState,
-} from "@/lib/admin-auth";
+import { ADMIN_AUTH_EVENT, checkAdminSession, loginAdmin } from "@/lib/admin-auth";
 
 export default function AdminAuthGate({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
@@ -21,50 +10,34 @@ export default function AdminAuthGate({ children }: { children: ReactNode }) {
   const [remember, setRemember] = useState(true);
   const [message, setMessage] = useState("");
   const [lockedUntil, setLockedUntil] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    void ensurePasswordHash().then(() => {
-      setAuthenticated(hasValidSession());
-      setLockedUntil(getFailureState().lockedUntil);
+    const sync = async () => {
+      setAuthenticated(await checkAdminSession());
       setReady(true);
-    });
-    const sync = () => setAuthenticated(hasValidSession());
+    };
+    void sync();
     window.addEventListener(ADMIN_AUTH_EVENT, sync);
     return () => window.removeEventListener(ADMIN_AUTH_EVENT, sync);
   }, []);
 
   async function submit(event: FormEvent) {
     event.preventDefault();
-    const now = Date.now();
-    const failure = getFailureState();
-    if (failure.lockedUntil > now) {
-      const minutes = Math.max(1, Math.ceil((failure.lockedUntil - now) / 60000));
-      setLockedUntil(failure.lockedUntil);
-      setMessage(`로그인이 잠겨 있습니다. 약 ${minutes}분 후 다시 시도하세요.`);
-      return;
-    }
+    if (submitting || lockedUntil > Date.now()) return;
+    setSubmitting(true);
+    setMessage("");
+    const result = await loginAdmin(password, remember);
+    setSubmitting(false);
 
-    const savedHash = await ensurePasswordHash();
-    const enteredHash = await hashPassword(password);
-    if (savedHash === enteredHash) {
-      clearFailures();
-      createSession(remember);
+    if (result.ok) {
       setAuthenticated(true);
       setPassword("");
-      setMessage("");
       return;
     }
 
-    const count = failure.count + 1;
-    if (count >= MAX_FAILURES) {
-      const until = now + LOCK_DURATION_MS;
-      saveFailureState({ count: 0, lockedUntil: until });
-      setLockedUntil(until);
-      setMessage("비밀번호를 5회 틀려 5분 동안 로그인이 잠겼습니다.");
-    } else {
-      saveFailureState({ count, lockedUntil: 0 });
-      setMessage(`비밀번호가 맞지 않습니다. ${MAX_FAILURES - count}회 더 시도할 수 있습니다.`);
-    }
+    if (result.lockedUntil) setLockedUntil(result.lockedUntil);
+    setMessage(result.message || "로그인에 실패했습니다.");
   }
 
   if (!ready) return <div className="admin-auth-loading">관리자 인증을 확인하고 있습니다.</div>;
@@ -81,10 +54,14 @@ export default function AdminAuthGate({ children }: { children: ReactNode }) {
           <input
             type="password"
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={(event) => setPassword(event.target.value.replace(/\D/g, "").slice(0, 4))}
             autoComplete="current-password"
+            inputMode="numeric"
+            pattern="[0-9]{4}"
+            minLength={4}
+            maxLength={4}
             autoFocus
-            disabled={currentlyLocked}
+            disabled={currentlyLocked || submitting}
             required
           />
         </label>
@@ -93,8 +70,7 @@ export default function AdminAuthGate({ children }: { children: ReactNode }) {
           <span>로그인 상태 7일 유지</span>
         </label>
         {message && <p className="admin-login-message" role="alert">{message}</p>}
-        <button type="submit" disabled={currentlyLocked}>로그인</button>
-        <p className="admin-login-help">최초 비밀번호: <strong>fengshui2026</strong></p>
+        <button type="submit" disabled={currentlyLocked || submitting}>{submitting ? "확인 중" : "로그인"}</button>
       </form>
     </main>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { defaultSiteSettings, mergeSiteSettings, SITE_SETTINGS_EVENT, SITE_SETTINGS_KEY, type SiteSettings } from "@/lib/site-settings";
+import { showAdminToast } from "@/lib/admin-toast";
 
 const read = () => {
   try { const raw = localStorage.getItem(SITE_SETTINGS_KEY); return raw ? mergeSiteSettings(JSON.parse(raw)) : mergeSiteSettings(defaultSiteSettings); }
@@ -26,14 +27,14 @@ export default function SiteSettingsForm() {
   });
   const upload = async (path: string, event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; if (!file) return;
-    try { set(path, await imageToDataUrl(file)); setMessage(`${file.name} 업로드 준비 완료`); } catch (error) { setMessage(error instanceof Error ? error.message : "업로드 실패"); }
+    try { set(path, await imageToDataUrl(file)); const text = `${file.name} 업로드가 완료되었습니다. 저장 버튼을 눌러 적용하세요.`; setMessage(text); showAdminToast(text, "success"); } catch (error) { const text = error instanceof Error ? error.message : "업로드에 실패했습니다."; setMessage(text); showAdminToast(text, "error"); }
   };
   const save = (event: FormEvent) => {
     event.preventDefault();
-    try { localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(site)); window.dispatchEvent(new Event(SITE_SETTINGS_EVENT)); setMessage("저장했습니다. 공개 화면에 바로 반영됩니다."); }
-    catch { setMessage("저장 공간이 부족합니다. 이미지 용량을 줄여주세요."); }
+    try { localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(site)); window.dispatchEvent(new Event(SITE_SETTINGS_EVENT)); const text = "설정이 저장되었습니다."; setMessage(text); showAdminToast(text, "success"); }
+    catch { const text = "저장에 실패했습니다. 이미지 용량을 줄여주세요."; setMessage(text); showAdminToast(text, "error"); }
   };
-  const reset = () => { localStorage.removeItem(SITE_SETTINGS_KEY); setSite(mergeSiteSettings(defaultSiteSettings)); window.dispatchEvent(new Event(SITE_SETTINGS_EVENT)); setMessage("기본 설정으로 복원했습니다."); };
+  const reset = () => { if (!window.confirm("사이트 설정을 기본값으로 복원할까요?")) return; localStorage.removeItem(SITE_SETTINGS_KEY); setSite(mergeSiteSettings(defaultSiteSettings)); window.dispatchEvent(new Event(SITE_SETTINGS_EVENT)); const text = "기본 설정으로 복원되었습니다."; setMessage(text); showAdminToast(text, "success"); };
   const field = (label: string, path: string, value: string, type="text") => <label>{label}<input type={type} value={value || ""} onChange={(e) => set(path, e.target.value)} /></label>;
   const imageField = (label: string, path: string, value: string) => <label>{label}<input value={value || ""} onChange={(e) => set(path, e.target.value)} /><input type="file" accept="image/*" onChange={(e) => upload(path, e)} /></label>;
   return <form onSubmit={save}>

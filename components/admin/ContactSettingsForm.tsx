@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { showAdminToast } from "@/lib/admin-toast";
 import {
   defaultSiteSettings,
   mergeSiteSettings,
@@ -50,6 +51,7 @@ export default function ContactSettingsForm() {
     window.localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(form));
     window.dispatchEvent(new Event(SITE_SETTINGS_EVENT));
     setSaved(true);
+    showAdminToast("상담 정보가 저장되었습니다.", "success");
   };
 
   return (

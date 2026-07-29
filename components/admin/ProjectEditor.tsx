@@ -6,6 +6,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import type { Project, ProjectCardLayout, ProjectCategory, ProjectStatus } from "@/types/project";
 import { fileToDataUrl, makeProjectImage, readStoredProjects, saveStoredProjects } from "@/lib/project-store";
+import { showAdminToast } from "@/lib/admin-toast";
 
 const blank = (): Project => ({
   id: `project-${Date.now()}`, slug: `project-${Date.now()}`, title: "", category: "30", useType: "Residential", location: "", area: "", year: new Date().getFullYear(), tags: [], coverImage: "", mobileCoverImage: "", images: [], order: 999, status: "draft", featured: false, cardLayout: "wide", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), seo: { title: "", description: "", ogImage: "" }, revisions: [],
@@ -18,16 +19,16 @@ export default function ProjectEditor({ defaults, initialProject }: { defaults: 
   const preview = useMemo(() => project.coverImage || project.images[0]?.src || "", [project]);
   const patch = <K extends keyof Project>(key: K, value: Project[K]) => setProject((current) => ({ ...current, [key]: value }));
 
-  const uploadCover = async (event: ChangeEvent<HTMLInputElement>, mobile = false) => { const file = event.target.files?.[0]; if (!file) return; const src = await fileToDataUrl(file); patch(mobile ? "mobileCoverImage" : "coverImage", src); };
-  const uploadDetails = async (event: ChangeEvent<HTMLInputElement>) => { const files = Array.from(event.target.files ?? []); const start = project.images.length; const additions = await Promise.all(files.map(async (file, i) => makeProjectImage(await fileToDataUrl(file), project.title, start + i + 1))); patch("images", [...project.images, ...additions]); };
+  const uploadCover = async (event: ChangeEvent<HTMLInputElement>, mobile = false) => { const file = event.target.files?.[0]; if (!file) return; try { const src = await fileToDataUrl(file); patch(mobile ? "mobileCoverImage" : "coverImage", src); showAdminToast(`${mobile ? "모바일" : "PC"} 대표 이미지가 추가되었습니다. 저장 버튼을 눌러 적용하세요.`, "success"); } catch { showAdminToast("대표 이미지 업로드에 실패했습니다.", "error"); } };
+  const uploadDetails = async (event: ChangeEvent<HTMLInputElement>) => { const files = Array.from(event.target.files ?? []); if (!files.length) return; try { const start = project.images.length; const additions = await Promise.all(files.map(async (file, i) => makeProjectImage(await fileToDataUrl(file), project.title, start + i + 1))); patch("images", [...project.images, ...additions]); showAdminToast(`상세 이미지 ${additions.length}장이 추가되었습니다.`, "success"); } catch { showAdminToast("상세 이미지 업로드에 실패했습니다.", "error"); } };
   const moveImage = (index: number, direction: -1 | 1) => { const target = index + direction; if (target < 0 || target >= project.images.length) return; const images = [...project.images]; [images[index], images[target]] = [images[target], images[index]]; patch("images", images.map((img, i) => ({ ...img, order: i + 1 }))); };
-  const removeImage = (id: string) => patch("images", project.images.filter((img) => img.id !== id).map((img, i) => ({ ...img, order: i + 1 })));
+  const removeImage = (id: string) => { patch("images", project.images.filter((img) => img.id !== id).map((img, i) => ({ ...img, order: i + 1 }))); showAdminToast("이미지가 삭제되었습니다.", "success"); };
 
   const save = (event: FormEvent) => {
-    event.preventDefault(); if (!project.title.trim() || !project.location.trim() || !project.area.trim() || !project.coverImage) { setMessage("프로젝트명, 지역, 평형, 대표 이미지는 필수입니다."); return; }
+    event.preventDefault(); if (!project.title.trim() || !project.location.trim() || !project.area.trim() || !project.coverImage) { const text = "프로젝트명, 지역, 평형, 대표 이미지는 필수입니다."; setMessage(text); showAdminToast(text, "error"); return; }
     const items = readStoredProjects(defaults); const exists = items.some((item) => item.id === project.id); const now = new Date().toISOString(); const slugBase = project.slug.trim() || project.title.toLowerCase().replace(/[^a-z0-9가-힣]+/g, "-").replace(/^-|-$/g, "");
     const saved: Project = { ...project, slug: slugBase || project.id, tags: project.tags.filter(Boolean), order: exists ? project.order : Math.max(0, ...items.map((item) => item.order)) + 1, updatedAt: now, seo: { ...project.seo, title: project.seo.title || `${project.title} | 풍수 인테리어`, ogImage: project.seo.ogImage || project.coverImage }, revisions: [...project.revisions, { id: `revision-${Date.now()}`, createdAt: now, note: exists ? "관리자 수정" : "관리자 등록" }] };
-    const next = exists ? items.map((item) => item.id === saved.id ? saved : item) : [...items, saved]; saveStoredProjects(next); setProject(saved); setMessage("저장되었습니다. PROJECTS 공개 화면에 바로 반영됩니다."); if (!editId) router.replace(`/admin/projects/new/?id=${encodeURIComponent(saved.id)}`);
+    const next = exists ? items.map((item) => item.id === saved.id ? saved : item) : [...items, saved]; saveStoredProjects(next); setProject(saved); const text = exists ? "프로젝트 수정 내용이 저장되었습니다." : "새 프로젝트가 저장되었습니다."; setMessage(text); showAdminToast(text, "success"); if (!editId) router.replace(`/admin/projects/new/?id=${encodeURIComponent(saved.id)}`);
   };
 
   return <form className="project-editor" onSubmit={save}>
