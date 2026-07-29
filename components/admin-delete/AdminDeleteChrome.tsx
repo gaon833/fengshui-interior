@@ -4,7 +4,6 @@ import { leaveAdminDeleteMode } from "@/lib/admin-delete-mode";
 
 export function AdminDeleteChrome({ label = "이미지 삭제" }: { label?: string }) {
   return <div className="admin-delete-chrome" role="status" aria-label={label}>
-    <span className="admin-delete-chrome__label">{label}</span>
     <button className="admin-delete-chrome__done" type="button" onClick={leaveAdminDeleteMode}>완료</button>
   </div>;
 }
