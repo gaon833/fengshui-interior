@@ -109,3 +109,44 @@
 .scrap-page{padding:110px var(--page-right-gap) 120px 0}.scrap-page header{margin-bottom:55px}.scrap-page h1{margin:0 0 10px;font-size:28px;font-weight:400}.scrap-page header p,.scrap-empty{color:#888;font-size:12px}.scrap-masonry{columns:3;column-gap:var(--grid-gap)}.scrap-card{position:relative;break-inside:avoid;margin:0 0 var(--grid-gap);background:#fff}.scrap-card-image{overflow:hidden;background:#eee}.scrap-card-image img{display:block;width:100%;height:auto}.scrap-card-meta{display:flex;align-items:baseline;gap:10px;padding-top:8px}.scrap-card-meta span{color:#999;font-size:8px;letter-spacing:.12em}.scrap-card-meta strong{font-size:9px;font-weight:500}.scrap-board-heart{top:12px;right:12px}
 @media(max-width:900px){.project-engagement-actions{position:static;margin:22px 18px 0}.detail-photo.portrait .detail-photo-inner{max-width:100%}.scrap-masonry{columns:2}.scrap-page{padding:90px 18px}.scrap-heart{width:32px;height:30px}.project-card-image .scrap-heart{top:10px;right:10px}}
 .project-card>a.project-card-meta{display:flex}.project-card-image>a{display:block}.detail-cover .detail-photo-inner{max-width:none}
+
+/* v5.0.3 refined scrap UI + Gallery */
+.scrap-heart{width:24px;height:23px}
+.scrap-heart svg{width:19px;height:18px;stroke-width:1.75}
+.scrap-heart.is-active svg{transform:none}
+.scrap-feedback{bottom:38px;padding:10px 16px;border:1px solid rgba(255,255,255,.72);border-radius:10px;background:rgba(255,255,255,.58);color:#555;box-shadow:0 10px 34px rgba(35,35,35,.12);backdrop-filter:blur(20px) saturate(135%);-webkit-backdrop-filter:blur(20px) saturate(135%);font-size:11px;letter-spacing:.03em}
+.gallery-page{padding:110px 30px 80px}.gallery-page>header{max-width:1200px;margin:0 auto 34px}.gallery-page h1{font-size:16px;font-weight:500;letter-spacing:.16em}.gallery-page header p{margin-top:9px;color:#888;font-size:11px;letter-spacing:.03em}
+.gallery-masonry{columns:5 240px;column-gap:18px;max-width:1600px;margin:0 auto}.gallery-card{break-inside:avoid;margin:0 0 24px}.gallery-card>a{display:block;color:inherit;text-decoration:none}.gallery-card-image{position:relative;overflow:hidden}.gallery-card-image img{display:block;width:100%;height:auto}.gallery-card-heart{position:absolute;top:13px;right:13px;z-index:3}.gallery-card-meta{display:flex;flex-direction:column;gap:4px;padding:9px 1px 0}.gallery-card-meta span{color:#999;font-size:8px;letter-spacing:.14em}.gallery-card-meta strong{color:#666;font-size:10px;font-weight:400;letter-spacing:.02em}
+.admin-gallery-preview{max-width:360px;margin:8px 0 18px}.admin-gallery-preview img{width:100%;height:auto}.admin-gallery-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px}.admin-gallery-list article{border:1px solid #e5e5e5;padding:10px}.admin-gallery-list img{width:100%;height:190px;object-fit:cover}.admin-gallery-list article div{display:flex;flex-direction:column;gap:6px;padding-top:8px}.admin-gallery-list strong{font-size:11px;font-weight:500}.admin-gallery-list span{font-size:9px;color:#999}.admin-gallery-list button{align-self:flex-start;border:0;background:none;color:#888;font-size:9px;cursor:pointer;padding:0}
+@media(max-width:900px){.gallery-page{padding:88px 12px 50px}.gallery-masonry{columns:2;column-gap:10px}.gallery-card{margin-bottom:15px}.gallery-card-heart{top:9px;right:9px}.scrap-heart{width:22px;height:21px}.scrap-heart svg{width:18px;height:17px}}
+
+/* v5.0.4 image share icon: site/project link, vertically aligned below heart */
+.image-share-button{
+  position:absolute;
+  z-index:5;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:24px;
+  height:23px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#fff;
+  cursor:pointer;
+  filter:drop-shadow(0 1px 5px rgba(0,0,0,.38));
+  transition:transform .2s ease,opacity .2s ease;
+}
+.image-share-button:hover{transform:scale(1.08)}
+.image-share-button:active{transform:scale(.94)}
+.image-share-button svg{width:18px;height:18px;overflow:visible}
+.image-share-button path{fill:none;stroke:currentColor;stroke-width:2.25;stroke-linecap:round}
+.image-share-button circle{fill:currentColor;stroke:none}
+.project-card-share,.detail-image-share{top:45px;right:14px}
+.gallery-card-share{top:44px;right:13px}
+@media(max-width:900px){
+  .image-share-button{width:22px;height:21px}
+  .image-share-button svg{width:17px;height:17px}
+  .project-card-share,.detail-image-share{top:39px;right:10px}
+  .gallery-card-share{top:37px;right:9px}
+}

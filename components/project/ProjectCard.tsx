@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/types/project";
 import ScrapButton from "./ScrapButton";
+import ShareIconButton from "./ShareIconButton";
 
 export default function ProjectCard({ project, index }: { project: Project; index: number }) {
   const layout = project.cardLayout ?? "wide";
@@ -15,6 +16,7 @@ export default function ProjectCard({ project, index }: { project: Project; inde
           </picture>
         </Link>
         <ScrapButton className="project-card-heart" item={{id:`project:${project.slug}`,kind:"project",projectSlug:project.slug,projectTitle:project.title,src:project.coverImage,alt:`${project.title} 대표 이미지`}} />
+        <ShareIconButton className="project-card-share" projectSlug={project.slug} projectTitle={project.title} />
       </div>
       <Link className="project-card-meta" href={`/project/view/?slug=${encodeURIComponent(project.slug)}`}>
         <div><h2>{project.title}</h2><p>{project.location} · {project.area}</p></div><span className="project-card-year">{project.year}</span>

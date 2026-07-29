@@ -8,6 +8,7 @@ const primaryItems = [
   { href: "/admin/studio", label: "OUR STORY 관리" },
   { href: "/admin/service", label: "PROCESS 관리" },
   { href: "/admin/projects", label: "PROJECTS 관리" },
+  { href: "/admin/gallery", label: "GALLERY 관리" },
   { href: "/admin/contact", label: "CONSULTATION 관리" },
 ];
 const systemItems = [

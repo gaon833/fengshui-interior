@@ -7,7 +7,7 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = site.siteUrl || "https://fengshui-interior.pages.dev";
   const now = new Date();
-  const staticPages = ["", "/studio", "/service", "/project", "/reservation"];
+  const staticPages = ["", "/studio", "/service", "/project", "/gallery", "/scrap", "/reservation"];
 
   return [
     ...staticPages.map((path) => ({
