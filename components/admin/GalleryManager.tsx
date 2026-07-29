@@ -168,7 +168,7 @@ export default function GalleryManager() {
 
   return <div className="admin-stack">
     <section className="admin-card admin-form">
-      <div className="admin-heading"><div><h1>GALLERY 관리</h1><p>사진을 선택하고 공간·스타일 태그를 직접 확정한 뒤 저장합니다.</p></div><a className="admin-filter-button" href="/gallery/?adminDelete=1&returnTo=%2Fadmin%2Fgallery">이미지 삭제</a></div>
+      <div className="admin-heading"><div><h1>GALLERY 관리</h1><p>사진을 선택하고 공간·스타일 태그를 직접 확정한 뒤 저장합니다.</p></div></div>
       <label>이미지 <small>한 번에 최대 10장 · 원본 비율 유지</small><input type="file" accept="image/*" multiple disabled={processing} onChange={(event) => void onFiles(event.target.files)} /></label>
 
       {readyTasks.length > 0 && <section className="gallery-common-tags">
@@ -196,7 +196,7 @@ export default function GalleryManager() {
       </div>}
 
       {readyTasks.length > 0 && <div className="gallery-save-summary"><span>{confirmedCount}장 태그 확정</span>{missingCount > 0 && <strong>{missingCount}장 공간 태그 필요</strong>}</div>}
-      <button type="button" className="admin-primary-button" disabled={processing || readyTasks.length === 0} onClick={saveAll}>{processing ? "처리 중…" : readyTasks.length ? `${readyTasks.length}장 저장` : "사진 저장"}</button>
+      <div className="gallery-admin-actions"><button type="button" className="admin-primary-button" disabled={processing || readyTasks.length === 0} onClick={saveAll}>{processing ? "처리 중…" : readyTasks.length ? `${readyTasks.length}장 저장` : "사진 저장"}</button><a className="admin-filter-button" href="/gallery/?adminDelete=1&returnTo=%2Fadmin%2Fgallery">이미지 삭제</a></div>
     </section>
 
     <section className="admin-card"><h2>등록된 GALLERY</h2>{items.length === 0 ? <p>추가한 이미지가 없습니다.</p> : <div className="admin-gallery-list">{items.map((item) => <article key={item.id}><Image src={item.src} alt={item.title} width={220} height={280} unoptimized /><div><strong>{item.title}</strong>{item.tags?.space && <span>{[item.tags.space, ...item.tags.styles, ...item.tags.colors].slice(0, 5).join(" · ")}</span>}<a href="/gallery/?adminDelete=1&returnTo=%2Fadmin%2Fgallery">이미지 삭제</a></div></article>)}</div>}</section>

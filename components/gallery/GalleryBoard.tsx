@@ -41,16 +41,6 @@ const synonymGroups = [
   ["간접조명", "무드조명", "조명", "lighting", "light"], ["타일", "대리석", "마블", "tile", "marble"],
 ];
 
-const QUICK_FILTERS = {
-  spaces: ["거실", "주방", "욕실", "침실"],
-  styles: ["웜 미니멀", "재팬디", "호텔식", "모던"],
-  colors: ["화이트", "아이보리", "베이지", "우드톤"],
-} as const;
-
-type FilterGroup = keyof typeof QUICK_FILTERS;
-type ActiveFilters = Record<FilterGroup, string[]>;
-const EMPTY_FILTERS: ActiveFilters = { spaces: [], styles: [], colors: [] };
-
 function normalize(value: string) {
   return value.toLocaleLowerCase("ko-KR").replace(/[^0-9a-zA-Z가-힣]+/g, " ").replace(/\s+/g, " ").trim();
 }
@@ -99,7 +89,6 @@ export default function GalleryBoard() {
   const [hiddenIds, setHiddenIds] = useState<string[]>([]);
   const [selected, setSelected] = useState<GalleryItem | null>(null);
   const [query, setQuery] = useState("");
-  const [filters, setFilters] = useState<ActiveFilters>(EMPTY_FILTERS);
 
   useEffect(() => {
     const sync = () => { setCustomItems(readGalleryItems()); setHiddenIds(readHiddenGalleryIds()); };
@@ -117,23 +106,15 @@ export default function GalleryBoard() {
   };
 
   const filteredItems = useMemo(() => items
-    .filter((item) => itemMatchesFilters(item, filters))
     .map((item) => ({ item, score: localScore(item, query) }))
     .filter((entry) => entry.score > 0)
     .sort((a, b) => b.score - a.score)
-    .map((entry) => entry.item), [items, query, filters]);
-
-  const toggleFilter = (group: FilterGroup, value: string) => {
-    setFilters((current) => ({ ...current, [group]: current[group].includes(value) ? current[group].filter((item) => item !== value) : [...current[group], value] }));
-  };
+    .map((entry) => entry.item), [items, query]);
 
   const submitSearch = (event: FormEvent) => {
     event.preventDefault();
-    const filterText = [...filters.spaces, ...filters.styles, ...filters.colors].join(" ");
-    trackGallerySearch([query, filterText].filter(Boolean).join(" "));
+    trackGallerySearch(query);
   };
-
-  const hasFilters = Object.values(filters).some((values) => values.length > 0);
 
   return (
     <div className={deleteMode.active ? "admin-delete-page-shell is-gallery-delete" : undefined}>
@@ -146,14 +127,7 @@ export default function GalleryBoard() {
             {query && <button type="button" onClick={() => setQuery("")} aria-label="검색어 지우기">×</button>}
           </label>
         </form>
-        <div className="gallery-tag-filters" aria-label="빠른 태그 필터">
-          {Object.entries(QUICK_FILTERS).map(([group, values]) => <div className="gallery-filter-row" key={group}>
-            <span>{group === "spaces" ? "공간" : group === "styles" ? "스타일" : "색상"}</span>
-            <div>{values.map((value) => <button type="button" key={value} className={filters[group as FilterGroup].includes(value) ? "is-active" : ""} onClick={() => toggleFilter(group as FilterGroup, value)}>{value}</button>)}</div>
-          </div>)}
-          {hasFilters && <button type="button" className="gallery-filter-reset" onClick={() => setFilters(EMPTY_FILTERS)}>필터 초기화</button>}
-        </div>
-        {(query.trim() || hasFilters) && <div className="gallery-search-meta" role="status">{filteredItems.length}개의 관련 이미지</div>}
+        {query.trim() && <div className="gallery-search-meta" role="status">{filteredItems.length}개의 관련 이미지</div>}
       </div>}
 
       {filteredItems.length > 0 ? (

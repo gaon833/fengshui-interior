@@ -280,3 +280,56 @@ textarea{
 .gallery-filter-row button.is-active{border-color:#555;background:#555;color:#fff}
 .gallery-filter-reset{align-self:flex-end;background:transparent;color:#999}
 @media(max-width:700px){.gallery-tag-filters{padding:12px}.gallery-filter-row{grid-template-columns:1fr;gap:5px}.gallery-filter-row>span{padding-top:0}.gallery-filter-row>div{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}.gallery-filter-row>div::-webkit-scrollbar{display:none}.gallery-filter-row button{flex:0 0 auto}}
+
+/* v7.2.1 requested UI refinement */
+/* 관리자 태그: 얇은 실선과 글자색 통일 */
+.gallery-tag-buttons button{
+  border:1px solid #8a8a8a!important;
+  background:transparent!important;
+  color:#8a8a8a!important;
+  box-shadow:none!important;
+}
+.gallery-tag-buttons button:hover{
+  border-color:#666!important;
+  color:#666!important;
+  background:rgba(100,100,100,.035)!important;
+}
+.gallery-tag-buttons button.is-selected{
+  border-color:#666!important;
+  background:#666!important;
+  color:#fff!important;
+}
+.gallery-tag-group{
+  border:1px solid rgba(138,138,138,.48)!important;
+  padding:13px 16px 14px!important;
+}
+.gallery-tag-group legend{color:#8a8a8a!important;padding:0 5px}
+.gallery-tag-group legend small{border:1px solid rgba(138,138,138,.5);background:transparent!important;color:#8a8a8a!important}
+
+/* 완료 버튼: 삭제 대상 그리드의 오른쪽 위 + 이미지 삭제 버튼과 같은 모양 */
+.admin-delete-page-shell.is-gallery-delete{max-width:1600px;margin:0 auto}
+.admin-delete-page-shell .admin-delete-chrome{top:0!important;right:0!important}
+.admin-delete-page-shell .admin-delete-chrome__done{
+  min-width:104px!important;
+  min-height:46px!important;
+  padding:0 22px!important;
+  border:1px solid rgba(105,105,105,.24)!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  color:#777!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.07)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+}
+
+/* GALLERY 관리: 사진 저장과 이미지 삭제 버튼을 10px 간격으로 배치 */
+.gallery-admin-actions{display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap}
+.gallery-admin-actions .admin-primary-button,
+.gallery-admin-actions .admin-filter-button{min-height:46px!important;padding:0 22px!important;border-radius:14px!important;display:inline-flex;align-items:center;justify-content:center}
+
+/* 공개 GALLERY는 검색창만 표시 */
+.gallery-discovery-wrap{margin-bottom:22px}
+@media(max-width:900px){
+  .admin-delete-page-shell .admin-delete-chrome{right:0!important}
+  .gallery-admin-actions{gap:10px}
+}
