@@ -5,6 +5,18 @@ export default function ProjectGrid({ projects, adminDeleteActive = false, onDel
   const leftProjects = projects.filter((_, index) => index % 2 === 0);
   const rightProjects = projects.filter((_, index) => index % 2 === 1);
 
+  if (adminDeleteActive) {
+    return (
+      <section className="project-grid-wrap" aria-live="polite">
+        <div className="project-delete-grid">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} adminDeleteActive onDeleteProject={onDeleteProject} />
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="project-grid-wrap" aria-live="polite">
       <div className="project-grid project-grid--desktop">

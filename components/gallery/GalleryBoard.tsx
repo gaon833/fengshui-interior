@@ -81,6 +81,7 @@ export default function GalleryBoard() {
   const [hiddenIds, setHiddenIds] = useState<string[]>([]);
   const [selected, setSelected] = useState<GalleryItem | null>(null);
   const [query, setQuery] = useState("");
+  const [deleteCategory, setDeleteCategory] = useState<"ALL" | "20" | "30" | "40" | "50" | "60" | "C">("ALL");
 
   useEffect(() => {
     const sync = () => { setCustomItems(readGalleryItems()); setHiddenIds(readHiddenGalleryIds()); };
@@ -97,11 +98,17 @@ export default function GalleryBoard() {
     await fetch("/api/admin/content-delete", { method: "POST", headers: { "content-type": "application/json" }, credentials: "include", body: JSON.stringify({ kind: "gallery", id: item.id }) }).catch(() => undefined);
   };
 
-  const filteredItems = useMemo(() => items
+  const projectCategoryBySlug = useMemo(() => new Map(projects.map((project) => [project.slug, project.category])), []);
+
+  const categoryItems = useMemo(() => deleteMode.active && deleteCategory !== "ALL"
+    ? items.filter((item) => item.projectSlug && projectCategoryBySlug.get(item.projectSlug) === deleteCategory)
+    : items, [items, deleteMode.active, deleteCategory, projectCategoryBySlug]);
+
+  const filteredItems = useMemo(() => categoryItems
     .map((item) => ({ item, score: localScore(item, query) }))
     .filter((entry) => entry.score > 0)
     .sort((a, b) => b.score - a.score)
-    .map((entry) => entry.item), [items, query]);
+    .map((entry) => entry.item), [categoryItems, query]);
 
   const submitSearch = (event: FormEvent) => {
     event.preventDefault();
@@ -111,6 +118,9 @@ export default function GalleryBoard() {
   return (
     <div className={deleteMode.active ? "admin-delete-page-shell is-gallery-delete" : undefined}>
       {deleteMode.active && <AdminDeleteChrome label="GALLERY 이미지 삭제" />}
+      {deleteMode.active && <nav className="project-filter" aria-label="갤러리 필터">
+        {(["ALL", "20", "30", "40", "50", "60", "C"] as const).map((item) => <button key={item} type="button" className={deleteCategory === item ? "is-active" : undefined} aria-pressed={deleteCategory === item} onClick={() => setDeleteCategory(item)}>{item}</button>)}
+      </nav>}
       {!deleteMode.active && <div className="gallery-discovery-wrap">
         <form className="gallery-search-wrap" onSubmit={submitSearch}>
           <label className="gallery-search" aria-label="갤러리 검색">
