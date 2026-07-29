@@ -651,3 +651,82 @@ textarea{
   .admin-delete-page-shell.is-gallery-delete .gallery-masonry{columns:2!important;column-gap:12px!important;}
   .admin-delete-page-shell.is-gallery-delete .gallery-card{margin-bottom:12px!important;}
 }
+
+
+/* v7.3.5 — keep public Gallery / Projects grid geometry in visual-delete mode.
+   Only the delete-page header, filters, done button and X controls are restyled. */
+.admin-delete-page-shell.is-gallery-delete .gallery-masonry{
+  columns:5 240px!important;
+  column-gap:18px!important;
+  max-width:1600px!important;
+  margin:0 auto!important;
+}
+.admin-delete-page-shell.is-gallery-delete .gallery-card{
+  margin:0 0 24px!important;
+  break-inside:avoid!important;
+}
+.admin-delete-page-shell.is-gallery-delete .gallery-card-image{
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+.admin-delete-page-shell.is-project-delete .project-grid--desktop{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  column-gap:var(--grid-gap)!important;
+  align-items:start!important;
+}
+.admin-delete-page-shell.is-project-delete .project-grid--mobile{display:none!important;}
+.admin-delete-page-shell.is-project-delete .project-grid-column{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:var(--grid-gap)!important;
+  min-width:0!important;
+}
+.admin-delete-page-shell.is-project-delete .project-card{
+  overflow:visible!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.admin-delete-page-shell.is-project-delete .project-card-image,
+.admin-delete-page-shell.is-project-delete .project-card-image-wrap{
+  border-radius:0!important;
+}
+.admin-delete-page-shell.is-project-delete .project-card-meta{
+  min-height:0!important;
+  padding:9px 0 0!important;
+  border-top:0!important;
+}
+.admin-delete-page-shell.is-project-delete .project-card-meta h2{
+  margin:0!important;
+  font-size:9px!important;
+  font-weight:500!important;
+  line-height:1.15!important;
+  letter-spacing:.03em!important;
+}
+.admin-delete-page-shell.is-project-delete .project-card-meta p,
+.admin-delete-page-shell.is-project-delete .project-card-year{
+  margin:3px 0 0!important;
+  color:#8c8c8c!important;
+  font-size:8px!important;
+  font-weight:400!important;
+  line-height:1.15!important;
+}
+@media(max-width:1100px){
+  .admin-delete-page-shell.is-gallery-delete .gallery-masonry{columns:3 220px!important;}
+}
+@media(max-width:900px){
+  .admin-delete-page-shell.is-project-delete .project-grid--desktop{display:none!important;}
+  .admin-delete-page-shell.is-project-delete .project-grid--mobile{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:18px!important;
+  }
+  .admin-delete-page-shell.is-gallery-delete .gallery-masonry{
+    columns:2!important;
+    column-gap:10px!important;
+  }
+  .admin-delete-page-shell.is-gallery-delete .gallery-card{margin-bottom:15px!important;}
+}
