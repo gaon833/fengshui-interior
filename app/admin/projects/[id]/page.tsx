@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import ProjectEditor from "@/components/admin/ProjectEditor";
 import { getAdminProjects, getProjectById } from "@/lib/projects";
@@ -18,8 +19,8 @@ export default async function EditProjectPage({
   if (!project) notFound();
 
   return (
-    <>
+    <Suspense fallback={<p>편집기를 불러오는 중입니다.</p>}>
       <ProjectEditor defaults={getAdminProjects()} initialProject={project} />
-    </>
+    </Suspense>
   );
 }
