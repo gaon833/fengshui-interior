@@ -1,3 +1,5 @@
+import { optimizeImageFile } from "@/lib/image-optimizer";
+
 export const STORY_CONTENT_KEY = "fengshui-story-content-v1";
 export const PROCESS_CONTENT_KEY = "fengshui-process-content-v1";
 export const PAGE_CONTENT_EVENT = "fengshui-page-content-updated";
@@ -53,11 +55,5 @@ export function saveLocalContent<T>(key: string, value: T) {
 }
 
 export async function imageFileToDataUrl(file: File): Promise<string> {
-  if (file.size > 3 * 1024 * 1024) throw new Error("이미지는 3MB 이하만 업로드할 수 있습니다.");
-  return await new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result));
-    reader.onerror = () => reject(new Error("이미지를 읽지 못했습니다."));
-    reader.readAsDataURL(file);
-  });
+  return optimizeImageFile(file, { maxWidth: 1600, maxHeight: 2400, quality: 0.84 });
 }

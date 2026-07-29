@@ -1,20 +1,27 @@
-export type ImageGuide = { width: number; height: number; label: string; note?: string };
+export type ImageGuide = {
+  width?: number;
+  height?: number;
+  label: string;
+  note?: string;
+  guide?: string;
+  orientation?: "landscape" | "portrait" | "square" | "any";
+};
 
 export const IMAGE_GUIDES = {
-  logo: { width: 800, height: 300, label: "가로형", note: "PNG 투명 배경 권장" },
-  mainPc: { width: 1920, height: 1080, label: "가로", note: "16:9" },
-  mainMobile: { width: 1080, height: 1920, label: "세로", note: "9:16" },
-  og: { width: 1200, height: 630, label: "가로", note: "소셜 공유용" },
-  favicon: { width: 512, height: 512, label: "정사각형", note: "PNG 권장" },
-  story: { width: 1200, height: 1600, label: "세로", note: "3:4" },
-  process: { width: 1600, height: 900, label: "가로", note: "16:9" },
-  projectPc: { width: 1600, height: 1000, label: "가로", note: "8:5" },
-  projectMobile: { width: 1000, height: 1500, label: "세로", note: "2:3" },
-  detailLandscape: { width: 1600, height: 1000, label: "가로", note: "8:5" },
-  detailPortrait: { width: 1000, height: 1500, label: "세로", note: "2:3" },
+  logo: { label: "로고", guide: "권장 업로드 1600px 이상 · PNG 투명 배경 권장", orientation: "landscape" },
+  mainPc: { label: "가로", guide: "권장 업로드 3200 × 2100px", orientation: "landscape" },
+  mainMobile: { label: "세로", guide: "권장 업로드 가로 3200px · 원본 비율 유지", orientation: "portrait" },
+  og: { label: "가로", guide: "권장 업로드 2400 × 1260px", orientation: "landscape" },
+  favicon: { label: "정사각형", guide: "권장 업로드 1024 × 1024px · PNG 권장", orientation: "square" },
+  story: { label: "세로", guide: "권장 업로드 가로 3200px · 원본 비율 유지", orientation: "portrait" },
+  process: { label: "가로", guide: "권장 업로드 3200 × 2100px", orientation: "landscape" },
+  projectPc: { label: "가로", guide: "권장 업로드 3200 × 2100px", orientation: "landscape" },
+  projectMobile: { label: "세로", guide: "권장 업로드 가로 3200px · 원본 비율 유지", orientation: "portrait" },
+  detailLandscape: { label: "가로", guide: "권장 업로드 3200 × 2100px", orientation: "landscape" },
+  detailPortrait: { label: "세로", guide: "권장 업로드 가로 3200px · 원본 비율 유지", orientation: "portrait" },
 } satisfies Record<string, ImageGuide>;
 
-export const guideText = (guide: ImageGuide) => `${guide.label} (${guide.width} × ${guide.height}px${guide.note ? ` · ${guide.note}` : ""})`;
+export const guideText = (guide: ImageGuide) => guide.guide ?? `${guide.label}${guide.width && guide.height ? ` (${guide.width} × ${guide.height}px)` : ""}${guide.note ? ` · ${guide.note}` : ""}`;
 
 export async function readImageSize(file: File): Promise<{width:number;height:number}> {
   const url = URL.createObjectURL(file);
@@ -30,19 +37,11 @@ export async function readImageSize(file: File): Promise<{width:number;height:nu
 
 export async function confirmImageRatio(file: File, guide: ImageGuide): Promise<boolean> {
   const actual = await readImageSize(file);
-  const expectedRatio = guide.width / guide.height;
-  const actualRatio = actual.width / actual.height;
-  const difference = Math.abs(actualRatio - expectedRatio) / expectedRatio;
-  if (difference <= 0.08) return true;
-  return window.confirm(`이미지 비율이 권장 비율과 다릅니다.\n\n권장: ${guide.width} × ${guide.height}px\n현재: ${actual.width} × ${actual.height}px\n\n잘리거나 여백이 생길 수 있습니다. 그래도 업로드할까요?`);
+  const orientation = actual.width === actual.height ? "square" : actual.width > actual.height ? "landscape" : "portrait";
+  if (!guide.orientation || guide.orientation === "any" || orientation === guide.orientation) return true;
+  return window.confirm(`선택한 이미지의 방향이 권장 방향과 다릅니다.\n\n권장: ${guide.label}\n현재: ${actual.width} × ${actual.height}px\n\n그래도 업로드할까요?`);
 }
 
-export async function confirmMixedDetailImage(file: File): Promise<boolean> {
-  const actual = await readImageSize(file);
-  const ratio = actual.width / actual.height;
-  const landscape = IMAGE_GUIDES.detailLandscape.width / IMAGE_GUIDES.detailLandscape.height;
-  const portrait = IMAGE_GUIDES.detailPortrait.width / IMAGE_GUIDES.detailPortrait.height;
-  const ok = Math.min(Math.abs(ratio-landscape)/landscape, Math.abs(ratio-portrait)/portrait) <= 0.1;
-  if (ok) return true;
-  return window.confirm(`상세 이미지 비율이 권장 비율과 다릅니다.\n\n가로 권장: 1600 × 1000px\n세로 권장: 1000 × 1500px\n현재: ${actual.width} × ${actual.height}px\n\n그래도 업로드할까요?`);
+export async function confirmMixedDetailImage(_file: File): Promise<boolean> {
+  return true;
 }

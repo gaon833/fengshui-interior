@@ -4,6 +4,7 @@ import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { defaultSiteSettings, mergeSiteSettings, SITE_SETTINGS_EVENT, SITE_SETTINGS_KEY, type SiteSettings } from "@/lib/site-settings";
 import { showAdminToast } from "@/lib/admin-toast";
 import { IMAGE_GUIDES, guideText, confirmImageRatio, type ImageGuide } from "@/lib/image-guidelines";
+import { optimizeImageFile } from "@/lib/image-optimizer";
 
 const read = () => {
   try { const raw = localStorage.getItem(SITE_SETTINGS_KEY); return raw ? mergeSiteSettings(JSON.parse(raw)) : mergeSiteSettings(defaultSiteSettings); }
@@ -11,12 +12,9 @@ const read = () => {
 };
 
 async function imageToDataUrl(file: File): Promise<string> {
-  if (file.size > 3 * 1024 * 1024) throw new Error("이미지는 3MB 이하만 업로드할 수 있습니다.");
-  return await new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result)); reader.onerror = () => reject(new Error("이미지를 읽지 못했습니다.")); reader.readAsDataURL(file);
-  });
+  return optimizeImageFile(file, { maxWidth: 1600, maxHeight: 2400, quality: 0.84 });
 }
+
 
 export default function SiteSettingsForm() {
   const [site, setSite] = useState<SiteSettings>(() => mergeSiteSettings(defaultSiteSettings));
@@ -53,7 +51,7 @@ export default function SiteSettingsForm() {
         {field("브랜드명", "brandName", site.brandName)}
         {imageField("PC 메인 대표 이미지", "mainImage", site.mainImage, IMAGE_GUIDES.mainPc)}
         {imageField("모바일 메인 대표 이미지", "mobileMainImage", site.mobileMainImage || "", IMAGE_GUIDES.mainMobile)}
-        <p className="admin-note">이미지는 3MB 이하 권장입니다. 업로드 이미지는 이 브라우저에 안전하게 저장됩니다.</p>
+        <p className="admin-note">고화질 원본을 올리면 자동으로 크기와 용량을 줄여 WebP로 저장합니다.</p>
       </section>
       <section className="editor-panel"><h2>회사 정보</h2>
         {field("회사명", "company.name", site.company?.name || site.brandName)}

@@ -1,4 +1,5 @@
 import type { Project, ProjectImage } from "@/types/project";
+import { optimizeImageFile } from "@/lib/image-optimizer";
 
 export const PROJECTS_STORAGE_KEY = "fengshui-admin-projects-v3";
 export const PROJECTS_EVENT = "fengshui-projects-updated";
@@ -27,13 +28,9 @@ export function saveStoredProjects(projects: Project[]) {
 }
 
 export function fileToDataUrl(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result));
-    reader.onerror = () => reject(reader.error ?? new Error("이미지를 읽지 못했습니다."));
-    reader.readAsDataURL(file);
-  });
+  return optimizeImageFile(file, { maxWidth: 1600, maxHeight: 2400, quality: 0.84 });
 }
+
 
 export function makeProjectImage(src: string, title: string, order: number): ProjectImage {
   return {
