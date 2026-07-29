@@ -1,0 +1,75 @@
+:root {
+  --sidebar-width: 400px;
+  --page-right-gap: 35px;
+  --page-top: 94px;
+  --grid-gap: 35px;
+
+  --logo-width: 145px;
+  --logo-top: 30px;
+  --logo-left: 130px;
+  --desktop-logo-offset-x: -5px;
+
+  /* Global navigation system: edit these values once to update every public menu. */
+  --hamburger-top: 30px;
+  --hamburger-right: 30px;
+  --hamburger-size: 24px;
+  --hamburger-line-width: 18px;
+  --hamburger-line-height: 1px;
+
+  --menu-left: 25px;
+  --project-filter-top: 150px;
+  --project-filter-height: 43px;
+  --content-image-top: calc(var(--project-filter-top) + var(--project-filter-height));
+  --menu-top: var(--content-image-top);
+  --menu-font-family: "Helvetica Neue", "Nimbus Sans L", "Liberation Sans", Arial, sans-serif;
+  --menu-font-size: 16.2px;
+  --menu-font-weight: 200;
+  --menu-line-height: 1.35;
+  --menu-letter-spacing: .0726em;
+  --menu-gap: 24px;
+  --menu-divider-width: 100px;
+  --menu-divider-margin-top: 22px;
+  --menu-divider-margin-bottom: 18px;
+
+  --menu-footer-gap: 18px;
+  --menu-social-gap: 12px;
+  --menu-social-icon-size: 27px;
+  --menu-company-font-size: 9px;
+  --menu-company-title-size: 10px;
+  --menu-company-copyright-size: 8px;
+
+
+  --site-font-family: "Helvetica Neue", "Nimbus Sans L", "Liberation Sans", Arial, sans-serif;
+  --site-font-size: 14px;
+  --site-font-weight: 300;
+  --site-line-height: 1.45;
+  --site-letter-spacing: 0;
+  --site-text-color: #8f8f8f;
+  --site-strong-color: #111111;
+  --site-muted-color: #777777;
+  --site-border-color: #666666;
+
+  --page-bg: #ffffff;
+  --text-color: var(--site-text-color);
+  --muted-color: var(--site-muted-color);
+  --menu-color: var(--site-muted-color);
+  --menu-active-color: var(--site-strong-color);
+  --menu-icon-color: var(--menu-color);
+  --menu-footer-color: var(--menu-color);
+  --menu-divider-color: var(--menu-color);
+
+  /* Mobile values remain independent but are also controlled here. */
+  --mobile-menu-color: #777777;
+  --mobile-menu-active-color: #555555;
+  --mobile-menu-font-size: 15.3px;
+  --mobile-menu-gap: 22px;
+  --mobile-menu-top: 108px;
+  --mobile-hamburger-top: 20px;
+  --mobile-hamburger-right: 18px;
+  --mobile-menu-footer-gap: 15px;
+  --mobile-menu-social-gap: 10px;
+  --mobile-menu-social-icon-size: 25px;
+  --mobile-menu-company-font-size: 8px;
+  --mobile-menu-company-title-size: 9px;
+  --mobile-menu-company-copyright-size: 7px;
+}

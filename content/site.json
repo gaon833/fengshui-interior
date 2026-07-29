@@ -1,4 +1,34 @@
 {
-  "site_name": "풍수 인테리어",
-  "hero_image": "/assets/hero.jpg"
+  "brandName": "풍수 인테리어",
+  "logo": "/logo/brand-logo.png",
+  "blogUrl": "#",
+  "instagramUrl": "#",
+  "reservationUrl": "/reservation",
+  "mainImage": "/projects/calm-house/cover.webp",
+  "contact": {
+    "phone": "02-0000-0000",
+    "sms": "",
+    "kakaoUrl": "#",
+    "naverTalkUrl": "#",
+    "address": "서울특별시 마포구 양화로 17-9",
+    "copyright": "© Copyright 2026 풍수 인테리어. All rights reserved."
+  },
+  "seo": {
+    "title": "풍수 인테리어",
+    "description": "모던 인테리어 포트폴리오",
+    "ogImage": "/projects/calm-house/cover.webp",
+    "keywords": "풍수 인테리어, 아파트 인테리어, 인테리어 포트폴리오",
+    "favicon": "/logo/brand-logo.png"
+  },
+  "admin": {
+    "autosaveDelayMs": 1000,
+    "trashRetentionDays": 30
+  },
+  "mobileMainImage": "/projects/calm-house/mobile-main-portrait.webp",
+  "siteUrl": "https://fengshui-interior.pages.dev",
+  "company": {
+    "name": "풍수 인테리어",
+    "representative": "",
+    "email": ""
+  }
 }

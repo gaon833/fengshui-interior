@@ -1,0 +1,40 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import type { Project } from "@/types/project";
+import ProjectGrid from "./ProjectGrid";
+
+const categories = ["ALL", "20", "30", "40", "50", "60", "C"] as const;
+type Category = (typeof categories)[number];
+
+export default function ProjectFilterView({ projects }: { projects: Project[] }) {
+  const [activeCategory, setActiveCategory] = useState<Category>("ALL");
+  const filteredProjects = useMemo(
+    () => activeCategory === "ALL"
+      ? projects
+      : projects.filter((project) => project.category === activeCategory),
+    [activeCategory, projects],
+  );
+
+  return (
+    <>
+      <nav className="project-filter" aria-label="프로젝트 필터">
+        {categories.map((item) => (
+          <button
+            key={item}
+            type="button"
+            className={activeCategory === item ? "is-active" : undefined}
+            aria-pressed={activeCategory === item}
+            onClick={() => setActiveCategory(item)}
+          >
+            {item}
+          </button>
+        ))}
+      </nav>
+      <ProjectGrid projects={filteredProjects} />
+      {filteredProjects.length === 0 && (
+        <p className="project-empty">해당 카테고리의 공개 프로젝트가 없습니다.</p>
+      )}
+    </>
+  );
+}

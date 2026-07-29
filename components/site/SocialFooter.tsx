@@ -1,0 +1,8 @@
+"use client";
+import type { ReactNode } from "react";
+import { useSiteSettings } from "@/components/site/SiteSettingsProvider";
+function SocialAnchor({ href, label, children }: { href: string; label: string; children: ReactNode }) { const available = Boolean(href && href !== "#"); return available ? <a className="social-icon-link" href={href} target="_blank" rel="noreferrer" aria-label={label}>{children}</a> : <span className="social-icon-link is-disabled" aria-label={`${label} 링크 준비 중`}>{children}</span>; }
+export default function SocialFooter() { const site = useSiteSettings(); const companyName = site.company?.name || site.brandName; return <div className="sidebar-social-footer"><div className="sidebar-social-icons" aria-label="소셜 미디어">
+<SocialAnchor href={site.blogUrl} label="블로그"><svg className="social-icon social-icon--blog" viewBox="0 0 44 44" aria-hidden="true"><path d="M5 7.5h34v24H25.5L20 38l-3.5-6.5H5z" fill="currentColor" /><text x="22" y="23.2" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff" fontFamily="Arial, sans-serif">blog</text></svg></SocialAnchor>
+<SocialAnchor href={site.instagramUrl} label="인스타그램"><svg className="social-icon social-icon--instagram" viewBox="0 0 44 44" aria-hidden="true"><rect x="7" y="7" width="30" height="30" rx="8" fill="none" stroke="currentColor" strokeWidth="3.5" /><circle cx="22" cy="22" r="7" fill="none" stroke="currentColor" strokeWidth="3.5" /><circle cx="31.5" cy="12.8" r="2" fill="currentColor" /></svg></SocialAnchor></div>
+<div className="sidebar-company-info"><strong>{companyName}</strong><span>{site.contact.address}</span><span>Tel : {site.contact.phone}</span>{site.company?.email && <span>{site.company.email}</span>}<small>{site.contact.copyright}</small></div></div>; }
