@@ -3,11 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import type { Project } from "@/types/project";
 import { readStoredProjects } from "@/lib/project-store";
 import ProjectInfo from "./ProjectInfo";
 import ProjectGallery from "./ProjectGallery";
+import ProjectEngagementActions from "./ProjectEngagementActions";
+import ScrapButton from "./ScrapButton";
+import { trackEngagement } from "@/lib/engagement";
 
 export default function ProjectClientDetail({ defaults }: { defaults: Project[] }) {
   const searchParams = useSearchParams();
@@ -15,6 +18,10 @@ export default function ProjectClientDetail({ defaults }: { defaults: Project[] 
   const projects = useMemo(() => readStoredProjects(defaults).filter((item) => item.status === "published"), [defaults]);
   const index = projects.findIndex((item) => item.slug === slug);
   const project = index >= 0 ? projects[index] : undefined;
+
+  useEffect(() => {
+    if (project) trackEngagement({type:"view",projectSlug:project.slug,projectTitle:project.title,target:"project"});
+  }, [project?.slug]);
 
   if (!project) {
     return (
@@ -31,11 +38,10 @@ export default function ProjectClientDetail({ defaults }: { defaults: Project[] 
   return (
     <article className="project-detail-page">
       <ProjectInfo project={project} />
+      <ProjectEngagementActions slug={project.slug} title={project.title} />
       <section className="detail-gallery">
-        <figure className="detail-photo landscape detail-cover">
-          <Image src={project.coverImage} alt={project.title} width={1600} height={1050} priority unoptimized={project.coverImage.startsWith("data:")} sizes="(max-width:900px) 100vw, 70vw" />
-        </figure>
-        <ProjectGallery images={project.images} />
+        <figure className="detail-photo landscape detail-cover"><div className="detail-photo-inner"><Image src={project.coverImage} alt={project.title} width={1600} height={1050} priority unoptimized={project.coverImage.startsWith("data:")} sizes="(max-width:900px) 100vw, 70vw" /><ScrapButton className="detail-image-heart" item={{id:`project:${project.slug}`,kind:"project",projectSlug:project.slug,projectTitle:project.title,src:project.coverImage,alt:`${project.title} 대표 이미지`}} /></div></figure>
+        <ProjectGallery images={project.images} projectSlug={project.slug} projectTitle={project.title} />
       </section>
       <nav className="project-navigation" aria-label="이전·다음 프로젝트">
         <div>

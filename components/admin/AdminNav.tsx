@@ -13,6 +13,7 @@ const primaryItems = [
 const systemItems = [
   { href: "/admin/trash", label: "휴지통" },
   { href: "/admin/settings", label: "사이트 설정" },
+  { href: "/admin/analytics", label: "통계 · 소비자 분석" },
   { href: "/admin/backup", label: "백업" },
   { href: "/admin/users", label: "사용자 권한" },
 ];
