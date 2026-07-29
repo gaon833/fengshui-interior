@@ -26,20 +26,21 @@ export default function GalleryManager() {
   const [fileName, setFileName] = useState("");
   const [projectSlug, setProjectSlug] = useState("");
   const [analysis, setAnalysis] = useState<GalleryAnalysis | null>(null);
+  const [pendingId, setPendingId] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
   const sync = () => setItems(readGalleryItems());
 
   useEffect(() => { sync(); window.addEventListener(GALLERY_EVENT, sync); return () => window.removeEventListener(GALLERY_EVENT, sync); }, []);
   const linkedProject = useMemo(() => projects.find((project) => project.slug === projectSlug), [projectSlug]);
 
-  const analyze = async (image: string) => {
+  const analyze = async (image: string, galleryId = pendingId || crypto.randomUUID()) => {
     setAnalyzing(true); setAnalysis(null);
     try {
-      const response = await fetch("/api/gallery/analyze", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ image }) });
+      const response = await fetch("/api/gallery/analyze", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ image, galleryId }) });
       const payload = await response.json() as { ok?: boolean; analysis?: Partial<GalleryAnalysis>; model?: string; error?: string };
       if (!response.ok || !payload.ok || !payload.analysis) throw new Error(payload.error || "AI 분석에 실패했습니다.");
       const next = normalizeAnalysis({ ...payload.analysis, model: payload.model });
-      setAnalysis(next); showAdminToast("AI가 사진을 분석했습니다.");
+      setPendingId(galleryId); setAnalysis(next); showAdminToast("AI가 사진을 분석했습니다.");
     } catch (error) {
       showAdminToast(`${error instanceof Error ? error.message : "AI 분석 실패"} 사진은 기본 검색 정보로 저장할 수 있습니다.`, "error");
     } finally { setAnalyzing(false); }
@@ -50,9 +51,9 @@ export default function GalleryManager() {
     try {
       const optimized = await optimizeImageFile(file, { maxWidth: 1600, maxHeight: 2400, quality: .84 });
       if (items.some((item) => item.src === optimized)) { setSrc(""); setFileName(""); return showAdminToast("이미 등록된 동일한 이미지입니다.", "error"); }
-      setSrc(optimized); setFileName(file.name.replace(/\.[^.]+$/, ""));
+      const nextId = crypto.randomUUID(); setPendingId(nextId); setSrc(optimized); setFileName(file.name.replace(/\.[^.]+$/, ""));
       showAdminToast("이미지가 최적화되었습니다.");
-      await analyze(optimized);
+      await analyze(optimized, nextId);
     } catch (error) { showAdminToast(error instanceof Error ? error.message : "이미지를 처리하지 못했습니다.", "error"); }
   };
 
@@ -62,8 +63,8 @@ export default function GalleryManager() {
     const title = analysis?.caption || (linkedProject ? `${linkedProject.title} 갤러리 이미지` : (fileName || "인테리어 갤러리 이미지"));
     const aiTerms = analysis ? [analysis.caption, ...analysis.space, ...analysis.styles, ...analysis.colors, ...analysis.materials, ...analysis.features, ...analysis.keywords] : [];
     const searchText = [fileName, ...aiTerms, linkedProject?.title, linkedProject?.location, linkedProject?.area, linkedProject?.useType, ...(linkedProject?.tags || []), linkedProject?.seo?.description].filter(Boolean).join(" ");
-    addGalleryItem({ src, title, projectSlug: linkedProject?.slug, projectTitle: linkedProject?.title, searchText, analysis: analysis || undefined });
-    setSrc(""); setFileName(""); setProjectSlug(""); setAnalysis(null); showAdminToast("GALLERY 이미지가 저장되었습니다.");
+    addGalleryItem({ id: pendingId || crypto.randomUUID(), src, title, projectSlug: linkedProject?.slug, projectTitle: linkedProject?.title, searchText, analysis: analysis || undefined });
+    setSrc(""); setFileName(""); setProjectSlug(""); setAnalysis(null); setPendingId(""); showAdminToast("GALLERY 이미지가 저장되었습니다.");
   };
 
   return <div className="admin-stack">

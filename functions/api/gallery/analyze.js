@@ -54,7 +54,24 @@ export async function onRequestPost(context) {
       temperature: 0.1,
     });
     const parsed = extractJson(result?.answer || result?.response || result);
-    return json({ ok: true, analysis: parsed, model: MODEL });
+    const galleryId = typeof body.galleryId === "string" ? body.galleryId.trim().slice(0, 180) : "";
+    if (galleryId && context.env.DB) {
+      await context.env.DB.prepare(`
+        INSERT INTO gallery_ai_analysis
+          (gallery_id, description, space_type, styles, colors, materials, lighting, keywords, raw_result, analyzed_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+        ON CONFLICT(gallery_id) DO UPDATE SET
+          description = excluded.description, space_type = excluded.space_type, styles = excluded.styles,
+          colors = excluded.colors, materials = excluded.materials, lighting = excluded.lighting,
+          keywords = excluded.keywords, raw_result = excluded.raw_result, analyzed_at = CURRENT_TIMESTAMP
+      `).bind(
+        galleryId, String(parsed.caption || ""), JSON.stringify(parsed.space || []),
+        JSON.stringify(parsed.styles || []), JSON.stringify(parsed.colors || []),
+        JSON.stringify(parsed.materials || []), JSON.stringify(parsed.features || []),
+        JSON.stringify(parsed.keywords || []), JSON.stringify(parsed)
+      ).run();
+    }
+    return json({ ok: true, analysis: parsed, model: MODEL, galleryId });
   } catch (error) {
     return json({ ok: false, error: error instanceof Error ? error.message : "AI 분석에 실패했습니다." }, 500);
   }

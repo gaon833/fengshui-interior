@@ -33,6 +33,7 @@ export default function AdminSecuritySettings() {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
+      await logoutAdmin();
     }
   }
 

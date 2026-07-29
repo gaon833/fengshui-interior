@@ -52,9 +52,9 @@ export function writeGalleryItems(items: GalleryItem[]) {
   window.dispatchEvent(new CustomEvent(GALLERY_EVENT));
 }
 
-export function addGalleryItem(item: Omit<GalleryItem, "id" | "createdAt">) {
+export function addGalleryItem(item: Omit<GalleryItem, "id" | "createdAt"> & { id?: string }) {
   const next: GalleryItem[] = [
-    { ...item, id: crypto.randomUUID(), createdAt: new Date().toISOString() },
+    { ...item, id: item.id || crypto.randomUUID(), createdAt: new Date().toISOString() },
     ...readGalleryItems(),
   ];
   writeGalleryItems(next);

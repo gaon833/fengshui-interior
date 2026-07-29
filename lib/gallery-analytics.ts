@@ -1,5 +1,7 @@
 "use client";
 
+import { sendServerAnalytics } from "@/lib/server-analytics";
+
 export type GalleryAnalyticsEvent = {
   id: string;
   type: "search" | "view";
@@ -28,8 +30,10 @@ export function trackGallerySearch(query: string) {
   const normalized = query.trim();
   if (!normalized) return;
   write([{ id: crypto.randomUUID(), type: "search", query: normalized, createdAt: new Date().toISOString() }, ...readRaw()]);
+  sendServerAnalytics({ eventType: "search", searchQuery: normalized });
 }
 
 export function trackGalleryView(imageId: string) {
   write([{ id: crypto.randomUUID(), type: "view", imageId, createdAt: new Date().toISOString() }, ...readRaw()]);
+  sendServerAnalytics({ eventType: "gallery_view", galleryId: imageId, imageId });
 }

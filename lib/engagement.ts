@@ -1,5 +1,7 @@
 "use client";
 
+import { sendServerAnalytics } from "@/lib/server-analytics";
+
 export type ScrapKind = "project" | "image";
 export type ScrapItem = {
   id: string;
@@ -57,6 +59,14 @@ export function trackEngagement(event: Omit<EngagementEvent, "id" | "createdAt">
   const next: EngagementEvent[] = [{ ...event, id: crypto.randomUUID(), createdAt: new Date().toISOString() }, ...current].slice(0, 5000);
   window.localStorage.setItem(EVENTS_KEY, JSON.stringify(next));
   window.dispatchEvent(new CustomEvent(ENGAGEMENT_EVENT));
+  const galleryId = event.target === "image" && event.imageId?.startsWith("gallery:") ? event.imageId.replace(/^gallery:/, "") : undefined;
+  sendServerAnalytics({
+    eventType: event.type,
+    projectSlug: event.projectSlug && event.projectSlug !== "gallery" ? event.projectSlug : undefined,
+    galleryId,
+    imageId: event.imageId,
+    metadata: { projectTitle: event.projectTitle, target: event.target },
+  });
 }
 
 export function readEngagementEvents(): EngagementEvent[] {
