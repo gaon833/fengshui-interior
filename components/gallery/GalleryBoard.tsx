@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import projectsData from "@/content/projects.json";
 import type { Project } from "@/types/project";
 import ScrapButton from "@/components/project/ScrapButton";
@@ -11,6 +11,7 @@ import { deleteGalleryItem, GALLERY_EVENT, hideGalleryItem, readGalleryItems, re
 import { trackGallerySearch, trackGalleryView } from "@/lib/gallery-analytics";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
 import { AdminDeleteButton, AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
+import { galleryTagsToSearchText, type GalleryTags } from "@/lib/gallery-tags";
 
 const projects = projectsData as Project[];
 
@@ -32,14 +33,28 @@ const synonymGroups = [
   ["욕실", "화장실", "bathroom", "bath"], ["침실", "방", "bedroom"],
   ["화이트", "흰색", "아이보리", "크림", "오프화이트", "white", "ivory"],
   ["아이보리", "크림", "오프화이트", "화이트", "베이지", "ivory", "cream"],
-  ["우드", "나무", "오크", "월넛", "wood", "oak", "walnut"],
-  ["호텔", "호텔식", "럭셔리", "고급", "hotel", "luxury"],
+  ["우드톤", "우드", "나무", "오크", "월넛", "wood", "oak", "walnut"],
+  ["호텔식", "호텔", "럭셔리", "고급", "hotel", "luxury"],
   ["미니멀", "심플", "모던", "깔끔", "minimal", "modern"],
-  ["베이지", "크림", "아이보리", "beige", "웜", "warm"],
-  ["조명", "간접조명", "무드조명", "lighting", "light"], ["타일", "대리석", "마블", "tile", "marble"],
+  ["웜 미니멀", "따뜻한 미니멀", "warm minimalism"],
+  ["콰이어트 럭셔리", "조용한 럭셔리", "quiet luxury"],
+  ["간접조명", "무드조명", "조명", "lighting", "light"], ["타일", "대리석", "마블", "tile", "marble"],
 ];
 
-function normalize(value: string) { return value.toLocaleLowerCase("ko-KR").replace(/[^0-9a-zA-Z가-힣]+/g, " ").replace(/\s+/g, " ").trim(); }
+const QUICK_FILTERS = {
+  spaces: ["거실", "주방", "욕실", "침실"],
+  styles: ["웜 미니멀", "재팬디", "호텔식", "모던"],
+  colors: ["화이트", "아이보리", "베이지", "우드톤"],
+} as const;
+
+type FilterGroup = keyof typeof QUICK_FILTERS;
+type ActiveFilters = Record<FilterGroup, string[]>;
+const EMPTY_FILTERS: ActiveFilters = { spaces: [], styles: [], colors: [] };
+
+function normalize(value: string) {
+  return value.toLocaleLowerCase("ko-KR").replace(/[^0-9a-zA-Z가-힣]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
 function localTerms(query: string) {
   const base = normalize(query).split(" ").filter(Boolean);
   return base.map((term) => {
@@ -47,39 +62,35 @@ function localTerms(query: string) {
     return group ? group.map(normalize) : [term];
   });
 }
-function localScore(item: GalleryItem, query: string) {
-  if (!query.trim()) return 1;
-  const analysis = item.analysis;
-  const haystack = normalize([
-    item.title, item.projectTitle, item.projectSlug, item.searchText, analysis?.caption,
-    ...(analysis?.space || []), ...(analysis?.styles || []), ...(analysis?.colors || []),
-    ...(analysis?.materials || []), ...(analysis?.features || []), ...(analysis?.keywords || []),
-  ].filter(Boolean).join(" "));
-  let score = 0;
-  for (const alternatives of localTerms(query)) {
-    const matches = alternatives.filter((term) => haystack.includes(term)).length;
-    if (!matches) return 0;
-    score += matches * 8;
-  }
-  if (haystack.includes(normalize(query))) score += 30;
-  return score;
+
+function tagValues(tags?: GalleryTags) {
+  if (!tags) return [];
+  return [tags.space, ...tags.structures, ...tags.styles, ...tags.colors, ...tags.materials, ...tags.features].filter(Boolean);
 }
 
-type SearchResult = { galleryId: string; score: number; matchedTerms?: string[] };
+function itemMatchesFilters(item: GalleryItem, filters: ActiveFilters) {
+  const tags = item.tags;
+  if (!tags) return Object.values(filters).every((values) => values.length === 0);
+  return filters.spaces.every((value) => tags.space === value)
+    && filters.styles.every((value) => tags.styles.includes(value))
+    && filters.colors.every((value) => tags.colors.includes(value));
+}
 
-
-function GalleryMasonryCard({ item, deleteMode, onOpen, onDelete }: { item: GalleryItem; deleteMode: boolean; onOpen: () => void; onDelete: () => void }) {
-  const [rowSpan, setRowSpan] = useState(42);
-  return <article className="gallery-card" style={{ gridRowEnd: `span ${rowSpan}` }}><div className="gallery-card-image" role="button" tabIndex={0} aria-label={`${item.title} 크게 보기`}
-    onClick={() => { if (!deleteMode) onOpen(); }}
-    onKeyDown={(event) => { if (!deleteMode && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); onOpen(); } }}>
-    <Image src={item.src} alt={item.title} width={1200} height={1600} sizes="(max-width:700px) 50vw, (max-width:1200px) 33vw, 25vw" loading="lazy" decoding="async" unoptimized={item.src.startsWith("data:")}
-      onLoad={(event) => { const image=event.currentTarget; const width=image.clientWidth||image.naturalWidth; const height=width*(image.naturalHeight/image.naturalWidth); setRowSpan(Math.max(18,Math.ceil((height+18)/8))); }} />
-    {deleteMode ? <AdminDeleteButton label={`${item.title} 삭제`} onDelete={onDelete} /> : <>
-      <ScrapButton className="gallery-card-heart" item={{ id:`gallery:${item.id}`,kind:"image",projectSlug:item.projectSlug||"gallery",projectTitle:item.projectTitle||item.title,src:item.src,alt:item.title }} />
-      <ShareIconButton className="gallery-card-share" projectSlug={item.projectSlug} projectTitle={item.projectTitle||item.title} fallbackPath="/gallery" />
-    </>}
-  </div></article>;
+function localScore(item: GalleryItem, query: string) {
+  if (!query.trim()) return 1;
+  const tags = item.tags;
+  const tagText = tags ? galleryTagsToSearchText(tags) : "";
+  const haystack = normalize([item.title, item.projectTitle, item.projectSlug, item.searchText, tagText].filter(Boolean).join(" "));
+  let score = 0;
+  for (const alternatives of localTerms(query)) {
+    const exactTagMatches = tagValues(tags).filter((tag) => alternatives.some((term) => normalize(tag) === term)).length;
+    const textMatches = alternatives.filter((term) => haystack.includes(term)).length;
+    if (!exactTagMatches && !textMatches) return 0;
+    score += exactTagMatches * 40 + textMatches * 8;
+  }
+  if (haystack.includes(normalize(query))) score += 30;
+  if (tags?.space && localTerms(query).flat().includes(normalize(tags.space))) score += 60;
+  return score;
 }
 
 export default function GalleryBoard() {
@@ -88,9 +99,7 @@ export default function GalleryBoard() {
   const [hiddenIds, setHiddenIds] = useState<string[]>([]);
   const [selected, setSelected] = useState<GalleryItem | null>(null);
   const [query, setQuery] = useState("");
-  const [remoteResults, setRemoteResults] = useState<SearchResult[] | null>(null);
-  const [searching, setSearching] = useState(false);
-  const [usedAI, setUsedAI] = useState(false);
+  const [filters, setFilters] = useState<ActiveFilters>(EMPTY_FILTERS);
 
   useEffect(() => {
     const sync = () => { setCustomItems(readGalleryItems()); setHiddenIds(readHiddenGalleryIds()); };
@@ -100,28 +109,6 @@ export default function GalleryBoard() {
 
   const items = useMemo(() => [...customItems, ...seedItems].filter((item) => !hiddenIds.includes(item.id)), [customItems, hiddenIds]);
 
-  useEffect(() => {
-    const normalizedQuery = query.trim();
-    if (!normalizedQuery) { setRemoteResults(null); setSearching(false); setUsedAI(false); return; }
-    const timer = window.setTimeout(async () => {
-      setSearching(true);
-      trackGallerySearch(normalizedQuery);
-      try {
-        const response = await fetch("/api/gallery/search", {
-          method: "POST", headers: { "content-type": "application/json" },
-          body: JSON.stringify({ query: normalizedQuery, galleryIds: customItems.map((item) => item.id) }),
-        });
-        const payload = await response.json() as { ok?: boolean; results?: SearchResult[]; usedAI?: boolean };
-        if (!response.ok || !payload.ok) throw new Error("검색 실패");
-        setRemoteResults(payload.results || []); setUsedAI(Boolean(payload.usedAI));
-      } catch {
-        setRemoteResults([]); setUsedAI(false);
-      } finally { setSearching(false); }
-    }, 550);
-    return () => window.clearTimeout(timer);
-  }, [query, customItems]);
-
-
   const removeGalleryItem = async (item: GalleryItem) => {
     if (!confirmVisualDelete("이 GALLERY 이미지를 삭제하시겠습니까?")) return;
     if (item.id.startsWith("seed:")) hideGalleryItem(item.id); else deleteGalleryItem(item.id);
@@ -129,40 +116,63 @@ export default function GalleryBoard() {
     await fetch("/api/admin/content-delete", { method: "POST", headers: { "content-type": "application/json" }, credentials: "include", body: JSON.stringify({ kind: "gallery", id: item.id }) }).catch(() => undefined);
   };
 
-  const filteredItems = useMemo(() => {
-    if (!query.trim()) return items;
-    const remoteMap = new Map((remoteResults || []).map((result) => [result.galleryId, result.score]));
-    return items
-      .map((item) => {
-        const remote = remoteMap.get(item.id) || 0;
-        const local = localScore(item, query);
-        return { item, score: Math.max(remote, local) + (remote > 0 ? 1000 : 0) };
-      })
-      .filter((entry) => entry.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .map((entry) => entry.item);
-  }, [items, query, remoteResults]);
+  const filteredItems = useMemo(() => items
+    .filter((item) => itemMatchesFilters(item, filters))
+    .map((item) => ({ item, score: localScore(item, query) }))
+    .filter((entry) => entry.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map((entry) => entry.item), [items, query, filters]);
+
+  const toggleFilter = (group: FilterGroup, value: string) => {
+    setFilters((current) => ({ ...current, [group]: current[group].includes(value) ? current[group].filter((item) => item !== value) : [...current[group], value] }));
+  };
+
+  const submitSearch = (event: FormEvent) => {
+    event.preventDefault();
+    const filterText = [...filters.spaces, ...filters.styles, ...filters.colors].join(" ");
+    trackGallerySearch([query, filterText].filter(Boolean).join(" "));
+  };
+
+  const hasFilters = Object.values(filters).some((values) => values.length > 0);
 
   return (
     <div className={deleteMode.active ? "admin-delete-page-shell is-gallery-delete" : undefined}>
       {deleteMode.active && <AdminDeleteChrome label="GALLERY 이미지 삭제" />}
-      {!deleteMode.active && <div className="gallery-search-wrap">
-        <label className="gallery-search" aria-label="AI 갤러리 검색">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
-          <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="거실, 아이보리, 호텔 느낌처럼 검색해보세요" autoComplete="off" />
-          {searching && <span className="gallery-searching" aria-label="AI 검색 중">AI</span>}
-          {!searching && query && <button type="button" onClick={() => setQuery("")} aria-label="검색어 지우기">×</button>}
-        </label>
-        {query.trim() && <div className="gallery-search-meta" role="status">{searching ? "AI가 사진 분석 결과를 검색하고 있습니다…" : `${filteredItems.length}개의 관련 이미지${usedAI ? " · AI 의미 검색" : ""}`}</div>}
+      {!deleteMode.active && <div className="gallery-discovery-wrap">
+        <form className="gallery-search-wrap" onSubmit={submitSearch}>
+          <label className="gallery-search" aria-label="갤러리 검색">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
+            <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="화이트 거실, 간접조명 욕실처럼 검색해보세요" autoComplete="off" />
+            {query && <button type="button" onClick={() => setQuery("")} aria-label="검색어 지우기">×</button>}
+          </label>
+        </form>
+        <div className="gallery-tag-filters" aria-label="빠른 태그 필터">
+          {Object.entries(QUICK_FILTERS).map(([group, values]) => <div className="gallery-filter-row" key={group}>
+            <span>{group === "spaces" ? "공간" : group === "styles" ? "스타일" : "색상"}</span>
+            <div>{values.map((value) => <button type="button" key={value} className={filters[group as FilterGroup].includes(value) ? "is-active" : ""} onClick={() => toggleFilter(group as FilterGroup, value)}>{value}</button>)}</div>
+          </div>)}
+          {hasFilters && <button type="button" className="gallery-filter-reset" onClick={() => setFilters(EMPTY_FILTERS)}>필터 초기화</button>}
+        </div>
+        {(query.trim() || hasFilters) && <div className="gallery-search-meta" role="status">{filteredItems.length}개의 관련 이미지</div>}
       </div>}
 
       {filteredItems.length > 0 ? (
         <section className="gallery-masonry" aria-label="인테리어 갤러리 검색 결과">
-          {filteredItems.map((item) => <GalleryMasonryCard key={item.id} item={item} deleteMode={deleteMode.active} onOpen={() => { trackGalleryView(item.id); setSelected(item); }} onDelete={() => void removeGalleryItem(item)} />)}
+          {filteredItems.map((item) => (
+            <article className="gallery-card" key={item.id}><div className="gallery-card-image" role="button" tabIndex={0} aria-label={`${item.title} 크게 보기`}
+              onClick={() => { if (!deleteMode.active) { trackGalleryView(item.id); setSelected(item); } }}
+              onKeyDown={(event) => { if (!deleteMode.active && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); trackGalleryView(item.id); setSelected(item); } }}>
+              <Image src={item.src} alt={item.title} width={1200} height={1600} sizes="(max-width:700px) 50vw, (max-width:1200px) 33vw, 25vw" loading="lazy" decoding="async" unoptimized={item.src.startsWith("data:")} />
+              {deleteMode.active ? <AdminDeleteButton label={`${item.title} 삭제`} onDelete={() => void removeGalleryItem(item)} /> : <>
+                <ScrapButton className="gallery-card-heart" item={{ id: `gallery:${item.id}`, kind: "image", projectSlug: item.projectSlug || "gallery", projectTitle: item.projectTitle || item.title, src: item.src, alt: item.title }} />
+                <ShareIconButton className="gallery-card-share" projectSlug={item.projectSlug} projectTitle={item.projectTitle || item.title} fallbackPath="/gallery" />
+              </>}
+            </div></article>
+          ))}
         </section>
-      ) : !searching ? (
-        <div className="gallery-empty-search" role="status"><p>관련 이미지를 찾지 못했습니다.</p><span>다른 표현으로 검색해 보세요.</span></div>
-      ) : null}
+      ) : (
+        <div className="gallery-empty-search" role="status"><p>관련 이미지를 찾지 못했습니다.</p><span>다른 태그나 표현으로 검색해 보세요.</span></div>
+      )}
 
       {!deleteMode.active && <ImageLightbox item={selected ? { id: `gallery:${selected.id}`, src: selected.src, alt: selected.title, projectSlug: selected.projectSlug, projectTitle: selected.projectTitle || selected.title } : null} onClose={() => setSelected(null)} />}
     </div>

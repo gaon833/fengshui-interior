@@ -1,5 +1,7 @@
 "use client";
 
+import type { GalleryTags } from "@/lib/gallery-tags";
+
 export type GalleryAnalysis = {
   caption: string;
   space: string[];
@@ -20,6 +22,7 @@ export type GalleryItem = {
   projectTitle?: string;
   searchText?: string;
   analysis?: GalleryAnalysis;
+  tags?: GalleryTags;
   createdAt: string;
 };
 
@@ -40,6 +43,7 @@ export function readGalleryItems(): GalleryItem[] {
       projectTitle: item.projectTitle,
       searchText: item.searchText || [item.title, item.space, item.projectTitle, item.projectSlug].filter(Boolean).join(" "),
       analysis: item.analysis,
+      tags: item.tags,
       createdAt: item.createdAt,
     }));
   } catch {
@@ -61,9 +65,9 @@ export function addGalleryItems(items: Array<Omit<GalleryItem, "id" | "createdAt
   const prepared: GalleryItem[] = items.map((item, index) => ({
     ...item,
     id: item.id || crypto.randomUUID(),
-    // 같은 묶음은 선택 순서를 유지하고, 묶음 전체는 기존 사진보다 앞에 놓는다.
     createdAt: new Date(createdAt + index).toISOString(),
   }));
+  // 같은 업로드 묶음은 사용자가 선택한 왼쪽→오른쪽 순서를 그대로 유지한다.
   writeGalleryItems([...prepared, ...readGalleryItems()]);
 }
 

@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { ENGAGEMENT_EVENT, readEngagementEvents, readScraps } from "@/lib/engagement";
 import { GALLERY_ANALYTICS_EVENT, readGalleryAnalytics } from "@/lib/gallery-analytics";
-import AiConsumerInsights from "@/components/admin/AiConsumerInsights";
 
 type Rank = { label: string; count: number };
 type Summary = {
@@ -61,13 +60,12 @@ export default function AnalyticsDashboard() {
       <article><strong>{summary.totals.searches}</strong><span>Gallery 검색</span></article>
       <article><strong>{summary.totals.views}</strong><span>콘텐츠 조회</span></article>
     </div>
-    <AiConsumerInsights />
-    <section className="admin-insight"><h2>빠른 요약</h2><p>{insight}</p><small>D1에 모인 전체 방문자의 행동 통계와 Workers AI 이미지 분석 결과를 기준으로 합니다.</small></section>
+    <section className="admin-insight"><h2>빠른 요약</h2><p>{insight}</p><small>D1에 모인 전체 방문자의 검색·조회·스크랩·공유 행동을 기준으로 합니다.</small></section>
     {renderRanks("Gallery 인기 검색어", summary.searches.map((row)=>({label:row.keyword,count:Number(row.count)})))}
-    {renderRanks("AI 분석 인기 스타일", summary.trends.styles)}
-    {renderRanks("AI 분석 인기 공간", summary.trends.spaces)}
-    {renderRanks("AI 분석 인기 색상", summary.trends.colors)}
-    {renderRanks("AI 분석 인기 자재", summary.trends.materials)}
+    {renderRanks("인기 스타일 태그", summary.trends.styles)}
+    {renderRanks("인기 공간 태그", summary.trends.spaces)}
+    {renderRanks("인기 색상 태그", summary.trends.colors)}
+    {renderRanks("인기 소재 태그", summary.trends.materials)}
     <section className="admin-analytics-list"><h2>인기 프로젝트</h2>{summary.projects.length ? summary.projects.map((row,i)=><article key={row.project_slug}><span>{String(i+1).padStart(2,"0")}</span><strong>{row.project_slug}</strong><em>조회 {row.views} · 스크랩 {row.scraps} · 공유 {row.shares}</em></article>) : <p>아직 집계할 데이터가 없습니다.</p>}</section>
     <section className="admin-analytics-list"><h2>인기 Gallery 이미지</h2>{summary.gallery.length ? summary.gallery.map((row,i)=><article key={row.gallery_id}><span>{String(i+1).padStart(2,"0")}</span><strong>{row.gallery_id}</strong><em>조회 {row.views} · 스크랩 {row.scraps} · 공유 {row.shares}</em></article>) : <p>아직 집계할 데이터가 없습니다.</p>}</section>
     <section className="admin-insight"><h2>현재 브라우저 기록</h2><p>스크랩 {local.scraps}개 · 프로젝트 행동 {local.events}건 · Gallery 검색·조회 {local.gallery}건</p><small>오프라인이나 서버 전송 실패 시에도 고객의 개인 SCRAP 기능은 계속 동작합니다.</small></section>
