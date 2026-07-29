@@ -28,9 +28,9 @@ export async function checkAdminSession(): Promise<boolean> {
   return Boolean(result.ok && result.authenticated);
 }
 
-export async function loginAdmin(password: string, remember: boolean): Promise<AdminAuthResult> {
+export async function loginAdmin(password: string): Promise<AdminAuthResult> {
   if (!/^\d{4}$/.test(password)) return { ok: false, message: "비밀번호는 숫자 4자리로 입력하세요." };
-  const result = await request<AdminAuthResult>("/api/admin/login", { method: "POST", body: JSON.stringify({ password, remember }) });
+  const result = await request<AdminAuthResult>("/api/admin/login", { method: "POST", body: JSON.stringify({ password }) });
   if (result.ok) emitAuthChange();
   return result;
 }

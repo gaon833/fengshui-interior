@@ -6,7 +6,6 @@ export async function onRequestPost(context) {
     await ensureAdminTables(context.env.DB);
     const body = await context.request.json();
     const password = typeof body?.password === "string" ? body.password : "";
-    const remember = body?.remember !== false;
     if (!/^\d{4}$/.test(password)) return json({ ok: false, message: "비밀번호는 숫자 4자리로 입력하세요." }, 400);
     const key = clientKey(context.request);
     const lock = await checkLock(context.env.DB, key);
@@ -17,7 +16,7 @@ export async function onRequestPost(context) {
       return json({ ok: false, remainingAttempts: failed.remainingAttempts, message: `비밀번호가 올바르지 않습니다. ${failed.remainingAttempts}회 남았습니다.` }, 401);
     }
     await clearFailures(context.env.DB, key);
-    const session = await createSession(context.env.DB, remember);
+    const session = await createSession(context.env.DB);
     return json({ ok: true, authenticated: true }, 200, { "set-cookie": sessionCookie(session.token, session.seconds) });
   } catch (error) {
     return json({ ok: false, message: error instanceof Error ? error.message : "로그인에 실패했습니다." }, 500);

@@ -7,7 +7,6 @@ export default function AdminAuthGate({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(true);
   const [message, setMessage] = useState("");
   const [lockedUntil, setLockedUntil] = useState(0);
   const [submitting, setSubmitting] = useState(false);
@@ -27,7 +26,7 @@ export default function AdminAuthGate({ children }: { children: ReactNode }) {
     if (submitting || lockedUntil > Date.now()) return;
     setSubmitting(true);
     setMessage("");
-    const result = await loginAdmin(password, remember);
+    const result = await loginAdmin(password);
     setSubmitting(false);
 
     if (result.ok) {
@@ -64,10 +63,6 @@ export default function AdminAuthGate({ children }: { children: ReactNode }) {
             disabled={currentlyLocked || submitting}
             required
           />
-        </label>
-        <label className="admin-login-remember">
-          <input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} />
-          <span>로그인 상태 7일 유지</span>
         </label>
         {message && <p className="admin-login-message" role="alert">{message}</p>}
         <button type="submit" disabled={currentlyLocked || submitting}>{submitting ? "확인 중" : "로그인"}</button>
