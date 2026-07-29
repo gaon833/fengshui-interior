@@ -130,7 +130,7 @@ export default function GalleryBoard() {
 
   return (
     <>
-      {deleteMode.active && <AdminDeleteChrome label="GALLERY 삭제 모드" />}
+      {deleteMode.active && <AdminDeleteChrome label="GALLERY 이미지 삭제" />}
       {!deleteMode.active && <div className="gallery-search-wrap">
         <label className="gallery-search" aria-label="AI 갤러리 검색">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>

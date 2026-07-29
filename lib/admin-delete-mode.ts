@@ -33,8 +33,28 @@ export function useAdminDeleteMode() {
   return { requested, authorized, checking, active: requested && authorized };
 }
 
+const SAFE_ADMIN_RETURN_PATHS = new Set([
+  "/admin",
+  "/admin/projects",
+  "/admin/gallery",
+  "/admin/story",
+  "/admin/process",
+  "/admin/settings",
+]);
+
+export function buildAdminDeleteHref(pathname: string, returnTo: string) {
+  const params = new URLSearchParams({ [ADMIN_DELETE_PARAM]: "1", returnTo });
+  return `${pathname}?${params.toString()}`;
+}
+
 export function leaveAdminDeleteMode() {
   const url = new URL(window.location.href);
+  const requestedReturn = url.searchParams.get("returnTo") || "";
+  if (SAFE_ADMIN_RETURN_PATHS.has(requestedReturn)) {
+    window.location.href = requestedReturn;
+    return;
+  }
   url.searchParams.delete(ADMIN_DELETE_PARAM);
+  url.searchParams.delete("returnTo");
   window.location.href = `${url.pathname}${url.search}${url.hash}`;
 }

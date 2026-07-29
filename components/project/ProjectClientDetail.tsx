@@ -39,7 +39,7 @@ export default function ProjectClientDetail({ defaults }: { defaults: Project[] 
   const next = projects[(index + 1) % projects.length];
 
   return (
-    <>{deleteMode.active && <AdminDeleteChrome label="프로젝트 상세 이미지 삭제 모드" />}<article className="project-detail-page">
+    <>{deleteMode.active && <AdminDeleteChrome label="프로젝트 상세 이미지 삭제" />}<article className="project-detail-page">
       <ProjectInfo project={project} />
       <section className="detail-gallery">
         <figure className="detail-photo landscape detail-cover"><div className="detail-photo-inner"><Image src={project.coverImage} alt={project.title} width={1600} height={1050} priority unoptimized={project.coverImage.startsWith("data:")} sizes="(max-width:900px) 100vw, 70vw" />{!deleteMode.active && <><ScrapButton className="detail-image-heart" item={{id:`project:${project.slug}`,kind:"project",projectSlug:project.slug,projectTitle:project.title,src:project.coverImage,alt:`${project.title} 대표 이미지`}} /><ShareIconButton className="detail-image-share" projectSlug={project.slug} projectTitle={project.title} /></>}</div></figure>

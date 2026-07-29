@@ -66,7 +66,7 @@ export default function AdminProjectList({ projects }: { projects: Project[] }) 
       {filteredProjects.map((project) => <div className="admin-row admin-project-row" key={project.id}>
         <span className="order-buttons"><button type="button" onClick={() => move(project.id, -1)}>↑</button><button type="button" onClick={() => move(project.id, 1)}>↓</button></span>
         <strong>{project.title}</strong><span>{project.location}</span><span>{project.area}</span><span>{project.tags.join(", ")}</span><span>{statusLabels[project.status]}</span>
-        <span className="row-actions"><Link href={`/admin/projects/new/?id=${encodeURIComponent(project.id)}`}>수정</Link><Link href={`/project/view/?slug=${encodeURIComponent(project.slug)}&adminDelete=1`}>이미지 삭제</Link></span>
+        <span className="row-actions"><Link href={`/admin/projects/new/?id=${encodeURIComponent(project.id)}`}>수정</Link><Link href={`/project/view/?slug=${encodeURIComponent(project.slug)}&adminDelete=1&returnTo=%2Fadmin%2Fprojects`}>이미지 삭제</Link></span>
       </div>)}
     </div>
   </>;

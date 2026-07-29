@@ -7,7 +7,7 @@ import ProjectGrid from "./ProjectGrid";
 const categories = ["ALL", "20", "30", "40", "50", "60", "C"] as const;
 type Category = (typeof categories)[number];
 
-export default function ProjectFilterView({ projects }: { projects: Project[] }) {
+export default function ProjectFilterView({ projects, adminDeleteActive = false, onDeleteProject }: { projects: Project[]; adminDeleteActive?: boolean; onDeleteProject?: (project: Project) => void }) {
   const [activeCategory, setActiveCategory] = useState<Category>("ALL");
   const filteredProjects = useMemo(
     () => activeCategory === "ALL"
@@ -31,7 +31,7 @@ export default function ProjectFilterView({ projects }: { projects: Project[] })
           </button>
         ))}
       </nav>
-      <ProjectGrid projects={filteredProjects} />
+      <ProjectGrid projects={filteredProjects} adminDeleteActive={adminDeleteActive} onDeleteProject={onDeleteProject} />
       {filteredProjects.length === 0 && (
         <p className="project-empty">해당 카테고리의 공개 프로젝트가 없습니다.</p>
       )}

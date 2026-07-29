@@ -182,3 +182,9 @@
 .admin-ai-result{padding:20px;border:1px solid rgba(120,120,120,.18);background:rgba(255,255,255,.72);backdrop-filter:blur(16px)}
 .admin-ai-result p{margin:10px 0 14px;color:#666}.admin-ai-result div{display:flex;flex-wrap:wrap;gap:7px}.admin-ai-result span{padding:6px 9px;border:1px solid #ddd;border-radius:999px;font-size:12px;color:#777}
 .admin-gallery-list article small{display:block;margin:7px 0;color:#999;font-size:12px}
+
+/* v6.7.1 image delete action placement */
+.admin-heading-actions .admin-filter-button[href*="adminDelete"],
+.admin-heading .admin-filter-button[href*="adminDelete"]{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 18px;border:1px solid #cfcfcf;border-radius:10px;background:#fff;color:#555;box-shadow:0 5px 16px rgba(0,0,0,.04);text-decoration:none;transition:border-color .18s ease,color .18s ease,transform .18s ease}
+.admin-heading-actions .admin-filter-button[href*="adminDelete"]:hover,
+.admin-heading .admin-filter-button[href*="adminDelete"]:hover{border-color:#8b8b8b;color:#222;transform:translateY(-1px)}

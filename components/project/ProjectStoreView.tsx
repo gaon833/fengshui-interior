@@ -5,7 +5,7 @@ import type { Project } from "@/types/project";
 import { PROJECTS_EVENT, PROJECTS_STORAGE_KEY, readStoredProjects, saveStoredProjects } from "@/lib/project-store";
 import ProjectFilterView from "./ProjectFilterView";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
-import { AdminDeleteChrome } from "@/components/admin-delete/AdminDeleteChrome";
+import { AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
 
 export default function ProjectStoreView({ projects }: { projects: Project[] }) {
   const deleteMode = useAdminDeleteMode();
@@ -21,5 +21,22 @@ export default function ProjectStoreView({ projects }: { projects: Project[] }) 
       window.removeEventListener(PROJECTS_EVENT, sync);
     };
   }, [projects, deleteMode.active]);
-  return <>{deleteMode.active && <AdminDeleteChrome label="PROJECTS 삭제 모드" />}<ProjectFilterView projects={items} /></>;
+  const removeProject = async (project: Project) => {
+    if (!confirmVisualDelete(`${project.title} 프로젝트를 삭제하시겠습니까?`, "공개 화면에서 즉시 사라지고 휴지통으로 이동합니다.")) return;
+    const now = new Date().toISOString();
+    const allProjects = readStoredProjects(projects);
+    const next = allProjects.map((item) => item.id === project.id
+      ? { ...item, status: "trash" as const, deletedAt: now, updatedAt: now }
+      : item);
+    saveStoredProjects(next);
+    setItems(next.filter((item) => item.status === "published"));
+    await fetch("/api/admin/content-delete", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ kind: "project", id: project.slug }),
+    }).catch(() => undefined);
+  };
+
+  return <>{deleteMode.active && <AdminDeleteChrome label="PROJECTS 이미지 삭제" />}<ProjectFilterView projects={items} adminDeleteActive={deleteMode.active} onDeleteProject={removeProject} /></>;
 }
