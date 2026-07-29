@@ -72,10 +72,7 @@ export default function GalleryBoard() {
                 fallbackPath="/gallery"
               />
             </div>
-            <div className="gallery-card-meta">
-              <span>{item.space}</span>
-              <strong>{item.title}</strong>
-            </div>
+
           </>
         );
 

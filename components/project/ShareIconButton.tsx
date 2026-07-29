@@ -57,10 +57,8 @@ export default function ShareIconButton({ projectSlug, projectTitle, className =
         onClick={onShare}
       >
         <svg aria-hidden="true" viewBox="0 0 32 32" focusable="false">
-          <path d="M10.8 16.2 22.3 9.6M10.8 16.2l11.5 6.6" />
-          <circle cx="8" cy="16" r="4.2" />
-          <circle cx="24.5" cy="7.8" r="4.2" />
-          <circle cx="24.5" cy="24.2" r="4.2" />
+          <path className="share-tray" d="M8.5 15.5v8.25c0 1.52 1.23 2.75 2.75 2.75h9.5c1.52 0 2.75-1.23 2.75-2.75V15.5" />
+          <path className="share-arrow" d="M16 21V5.5M10.75 10.75 16 5.5l5.25 5.25" />
         </svg>
       </button>
       {message && <div className="scrap-feedback" role="status">{message}</div>}

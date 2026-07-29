@@ -150,3 +150,66 @@
   .project-card-share,.detail-image-share{top:39px;right:10px}
   .gallery-card-share{top:37px;right:9px}
 }
+
+
+/* v5.0.5 refined hover controls and iOS-style share icon */
+.project-card-image,.gallery-card-image,.detail-photo-inner{position:relative}
+.project-card-image .scrap-heart,
+.project-card-image .image-share-button,
+.gallery-card-image .scrap-heart,
+.gallery-card-image .image-share-button,
+.detail-photo-inner .scrap-heart,
+.detail-photo-inner .image-share-button{
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.project-card-image:hover .scrap-heart,
+.project-card-image:hover .image-share-button,
+.project-card-image:focus-within .scrap-heart,
+.project-card-image:focus-within .image-share-button,
+.gallery-card-image:hover .scrap-heart,
+.gallery-card-image:hover .image-share-button,
+.gallery-card-image:focus-within .scrap-heart,
+.gallery-card-image:focus-within .image-share-button,
+.detail-photo-inner:hover .scrap-heart,
+.detail-photo-inner:hover .image-share-button,
+.detail-photo-inner:focus-within .scrap-heart,
+.detail-photo-inner:focus-within .image-share-button{
+  opacity:1;
+  pointer-events:auto;
+}
+.image-share-button{
+  width:30px;
+  height:30px;
+  border-radius:10px;
+  background:rgba(255,255,255,.94);
+  color:#222;
+  box-shadow:0 5px 18px rgba(0,0,0,.16);
+  filter:none;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.image-share-button svg{width:17px;height:17px}
+.image-share-button path{fill:none;stroke:currentColor;stroke-width:2.15;stroke-linecap:round;stroke-linejoin:round}
+.project-card-share,.detail-image-share,.gallery-card-share{top:auto;right:14px;bottom:14px}
+.gallery-card-image{border-radius:18px}
+.gallery-card-image img{border-radius:18px}
+.gallery-card{margin-bottom:18px}
+.gallery-card-meta{display:none!important}
+@media(max-width:900px){
+  .project-card-share,.detail-image-share,.gallery-card-share{top:auto;right:10px;bottom:10px}
+  .image-share-button{width:28px;height:28px;border-radius:9px}
+  .gallery-card-image,.gallery-card-image img{border-radius:14px}
+}
+@media(hover:none),(pointer:coarse){
+  .project-card-image .scrap-heart,
+  .project-card-image .image-share-button,
+  .gallery-card-image .scrap-heart,
+  .gallery-card-image .image-share-button,
+  .detail-photo-inner .scrap-heart,
+  .detail-photo-inner .image-share-button{
+    opacity:.96;
+    pointer-events:auto;
+  }
+}
