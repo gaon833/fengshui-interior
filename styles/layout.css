@@ -18,6 +18,9 @@ body, button, input, select, textarea, a, h1, h2, h3, h4, h5, h6, p, dt, dd, spa
 .site-shell--fixed .site-floating-logo { display: none; }
 .brand-logo { display: inline-flex; align-items: flex-start; width: var(--logo-width); line-height: 0; }
 .brand-logo img { display:block; width:100%; height:auto; object-fit:contain; }
+@media (min-width:901px) {
+  .brand-logo { margin-left: var(--desktop-logo-offset-x); }
+}
 .sidebar-logo, .drawer-logo, .site-floating-logo, .project-detail-logo {
   position: fixed; top: var(--logo-top); left: var(--logo-left); z-index: 56;
 }
