@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ENGAGEMENT_EVENT, readEngagementEvents, readScraps } from "@/lib/engagement";
 import { GALLERY_ANALYTICS_EVENT, readGalleryAnalytics } from "@/lib/gallery-analytics";
+import AiConsumerInsights from "@/components/admin/AiConsumerInsights";
 
 type Rank = { label: string; count: number };
 type Summary = {
@@ -60,7 +61,8 @@ export default function AnalyticsDashboard() {
       <article><strong>{summary.totals.searches}</strong><span>Gallery 검색</span></article>
       <article><strong>{summary.totals.views}</strong><span>콘텐츠 조회</span></article>
     </div>
-    <section className="admin-insight"><h2>AI 소비자 인사이트</h2><p>{insight}</p><small>D1에 모인 전체 방문자의 행동 통계와 Workers AI 이미지 분석 결과를 기준으로 합니다.</small></section>
+    <AiConsumerInsights />
+    <section className="admin-insight"><h2>빠른 요약</h2><p>{insight}</p><small>D1에 모인 전체 방문자의 행동 통계와 Workers AI 이미지 분석 결과를 기준으로 합니다.</small></section>
     {renderRanks("Gallery 인기 검색어", summary.searches.map((row)=>({label:row.keyword,count:Number(row.count)})))}
     {renderRanks("AI 분석 인기 스타일", summary.trends.styles)}
     {renderRanks("AI 분석 인기 공간", summary.trends.spaces)}

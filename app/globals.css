@@ -1,0 +1,13 @@
+
+/* v6.5 AI consumer decision dashboard */
+.admin-ai-decision{margin:28px 0;padding:30px;border:1px solid rgba(88,88,88,.16);border-radius:18px;background:rgba(255,255,255,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.admin-ai-decision>header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:18px}
+.admin-ai-decision h2{max-width:760px;margin:6px 0 0;font-size:clamp(20px,2.2vw,32px);font-weight:500;line-height:1.35;color:#4d4d4d}
+.admin-ai-kicker{font-size:10px;letter-spacing:.18em;color:#888}
+.admin-ai-summary{max-width:850px;margin:0 0 14px;color:#696969;line-height:1.8}
+.admin-ai-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}.admin-ai-meta span{padding:7px 10px;border-radius:999px;background:rgba(110,110,110,.08);font-size:11px;color:#747474}
+.admin-ai-main-recommendation{margin:18px 0 24px;padding:20px;border-radius:14px;background:rgba(245,245,245,.82)}
+.admin-ai-main-recommendation small{display:block;margin-bottom:8px;color:#888;letter-spacing:.08em}.admin-ai-main-recommendation strong{display:block;font-size:18px;color:#555}.admin-ai-main-recommendation p{margin:8px 0 0;color:#777;line-height:1.6}
+.admin-ai-columns{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:22px}.admin-ai-columns h3,.admin-ai-content-plan h3{margin:0 0 12px;font-size:13px;font-weight:500;color:#666}.admin-ai-columns p{display:flex;gap:12px;margin:0;padding:10px 0;border-bottom:1px solid rgba(100,100,100,.09);color:#777;line-height:1.55}.admin-ai-columns b{font-size:10px;font-weight:500;color:#999}
+.admin-ai-content-plan{margin-top:26px}.admin-ai-content-plan article{display:grid;grid-template-columns:minmax(120px,180px) 1fr;gap:16px;padding:12px 0;border-bottom:1px solid rgba(100,100,100,.09)}.admin-ai-content-plan strong{font-weight:500;color:#5e5e5e}.admin-ai-content-plan span{color:#777;line-height:1.5}.admin-ai-warning{display:block;margin-top:18px;color:#9a7b65}
+@media(max-width:760px){.admin-ai-decision{padding:20px}.admin-ai-decision>header{display:block}.admin-ai-decision>header button{margin-top:14px}.admin-ai-columns{grid-template-columns:1fr;gap:20px}.admin-ai-content-plan article{grid-template-columns:1fr;gap:5px}}

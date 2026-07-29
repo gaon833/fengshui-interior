@@ -1,7 +1,7 @@
 const DEFAULT_PIN = "8333";
 const COOKIE_NAME = "fengshui_admin_session";
 const SHORT_SESSION_SECONDS = 12 * 60 * 60;
-const LONG_SESSION_SECONDS = 7 * 24 * 60 * 60;
+const LONG_SESSION_SECONDS = 12 * 60 * 60;
 const LOCK_SECONDS = 5 * 60;
 const MAX_FAILURES = 5;
 const ITERATIONS = 120000;
@@ -106,7 +106,7 @@ export async function replacePin(db, pin) {
 
 export async function createSession(db, remember) {
   const token = randomToken();
-  const seconds = remember ? LONG_SESSION_SECONDS : SHORT_SESSION_SECONDS;
+  const seconds = SHORT_SESSION_SECONDS;
   const expiresAt = Math.floor(Date.now() / 1000) + seconds;
   await db.prepare("INSERT INTO admin_sessions (token, expires_at) VALUES (?, ?)").bind(token, expiresAt).run();
   return { token, seconds, expiresAt };
