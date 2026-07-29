@@ -88,3 +88,111 @@
   .detail-photo-inner>.admin-delete-x,
   .admin-delete-image-wrap>.admin-delete-x{top:9px!important;right:9px!important;width:34px!important;height:34px!important;border-radius:11px!important}
 }
+
+/* v6.8 unified rounded controls and stable delete overlays */
+:root{--ui-radius:12px;--ui-radius-lg:14px}
+
+/* 모든 실제 버튼과 버튼 역할 링크의 모서리를 같은 기준으로 통일 */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+[role="button"],
+.admin-primary-button,
+.admin-filter-button,
+.editor-actions a,
+.row-actions a,
+.project-share-button{
+  border-radius:var(--ui-radius)!important;
+}
+
+/* 입력창과 선택창도 같은 디자인 언어를 사용 */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea{
+  border-radius:var(--ui-radius)!important;
+}
+
+/* 관리자 상단의 이미지 삭제 / 새 프로젝트 버튼 정렬 */
+.admin-heading-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:18px!important;
+  flex-wrap:wrap;
+}
+.admin-heading-actions .admin-primary-button,
+.admin-heading-actions .admin-filter-button{
+  min-height:46px!important;
+  padding:0 22px!important;
+  border-radius:14px!important;
+  box-sizing:border-box;
+  white-space:nowrap;
+}
+
+/* 프로젝트 삭제 버튼의 기준점을 프로젝트 전체가 아닌 대표 이미지로 고정 */
+.project-card-image-wrap,
+.project-card-image{
+  position:relative!important;
+  isolation:isolate;
+}
+.project-card-image-wrap>.admin-delete-x,
+.project-card-image>.admin-delete-x{
+  position:absolute!important;
+  top:12px!important;
+  right:12px!important;
+  left:auto!important;
+  bottom:auto!important;
+  z-index:80!important;
+  margin:0!important;
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+.project-card-image-wrap>a,
+.project-card-image>a{
+  position:relative;
+  z-index:1;
+}
+
+/* 삭제 모드 완료 버튼: 긴 설명 없이 버튼 하나만 노출 */
+.admin-delete-chrome{
+  top:22px!important;
+  right:28px!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.admin-delete-chrome__done{
+  min-width:72px!important;
+  min-height:42px!important;
+  padding:0 20px!important;
+  border-radius:14px!important;
+  border:1px solid rgba(105,105,105,.26)!important;
+  background:rgba(255,255,255,.9)!important;
+  color:#666!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.08)!important;
+  backdrop-filter:blur(16px)!important;
+  -webkit-backdrop-filter:blur(16px)!important;
+}
+
+/* 아이콘성 컨트롤도 각지지 않게 유지 */
+.scrap-heart,
+.image-share-button,
+.gallery-search,
+.gallery-search button,
+.order-buttons button,
+.row-actions button,
+.admin-toast button{
+  border-radius:var(--ui-radius)!important;
+}
+
+@media(max-width:900px){
+  .admin-heading-actions{gap:10px!important}
+  .admin-heading-actions .admin-primary-button,
+  .admin-heading-actions .admin-filter-button{min-height:42px!important;padding:0 17px!important}
+  .project-card-image-wrap>.admin-delete-x,
+  .project-card-image>.admin-delete-x{top:9px!important;right:9px!important}
+  .admin-delete-chrome{top:12px!important;right:12px!important}
+}

@@ -12,7 +12,7 @@ export default function ProjectCard({ project, index, adminDeleteActive = false,
 
   return (
     <article className={`project-card project-card--${layout} ${adminDeleteActive ? "is-admin-delete" : ""}`}>
-      <div className="project-card-image">
+      <div className="project-card-image project-card-image-wrap">
         <Link href={adminDeleteActive ? `/project/view/?slug=${encodeURIComponent(project.slug)}&adminDelete=1&returnTo=%2Fadmin%2Fprojects` : `/project/view/?slug=${encodeURIComponent(project.slug)}`} aria-label={`${project.title} 프로젝트 보기`}>
           <picture>
             {project.mobileCoverImage && <source media="(max-width: 900px)" srcSet={project.mobileCoverImage} />}
