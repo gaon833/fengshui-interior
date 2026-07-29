@@ -7,8 +7,10 @@ import type { Project } from "@/types/project";
 import ScrapButton from "@/components/project/ScrapButton";
 import ShareIconButton from "@/components/project/ShareIconButton";
 import ImageLightbox from "@/components/gallery/ImageLightbox";
-import { GALLERY_EVENT, readGalleryItems, type GalleryItem } from "@/lib/gallery-store";
+import { deleteGalleryItem, GALLERY_EVENT, hideGalleryItem, readGalleryItems, readHiddenGalleryIds, type GalleryItem } from "@/lib/gallery-store";
 import { trackGallerySearch, trackGalleryView } from "@/lib/gallery-analytics";
+import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
+import { AdminDeleteButton, AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
 
 const projects = projectsData as Project[];
 
@@ -66,7 +68,9 @@ function localScore(item: GalleryItem, query: string) {
 type SearchResult = { galleryId: string; score: number; matchedTerms?: string[] };
 
 export default function GalleryBoard() {
+  const deleteMode = useAdminDeleteMode();
   const [customItems, setCustomItems] = useState<GalleryItem[]>([]);
+  const [hiddenIds, setHiddenIds] = useState<string[]>([]);
   const [selected, setSelected] = useState<GalleryItem | null>(null);
   const [query, setQuery] = useState("");
   const [remoteResults, setRemoteResults] = useState<SearchResult[] | null>(null);
@@ -74,12 +78,12 @@ export default function GalleryBoard() {
   const [usedAI, setUsedAI] = useState(false);
 
   useEffect(() => {
-    const sync = () => setCustomItems(readGalleryItems());
+    const sync = () => { setCustomItems(readGalleryItems()); setHiddenIds(readHiddenGalleryIds()); };
     sync(); window.addEventListener("storage", sync); window.addEventListener(GALLERY_EVENT, sync);
     return () => { window.removeEventListener("storage", sync); window.removeEventListener(GALLERY_EVENT, sync); };
   }, []);
 
-  const items = useMemo(() => [...customItems, ...seedItems], [customItems]);
+  const items = useMemo(() => [...customItems, ...seedItems].filter((item) => !hiddenIds.includes(item.id)), [customItems, hiddenIds]);
 
   useEffect(() => {
     const normalizedQuery = query.trim();
@@ -102,6 +106,14 @@ export default function GalleryBoard() {
     return () => window.clearTimeout(timer);
   }, [query, customItems]);
 
+
+  const removeGalleryItem = async (item: GalleryItem) => {
+    if (!confirmVisualDelete("이 GALLERY 이미지를 삭제하시겠습니까?")) return;
+    if (item.id.startsWith("seed:")) hideGalleryItem(item.id); else deleteGalleryItem(item.id);
+    setSelected(null);
+    await fetch("/api/admin/content-delete", { method: "POST", headers: { "content-type": "application/json" }, credentials: "include", body: JSON.stringify({ kind: "gallery", id: item.id }) }).catch(() => undefined);
+  };
+
   const filteredItems = useMemo(() => {
     if (!query.trim()) return items;
     const remoteMap = new Map((remoteResults || []).map((result) => [result.galleryId, result.score]));
@@ -118,7 +130,8 @@ export default function GalleryBoard() {
 
   return (
     <>
-      <div className="gallery-search-wrap">
+      {deleteMode.active && <AdminDeleteChrome label="GALLERY 삭제 모드" />}
+      {!deleteMode.active && <div className="gallery-search-wrap">
         <label className="gallery-search" aria-label="AI 갤러리 검색">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
           <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="거실, 아이보리, 호텔 느낌처럼 검색해보세요" autoComplete="off" />
@@ -126,17 +139,19 @@ export default function GalleryBoard() {
           {!searching && query && <button type="button" onClick={() => setQuery("")} aria-label="검색어 지우기">×</button>}
         </label>
         {query.trim() && <div className="gallery-search-meta" role="status">{searching ? "AI가 사진 분석 결과를 검색하고 있습니다…" : `${filteredItems.length}개의 관련 이미지${usedAI ? " · AI 의미 검색" : ""}`}</div>}
-      </div>
+      </div>}
 
       {filteredItems.length > 0 ? (
         <section className="gallery-masonry" aria-label="인테리어 갤러리 검색 결과">
           {filteredItems.map((item) => (
             <article className="gallery-card" key={item.id}><div className="gallery-card-image" role="button" tabIndex={0} aria-label={`${item.title} 크게 보기`}
-              onClick={() => { trackGalleryView(item.id); setSelected(item); }}
-              onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); trackGalleryView(item.id); setSelected(item); } }}>
+              onClick={() => { if (!deleteMode.active) { trackGalleryView(item.id); setSelected(item); } }}
+              onKeyDown={(event) => { if (!deleteMode.active && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); trackGalleryView(item.id); setSelected(item); } }}>
               <Image src={item.src} alt={item.title} width={1200} height={1600} sizes="(max-width:700px) 50vw, (max-width:1200px) 33vw, 25vw" loading="lazy" decoding="async" unoptimized={item.src.startsWith("data:")} />
-              <ScrapButton className="gallery-card-heart" item={{ id: `gallery:${item.id}`, kind: "image", projectSlug: item.projectSlug || "gallery", projectTitle: item.projectTitle || item.title, src: item.src, alt: item.title }} />
-              <ShareIconButton className="gallery-card-share" projectSlug={item.projectSlug} projectTitle={item.projectTitle || item.title} fallbackPath="/gallery" />
+              {deleteMode.active ? <AdminDeleteButton label={`${item.title} 삭제`} onDelete={() => void removeGalleryItem(item)} /> : <>
+                <ScrapButton className="gallery-card-heart" item={{ id: `gallery:${item.id}`, kind: "image", projectSlug: item.projectSlug || "gallery", projectTitle: item.projectTitle || item.title, src: item.src, alt: item.title }} />
+                <ShareIconButton className="gallery-card-share" projectSlug={item.projectSlug} projectTitle={item.projectTitle || item.title} fallbackPath="/gallery" />
+              </>}
             </div></article>
           ))}
         </section>
@@ -144,7 +159,7 @@ export default function GalleryBoard() {
         <div className="gallery-empty-search" role="status"><p>관련 이미지를 찾지 못했습니다.</p><span>다른 표현으로 검색해 보세요.</span></div>
       ) : null}
 
-      <ImageLightbox item={selected ? { id: `gallery:${selected.id}`, src: selected.src, alt: selected.title, projectSlug: selected.projectSlug, projectTitle: selected.projectTitle || selected.title } : null} onClose={() => setSelected(null)} />
+      {!deleteMode.active && <ImageLightbox item={selected ? { id: `gallery:${selected.id}`, src: selected.src, alt: selected.title, projectSlug: selected.projectSlug, projectTitle: selected.projectTitle || selected.title } : null} onClose={() => setSelected(null)} />}
     </>
   );
 }

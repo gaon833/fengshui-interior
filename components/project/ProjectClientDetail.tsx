@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
+import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
+import { AdminDeleteChrome } from "@/components/admin-delete/AdminDeleteChrome";
 import type { Project } from "@/types/project";
 import { readStoredProjects } from "@/lib/project-store";
 import ProjectInfo from "./ProjectInfo";
@@ -14,6 +16,7 @@ import { trackEngagement } from "@/lib/engagement";
 
 export default function ProjectClientDetail({ defaults }: { defaults: Project[] }) {
   const searchParams = useSearchParams();
+  const deleteMode = useAdminDeleteMode();
   const slug = searchParams.get("slug") ?? "";
   const projects = useMemo(() => readStoredProjects(defaults).filter((item) => item.status === "published"), [defaults]);
   const index = projects.findIndex((item) => item.slug === slug);
@@ -36,11 +39,10 @@ export default function ProjectClientDetail({ defaults }: { defaults: Project[] 
   const next = projects[(index + 1) % projects.length];
 
   return (
-    <article className="project-detail-page">
+    <>{deleteMode.active && <AdminDeleteChrome label="프로젝트 상세 이미지 삭제 모드" />}<article className="project-detail-page">
       <ProjectInfo project={project} />
       <section className="detail-gallery">
-        <figure className="detail-photo landscape detail-cover"><div className="detail-photo-inner"><Image src={project.coverImage} alt={project.title} width={1600} height={1050} priority unoptimized={project.coverImage.startsWith("data:")} sizes="(max-width:900px) 100vw, 70vw" /><ScrapButton className="detail-image-heart" item={{id:`project:${project.slug}`,kind:"project",projectSlug:project.slug,projectTitle:project.title,src:project.coverImage,alt:`${project.title} 대표 이미지`}} />
-        <ShareIconButton className="detail-image-share" projectSlug={project.slug} projectTitle={project.title} /></div></figure>
+        <figure className="detail-photo landscape detail-cover"><div className="detail-photo-inner"><Image src={project.coverImage} alt={project.title} width={1600} height={1050} priority unoptimized={project.coverImage.startsWith("data:")} sizes="(max-width:900px) 100vw, 70vw" />{!deleteMode.active && <><ScrapButton className="detail-image-heart" item={{id:`project:${project.slug}`,kind:"project",projectSlug:project.slug,projectTitle:project.title,src:project.coverImage,alt:`${project.title} 대표 이미지`}} /><ShareIconButton className="detail-image-share" projectSlug={project.slug} projectTitle={project.title} /></>}</div></figure>
         <ProjectGallery images={project.images} projectSlug={project.slug} projectTitle={project.title} />
       </section>
       <nav className="project-navigation" aria-label="이전·다음 프로젝트">
@@ -57,6 +59,6 @@ export default function ProjectClientDetail({ defaults }: { defaults: Project[] 
           </Link>
         </div>
       </nav>
-    </article>
+    </article></>
   );
 }

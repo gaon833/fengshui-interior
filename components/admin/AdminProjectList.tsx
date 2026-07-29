@@ -1,22 +1,23 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Project, ProjectStatus } from "@/types/project";
 import { PROJECTS_EVENT, readStoredProjects, saveStoredProjects } from "@/lib/project-store";
 import { showAdminToast } from "@/lib/admin-toast";
-import AdminDeleteLightbox from "@/components/admin/AdminDeleteLightbox";
+
+const statusLabels: Record<ProjectStatus, string> = { published: "공개", draft: "작성 중", private: "비공개", trash: "휴지통" };
 
 export default function AdminProjectList({ projects }: { projects: Project[] }) {
   const [items, setItems] = useState<Project[]>(projects);
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<"all" | ProjectStatus>("all");
-  const [selected, setSelected] = useState<Project | null>(null);
 
   useEffect(() => {
     const sync = () => setItems(readStoredProjects(projects));
-    sync(); window.addEventListener(PROJECTS_EVENT, sync); window.addEventListener("storage", sync);
+    sync();
+    window.addEventListener(PROJECTS_EVENT, sync);
+    window.addEventListener("storage", sync);
     return () => { window.removeEventListener(PROJECTS_EVENT, sync); window.removeEventListener("storage", sync); };
   }, [projects]);
 
@@ -29,9 +30,20 @@ export default function AdminProjectList({ projects }: { projects: Project[] }) 
     });
   }, [items, query, status]);
 
+  const move = (id: string, direction: -1 | 1) => {
+    const ordered = [...items].sort((a, b) => a.order - b.order);
+    const index = ordered.findIndex((item) => item.id === id);
+    const target = index + direction;
+    if (index < 0 || target < 0 || target >= ordered.length) return;
+    [ordered[index], ordered[target]] = [ordered[target], ordered[index]];
+    const next = ordered.map((item, order) => ({ ...item, order: order + 1, updatedAt: new Date().toISOString() }));
+    saveStoredProjects(next); setItems(next); showAdminToast("프로젝트 노출 순서가 변경되었습니다.", "success");
+  };
+
   const remove = (id: string) => {
+    if (!window.confirm("이 프로젝트를 휴지통으로 이동할까요?")) return;
     const next = items.map((item) => item.id === id ? { ...item, status: "trash" as const, deletedAt: new Date().toISOString(), updatedAt: new Date().toISOString() } : item);
-    saveStoredProjects(next); setItems(next); showAdminToast("프로젝트가 삭제되었습니다.", "success");
+    saveStoredProjects(next); setItems(next); showAdminToast("프로젝트가 휴지통으로 이동되었습니다.", "success");
   };
 
   const restoreDefaults = () => {
@@ -41,8 +53,6 @@ export default function AdminProjectList({ projects }: { projects: Project[] }) 
     window.setTimeout(() => window.location.reload(), 450);
   };
 
-  const visibleProjects = filteredProjects.filter((project) => project.status !== "trash");
-
   return <>
     <div className="admin-toolbar">
       <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="제목, 지역, 평형, 태그 검색" aria-label="프로젝트 검색" />
@@ -51,17 +61,13 @@ export default function AdminProjectList({ projects }: { projects: Project[] }) 
       </select>
       <button className="admin-filter-button" type="button" onClick={restoreDefaults}>기본 프로젝트 복원</button>
     </div>
-
-    <div className="admin-visual-manager-heading"><p>공개 PROJECTS와 같은 이미지 화면입니다. 사진을 클릭하면 크게 열리고, 오른쪽 위 ×로 삭제할 수 있습니다.</p></div>
-    {visibleProjects.length === 0 ? <div className="admin-empty">조건에 맞는 프로젝트가 없습니다.</div> : <div className="admin-project-visual-grid">
-      {visibleProjects.map((project) => <article className={`admin-project-visual-card admin-project-visual-card--${project.cardLayout || "wide"}`} key={project.id}>
-        <button type="button" className="admin-project-visual-image" onClick={() => setSelected(project)} aria-label={`${project.title} 크게 보기 및 삭제`}>
-          <Image src={project.coverImage} alt={`${project.title} 대표 이미지`} width={project.cardLayout === "portrait" ? 1100 : 1600} height={project.cardLayout === "portrait" ? 1500 : 1050} sizes="(max-width:900px) calc(100vw - 40px), 40vw" unoptimized={project.coverImage.startsWith("data:")} />
-        </button>
-        <div className="admin-project-visual-meta"><div><strong>{project.title}</strong><span>{project.location} · {project.area}</span></div><Link href={`/admin/projects/new/?id=${encodeURIComponent(project.id)}`}>수정</Link></div>
-      </article>)}
-    </div>}
-
-    <AdminDeleteLightbox open={Boolean(selected)} src={selected?.coverImage || ""} alt={selected ? `${selected.title} 대표 이미지` : "프로젝트 대표 이미지"} kindLabel="프로젝트" onClose={() => setSelected(null)} onDelete={() => { if (selected) remove(selected.id); }} />
+    <div className="admin-table">
+      {filteredProjects.length === 0 && <div className="admin-empty">조건에 맞는 프로젝트가 없습니다.</div>}
+      {filteredProjects.map((project) => <div className="admin-row admin-project-row" key={project.id}>
+        <span className="order-buttons"><button type="button" onClick={() => move(project.id, -1)}>↑</button><button type="button" onClick={() => move(project.id, 1)}>↓</button></span>
+        <strong>{project.title}</strong><span>{project.location}</span><span>{project.area}</span><span>{project.tags.join(", ")}</span><span>{statusLabels[project.status]}</span>
+        <span className="row-actions"><Link href={`/admin/projects/new/?id=${encodeURIComponent(project.id)}`}>수정</Link><Link href={`/project/view/?slug=${encodeURIComponent(project.slug)}&adminDelete=1`}>이미지 삭제</Link></span>
+      </div>)}
+    </div>
   </>;
 }

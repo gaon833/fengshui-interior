@@ -63,3 +63,14 @@ export function addGalleryItem(item: Omit<GalleryItem, "id" | "createdAt"> & { i
 export function deleteGalleryItem(id: string) {
   writeGalleryItems(readGalleryItems().filter((item) => item.id !== id));
 }
+
+const HIDDEN_KEY = "fengshui-gallery-hidden-v1";
+export function readHiddenGalleryIds(): string[] {
+  if (typeof window === "undefined") return [];
+  try { return JSON.parse(window.localStorage.getItem(HIDDEN_KEY) || "[]") as string[]; } catch { return []; }
+}
+export function hideGalleryItem(id: string) {
+  const next = Array.from(new Set([...readHiddenGalleryIds(), id]));
+  window.localStorage.setItem(HIDDEN_KEY, JSON.stringify(next));
+  window.dispatchEvent(new CustomEvent(GALLERY_EVENT));
+}
