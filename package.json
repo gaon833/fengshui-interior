@@ -1,8 +1,25 @@
 {
-  "name": "fengshui-interior-safe-restore",
-  "version": "1.0.0",
+  "name": "fengshui-interior-v3",
+  "version": "4.0.0",
   "private": true,
   "scripts": {
-    "build": "node build.mjs"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "validate": "node scripts/validate-content.mjs",
+    "check": "npm run validate && npm run typecheck && npm run build"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.0.0"
   }
 }
