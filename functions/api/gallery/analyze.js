@@ -103,7 +103,7 @@ function list(value, max = 8) {
 
 function normalizeAnalysis(value) {
   const caption = String(value?.caption || value?.description || "인테리어 공간 이미지").trim().slice(0, 500);
-  const space = list(value?.space || value?.spaces);
+  const space = list(value?.space || value?.spaces, 1);
   const styles = list(value?.styles || value?.style);
   const colors = list(value?.colors || value?.color);
   const materials = list(value?.materials || value?.material);
@@ -134,6 +134,33 @@ export async function onRequestGet(context) {
   }
 }
 
+export async function onRequestPatch(context) {
+  try {
+    const auth = await requireAdmin(context);
+    if (auth.response) return auth.response;
+    await ensureGalleryTables(context.env.DB);
+    const body = await context.request.json();
+    const galleryId = typeof body?.galleryId === "string" ? body.galleryId.trim().slice(0, 180) : "";
+    if (!galleryId) return json({ ok: false, error: "갤러리 이미지 ID가 없습니다." }, 400);
+    const analysis = normalizeAnalysis(body?.analysis || {});
+    if (!analysis.space.length) return json({ ok: false, error: "대표 공간 태그를 선택해 주세요." }, 400);
+    await context.env.DB.prepare(`INSERT INTO gallery_ai_analysis
+      (gallery_id, description, space_type, styles, colors, materials, lighting, keywords, raw_result, analysis_status, model, error_message, analyzed_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'ready', ?, NULL, CURRENT_TIMESTAMP)
+      ON CONFLICT(gallery_id) DO UPDATE SET
+        description=excluded.description, space_type=excluded.space_type, styles=excluded.styles,
+        colors=excluded.colors, materials=excluded.materials, lighting=excluded.lighting,
+        keywords=excluded.keywords, raw_result=excluded.raw_result, analysis_status='ready',
+        model=excluded.model, error_message=NULL, analyzed_at=CURRENT_TIMESTAMP`)
+      .bind(galleryId, analysis.caption, JSON.stringify(analysis.space), JSON.stringify(analysis.styles),
+        JSON.stringify(analysis.colors), JSON.stringify(analysis.materials), JSON.stringify(analysis.features),
+        JSON.stringify(analysis.keywords), JSON.stringify(analysis), MODEL).run();
+    return json({ ok: true, galleryId, analysis, storedInD1: true });
+  } catch (error) {
+    return json({ ok: false, error: error instanceof Error ? error.message : "태그 저장에 실패했습니다." }, 500);
+  }
+}
+
 export async function onRequestPost(context) {
   let galleryId = "";
   try {
@@ -153,7 +180,7 @@ export async function onRequestPost(context) {
       ON CONFLICT(gallery_id) DO UPDATE SET analysis_status='analyzing', model=excluded.model, error_message=NULL, analyzed_at=CURRENT_TIMESTAMP`)
       .bind(galleryId, MODEL).run();
 
-    const prompt = `당신은 인테리어 사진 검색용 분석기입니다. 사진에 실제로 보이는 내용만 한국어로 분석하고 반드시 JSON 객체 하나만 반환하세요.
+    const prompt = `당신은 인테리어 사진의 태그 추천기입니다. 먼저 대표 공간을 판정한 뒤 나머지 태그를 추천하세요. 사진에 실제로 보이는 내용만 한국어로 분석하고 반드시 JSON 객체 하나만 반환하세요.
 {
   "caption":"공간·색상·재료·분위기가 포함된 검색용 한 문장",
   "space":["거실"],
@@ -163,7 +190,15 @@ export async function onRequestPost(context) {
   "features":["간접조명","아일랜드"],
   "keywords":["아이보리 거실","따뜻한 우드 인테리어","호텔 느낌"]
 }
-규칙: 배열은 중복 없이 구체적인 한국어 단어로 작성하고, 보이지 않는 평형·지역·브랜드는 추측하지 마세요.`;
+공간 판정 규칙:
+- 변기, 세면대, 샤워부스, 욕조, 수전 중 2개 이상이면 욕실
+- 싱크대, 후드, 인덕션, 조리대, 아일랜드 중 2개 이상이면 주방
+- 침대와 침구가 중심이면 침실
+- 소파, TV, 거실 테이블이 중심이면 거실
+- 식탁이 중심이면 다이닝
+- 신발장과 현관문이 중심이면 현관
+대표 공간은 반드시 ["거실","주방","욕실","침실","다이닝","현관","복도","드레스룸","서재","세탁실","베란다","외관","기타"] 중 하나만 반환하세요.
+배열은 중복 없이 구체적인 한국어 단어로 작성하고, 보이지 않는 평형·지역·브랜드는 추측하지 마세요.`;
 
     const result = await context.env.AI.run(MODEL, {
       task: "query",

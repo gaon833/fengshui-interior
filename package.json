@@ -1,6 +1,6 @@
 {
   "name": "fengshui-interior-v3",
-  "version": "6.9.1",
+  "version": "6.10.0",
   "private": true,
   "scripts": {
     "dev": "next dev",

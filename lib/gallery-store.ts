@@ -53,11 +53,18 @@ export function writeGalleryItems(items: GalleryItem[]) {
 }
 
 export function addGalleryItem(item: Omit<GalleryItem, "id" | "createdAt"> & { id?: string }) {
-  const next: GalleryItem[] = [
-    { ...item, id: item.id || crypto.randomUUID(), createdAt: new Date().toISOString() },
-    ...readGalleryItems(),
-  ];
-  writeGalleryItems(next);
+  addGalleryItems([item]);
+}
+
+export function addGalleryItems(items: Array<Omit<GalleryItem, "id" | "createdAt"> & { id?: string }>) {
+  const createdAt = Date.now();
+  const prepared: GalleryItem[] = items.map((item, index) => ({
+    ...item,
+    id: item.id || crypto.randomUUID(),
+    // 같은 묶음은 선택 순서를 유지하고, 묶음 전체는 기존 사진보다 앞에 놓는다.
+    createdAt: new Date(createdAt + index).toISOString(),
+  }));
+  writeGalleryItems([...prepared, ...readGalleryItems()]);
 }
 
 export function deleteGalleryItem(id: string) {
