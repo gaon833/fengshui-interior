@@ -2,15 +2,17 @@
 
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import BrandLogo from "@/components/brand/BrandLogo";
 import DesktopSidebar from "./DesktopSidebar";
 import MenuDrawer from "./MenuDrawer";
 
 export default function SiteShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const isDeleteMode = searchParams.get("adminDelete") === "1";
   const isHome = pathname === "/";
-  const hasFixedSidebar = !isHome;
+  const hasFixedSidebar = !isHome && !isDeleteMode;
   const [headerHidden, setHeaderHidden] = useState(false);
 
   useEffect(() => {
@@ -21,10 +23,10 @@ export default function SiteShell({ children }: { children: ReactNode }) {
   }, [pathname]);
 
   return (
-    <div className={`site-shell${hasFixedSidebar ? " site-shell--fixed" : ""}${headerHidden ? " site-shell--header-hidden" : ""}`}>
+    <div className={`site-shell${hasFixedSidebar ? " site-shell--fixed" : ""}${headerHidden ? " site-shell--header-hidden" : ""}${isDeleteMode ? " site-shell--delete-mode" : ""}`}>
       {hasFixedSidebar && <DesktopSidebar />}
-      <BrandLogo className="site-floating-logo scroll-aware-header" />
-      <div className="scroll-aware-header"><MenuDrawer variant="site" useBackdrop={isHome} /></div>
+      {!isDeleteMode && <BrandLogo className="site-floating-logo scroll-aware-header" />}
+      {!isDeleteMode && <div className="scroll-aware-header"><MenuDrawer variant="site" useBackdrop={isHome} /></div>}
       <main className="site-content">{children}</main>
     </div>
   );

@@ -5,8 +5,8 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 32px;
-  width: 100%;
-  margin: 0 0 34px;
+  width: min(100%, 1600px);
+  margin: 0 auto 34px;
   padding: 46px 10px 34px;
   border-bottom: 1px solid #ecece9;
   background: #fff;
