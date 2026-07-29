@@ -178,3 +178,7 @@
 
 /* v5.0 engagement analytics */
 .admin-insight{margin-top:28px;padding:26px;border:1px solid #ddd;background:#fff}.admin-insight h2,.admin-analytics-list h2{margin:0 0 14px;font-size:18px;font-weight:500}.admin-insight p{margin:0 0 12px;line-height:1.8}.admin-insight small{color:#999}.admin-analytics-list{margin-top:28px}.admin-analytics-list article{display:grid;grid-template-columns:40px 1fr auto;gap:14px;align-items:center;padding:15px 0;border-top:1px solid #e4e4df}.admin-analytics-list article span{color:#aaa}.admin-analytics-list article strong{font-weight:500}.admin-analytics-list article em{color:#888;font-size:12px;font-style:normal}
+.admin-ai-status{padding:18px;border:1px solid rgba(120,120,120,.2);background:rgba(255,255,255,.58);backdrop-filter:blur(14px);font-size:14px;color:#777}
+.admin-ai-result{padding:20px;border:1px solid rgba(120,120,120,.18);background:rgba(255,255,255,.72);backdrop-filter:blur(16px)}
+.admin-ai-result p{margin:10px 0 14px;color:#666}.admin-ai-result div{display:flex;flex-wrap:wrap;gap:7px}.admin-ai-result span{padding:6px 9px;border:1px solid #ddd;border-radius:999px;font-size:12px;color:#777}
+.admin-gallery-list article small{display:block;margin:7px 0;color:#999;font-size:12px}

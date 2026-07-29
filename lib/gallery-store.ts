@@ -1,5 +1,17 @@
 "use client";
 
+export type GalleryAnalysis = {
+  caption: string;
+  space: string[];
+  styles: string[];
+  colors: string[];
+  materials: string[];
+  features: string[];
+  keywords: string[];
+  model?: string;
+  analyzedAt?: string;
+};
+
 export type GalleryItem = {
   id: string;
   src: string;
@@ -7,6 +19,7 @@ export type GalleryItem = {
   projectSlug?: string;
   projectTitle?: string;
   searchText?: string;
+  analysis?: GalleryAnalysis;
   createdAt: string;
 };
 
@@ -26,6 +39,7 @@ export function readGalleryItems(): GalleryItem[] {
       projectSlug: item.projectSlug,
       projectTitle: item.projectTitle,
       searchText: item.searchText || [item.title, item.space, item.projectTitle, item.projectSlug].filter(Boolean).join(" "),
+      analysis: item.analysis,
       createdAt: item.createdAt,
     }));
   } catch {

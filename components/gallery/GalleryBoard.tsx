@@ -8,6 +8,7 @@ import ScrapButton from "@/components/project/ScrapButton";
 import ShareIconButton from "@/components/project/ShareIconButton";
 import ImageLightbox from "@/components/gallery/ImageLightbox";
 import { GALLERY_EVENT, readGalleryItems, type GalleryItem } from "@/lib/gallery-store";
+import { trackGallerySearch, trackGalleryView } from "@/lib/gallery-analytics";
 
 const projects = projectsData as Project[];
 
@@ -84,6 +85,11 @@ export default function GalleryBoard() {
   const items = useMemo(() => [...customItems, ...seedItems], [customItems]);
   const filteredItems = useMemo(() => items.filter((item) => matches(item, query)), [items, query]);
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => { if (query.trim()) trackGallerySearch(query); }, 700);
+    return () => window.clearTimeout(timer);
+  }, [query]);
+
   return (
     <>
       <div className="gallery-search-wrap">
@@ -109,10 +115,11 @@ export default function GalleryBoard() {
                 role="button"
                 tabIndex={0}
                 aria-label={`${item.title} 크게 보기`}
-                onClick={() => setSelected(item)}
+                onClick={() => { trackGalleryView(item.id); setSelected(item); }}
                 onKeyDown={(event) => {
                   if (event.key === "Enter" || event.key === " ") {
                     event.preventDefault();
+                    trackGalleryView(item.id);
                     setSelected(item);
                   }
                 }}
