@@ -3,77 +3,58 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type DragEvent, type FormEvent } from "react";
 import type { Project, ProjectCardLayout, ProjectCategory, ProjectStatus } from "@/types/project";
 import { fileToDataUrl, makeProjectImage, readStoredProjects, saveStoredProjects } from "@/lib/project-store";
 import { showAdminToast } from "@/lib/admin-toast";
 import { IMAGE_GUIDES, guideText, confirmImageRatio } from "@/lib/image-guidelines";
+import styles from "./ProjectsV7.module.css";
 
-const blank = (): Project => ({
-  id: `project-${Date.now()}`, slug: `project-${Date.now()}`, title: "", category: "30", useType: "Residential", location: "", area: "", year: new Date().getFullYear(), tags: [], coverImage: "", mobileCoverImage: "", images: [], order: 999, status: "draft", featured: false, cardLayout: "wide", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), seo: { title: "", description: "", ogImage: "" }, revisions: [],
-});
+const blank = (): Project => ({ id: `project-${Date.now()}`, slug: `project-${Date.now()}`, title: "", category: "30", useType: "Residential", location: "", area: "", year: new Date().getFullYear(), tags: [], coverImage: "", mobileCoverImage: "", images: [], order: 999, status: "draft", featured: false, cardLayout: "wide", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), seo: { title: "", description: "", ogImage: "" }, revisions: [] });
+const regions = ["서울","경기","인천","부산","대구","대전","광주","울산","세종","강원","충북","충남","전북","전남","경북","경남","제주"];
+
+function UploadIcon(){return <svg className={styles.uploadIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>}
 
 export default function ProjectEditor({ defaults, initialProject }: { defaults: Project[]; initialProject?: Project }) {
   const params = useSearchParams(); const router = useRouter(); const editId = params.get("id") ?? initialProject?.id ?? null;
-  const [project, setProject] = useState<Project>(blank()); const [message, setMessage] = useState("");
+  const [project, setProject] = useState<Project>(blank()); const [message, setMessage] = useState(""); const coverInput = useRef<HTMLInputElement>(null);
   useEffect(() => { const items = readStoredProjects(defaults); const found = editId ? items.find((item) => item.id === editId) ?? initialProject : undefined; setProject(found ? structuredClone(found) : blank()); }, [defaults, editId, initialProject]);
   const preview = useMemo(() => project.coverImage || project.images[0]?.src || "", [project]);
   const patch = <K extends keyof Project>(key: K, value: Project[K]) => setProject((current) => ({ ...current, [key]: value }));
 
-  const uploadCover = async (event: ChangeEvent<HTMLInputElement>, mobile = false) => { const file = event.target.files?.[0]; if (!file) return; try { const guide = mobile ? IMAGE_GUIDES.projectMobile : IMAGE_GUIDES.projectPc; if (!(await confirmImageRatio(file, guide))) { event.target.value = ""; return; } const src = await fileToDataUrl(file); patch(mobile ? "mobileCoverImage" : "coverImage", src); showAdminToast(`${mobile ? "모바일" : "PC"} 대표 이미지가 추가되었습니다. 저장 버튼을 눌러 적용하세요.`, "success"); } catch { showAdminToast("대표 이미지 업로드에 실패했습니다.", "error"); } };
-  const uploadDetails = async (event: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files ?? []);
-    if (!files.length) return;
-    try {
-      const start = project.images.length;
-      const additions = await Promise.all(files.map(async (file, i) =>
-        makeProjectImage(await fileToDataUrl(file), project.title, start + i + 1),
-      ));
-      patch("images", [...project.images, ...additions]);
-      showAdminToast(`상세 이미지 ${additions.length}장이 최적화되어 추가되었습니다.`, "success");
-      event.target.value = "";
-    } catch {
-      showAdminToast("상세 이미지 업로드에 실패했습니다.", "error");
-    }
-  };
+  const applyCoverFile = async (file: File, mobile = false) => { try { const guide = mobile ? IMAGE_GUIDES.projectMobile : IMAGE_GUIDES.projectPc; if (!(await confirmImageRatio(file, guide))) return; const src = await fileToDataUrl(file); patch(mobile ? "mobileCoverImage" : "coverImage", src); showAdminToast(`${mobile ? "모바일" : "PC"} 대표 이미지가 추가되었습니다.`, "success"); } catch { showAdminToast("대표 이미지 업로드에 실패했습니다.", "error"); } };
+  const uploadCover = async (event: ChangeEvent<HTMLInputElement>, mobile = false) => { const file = event.target.files?.[0]; if (file) await applyCoverFile(file, mobile); event.target.value = ""; };
+  const dropCover = async (event: DragEvent<HTMLLabelElement>) => { event.preventDefault(); const file = event.dataTransfer.files?.[0]; if (file?.type.startsWith("image/")) await applyCoverFile(file); };
+  const uploadDetails = async (event: ChangeEvent<HTMLInputElement>) => { const files = Array.from(event.target.files ?? []); if (!files.length) return; try { const start = project.images.length; const additions = await Promise.all(files.map(async (file, i) => makeProjectImage(await fileToDataUrl(file), project.title, start + i + 1))); patch("images", [...project.images, ...additions]); showAdminToast(`상세 이미지 ${additions.length}장이 추가되었습니다.`, "success"); event.target.value = ""; } catch { showAdminToast("상세 이미지 업로드에 실패했습니다.", "error"); } };
   const moveImage = (index: number, direction: -1 | 1) => { const target = index + direction; if (target < 0 || target >= project.images.length) return; const images = [...project.images]; [images[index], images[target]] = [images[target], images[index]]; patch("images", images.map((img, i) => ({ ...img, order: i + 1 }))); };
-  const removeImage = (id: string) => { patch("images", project.images.filter((img) => img.id !== id).map((img, i) => ({ ...img, order: i + 1 }))); showAdminToast("이미지가 삭제되었습니다.", "success"); };
+  const removeImage = (id: string) => patch("images", project.images.filter((img) => img.id !== id).map((img, i) => ({ ...img, order: i + 1 })));
 
-  const save = (event: FormEvent) => {
-    event.preventDefault(); if (!project.title.trim() || !project.location.trim() || !project.area.trim() || !project.coverImage) { const text = "프로젝트명, 지역, 평형, 대표 이미지는 필수입니다."; setMessage(text); showAdminToast(text, "error"); return; }
-    const items = readStoredProjects(defaults); const exists = items.some((item) => item.id === project.id); const now = new Date().toISOString(); const slugBase = project.slug.trim() || project.title.toLowerCase().replace(/[^a-z0-9가-힣]+/g, "-").replace(/^-|-$/g, "");
-    const saved: Project = { ...project, slug: slugBase || project.id, tags: project.tags.filter(Boolean), order: exists ? project.order : Math.max(0, ...items.map((item) => item.order)) + 1, updatedAt: now, seo: { ...project.seo, title: project.seo.title || `${project.title} | 풍수 인테리어`, ogImage: project.seo.ogImage || project.coverImage }, revisions: [...project.revisions, { id: `revision-${Date.now()}`, createdAt: now, note: exists ? "관리자 수정" : "관리자 등록" }] };
-    const next = exists ? items.map((item) => item.id === saved.id ? saved : item) : [...items, saved]; saveStoredProjects(next); setProject(saved); const text = exists ? "프로젝트 수정 내용이 저장되었습니다." : "새 프로젝트가 저장되었습니다."; setMessage(text); showAdminToast(text, "success"); if (!editId) router.replace(`/admin/projects/new/?id=${encodeURIComponent(saved.id)}`);
-  };
+  const save = (event: FormEvent) => { event.preventDefault(); if (!project.title.trim() || !project.location.trim() || !project.area.trim() || !project.coverImage) { const text = "프로젝트명, 지역, 평형, 대표 이미지는 필수입니다."; setMessage(text); showAdminToast(text, "error"); return; } const items = readStoredProjects(defaults); const exists = items.some((item) => item.id === project.id); const now = new Date().toISOString(); const slugBase = project.slug.trim() || project.title.toLowerCase().replace(/[^a-z0-9가-힣]+/g, "-").replace(/^-|-$/g, ""); const saved: Project = { ...project, slug: slugBase || project.id, tags: project.tags.filter(Boolean), order: exists ? project.order : Math.max(0, ...items.map((item) => item.order)) + 1, updatedAt: now, seo: { ...project.seo, title: project.seo.title || `${project.title} | 풍수 인테리어`, ogImage: project.seo.ogImage || project.coverImage }, revisions: [...project.revisions, { id: `revision-${Date.now()}`, createdAt: now, note: exists ? "관리자 수정" : "관리자 등록" }] }; const next = exists ? items.map((item) => item.id === saved.id ? saved : item) : [...items, saved]; saveStoredProjects(next); setProject(saved); const text = exists ? "프로젝트 수정 내용이 저장되었습니다." : "새 프로젝트가 저장되었습니다."; setMessage(text); showAdminToast(text, "success"); if (!editId) router.replace(`/admin/projects/new/?id=${encodeURIComponent(saved.id)}`); };
 
-  return <form className="project-editor" onSubmit={save}>
-    <header className="editor-header"><div><h1>{editId ? "프로젝트 수정" : "새 프로젝트 등록"}</h1><p>대표 이미지와 상세 이미지는 브라우저에 저장됩니다.</p></div><div className="editor-actions"><Link href="/admin/projects/">목록</Link><button type="submit">저장</button></div></header>
-    {message && <div className="admin-save-message">{message}</div>}
-    <div className="editor-grid">
-      <section className="editor-panel"><h2>기본 정보</h2>
-        <label>프로젝트명<input value={project.title} onChange={(e) => patch("title", e.target.value)} /></label>
-        <label>주소용 슬러그<input value={project.slug} onChange={(e) => patch("slug", e.target.value)} /></label>
-        <label>지역<input value={project.location} onChange={(e) => patch("location", e.target.value)} placeholder="서울" /></label>
-        <label>평형<input value={project.area} onChange={(e) => patch("area", e.target.value)} placeholder="112㎡ (34평)" /></label>
-        <label>평형 필터<select value={project.category} onChange={(e) => patch("category", e.target.value as ProjectCategory)}><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="60">60</option><option value="C">C</option></select></label>
-        <label>연도<input type="number" value={project.year} onChange={(e) => patch("year", Number(e.target.value))} /></label>
-        <label>태그<input value={project.tags.join(", ")} onChange={(e) => patch("tags", e.target.value.split(",").map((v) => v.trim()))} /></label>
-        <label>상태<select value={project.status} onChange={(e) => patch("status", e.target.value as ProjectStatus)}><option value="draft">작성 중</option><option value="published">공개</option><option value="private">비공개</option><option value="trash">휴지통</option></select></label>
-        <label>카드 형태<select value={project.cardLayout ?? "wide"} onChange={(e) => patch("cardLayout", e.target.value as ProjectCardLayout)}><option value="wide">가로</option><option value="portrait">세로</option><option value="square">정사각형</option></select></label>
-      </section>
-      <section className="editor-panel project-image-manager"><h2>프로젝트 이미지</h2>
-        {preview && <div className="admin-image-preview"><Image src={preview} alt="대표 이미지 미리보기" width={720} height={480} unoptimized={preview.startsWith("data:")} /></div>}
-        <label>PC 대표 이미지 <span className="admin-image-guide">{guideText(IMAGE_GUIDES.projectPc)}</span><input type="file" accept="image/*" onChange={(e) => uploadCover(e)} /></label>
-        <label>모바일 대표 이미지 <span className="admin-image-guide">{guideText(IMAGE_GUIDES.projectMobile)}</span><input type="file" accept="image/*" onChange={(e) => uploadCover(e, true)} />{project.mobileCoverImage ? <span className="admin-upload-preview"><img src={project.mobileCoverImage} alt="모바일 대표 이미지 미리보기" /></span> : null}</label>
-        <div className="project-detail-upload-block">
-          <h3>상세 이미지</h3>
-          <p className="admin-image-guide">가로: {guideText(IMAGE_GUIDES.detailLandscape)}<br />세로: {guideText(IMAGE_GUIDES.detailPortrait)}</p>
-          <label>상세 이미지 여러 장 선택<input type="file" accept="image/*" multiple onChange={uploadDetails} /></label>
-          <p className="admin-note">고화질 원본을 올리면 자동으로 크기와 용량을 줄여 WebP로 저장합니다.</p>
-          {project.images.length ? <div className="admin-image-list">{project.images.map((image, index) => <article key={image.id}><Image src={image.src} alt={image.alt} width={260} height={180} unoptimized={image.src.startsWith("data:")} /><div><button type="button" onClick={() => moveImage(index, -1)} disabled={index === 0}>↑</button><button type="button" onClick={() => moveImage(index, 1)} disabled={index === project.images.length - 1}>↓</button><button type="button" onClick={() => removeImage(image.id)}>삭제</button></div></article>)}</div> : <p className="admin-empty-state">등록된 상세 이미지가 없습니다.</p>}
-        </div>
-      </section>
-      <section className="editor-panel"><h2>SEO</h2><label>SEO 제목<input value={project.seo.title} onChange={(e) => patch("seo", { ...project.seo, title: e.target.value })} /></label><label>SEO 설명<textarea value={project.seo.description} onChange={(e) => patch("seo", { ...project.seo, description: e.target.value })} /></label></section>
-    </div>
+  const areaParts = project.area.match(/([\d.]+)㎡?\s*\(?([\d.]+)?평?\)?/) ?? [];
+  const sqm = areaParts[1] ?? project.area.replace(/\D/g, ""); const pyeong = areaParts[2] ?? "";
+  const setArea = (nextSqm: string, nextPyeong: string) => patch("area", `${nextSqm || "0"}㎡ (${nextPyeong || "0"}평)`);
+
+  return <form className={styles.page} onSubmit={save}>
+    <Link className={styles.back} href="/admin/projects">← PROJECTS 목록으로</Link>
+    <div className={styles.editorHeader}><div><h1 className={styles.editorTitle}>{editId ? "프로젝트 수정" : "새 프로젝트 등록"}</h1><p className={styles.subtitle}>공개·작성 중·비공개·휴지통 프로젝트를 한 목록에서 관리합니다.</p></div><div className={styles.editorActions}><Link className={styles.button} href="/admin/projects">취소</Link><button className={styles.primaryButton} type="submit">저장</button></div></div>
+    {message && <div className={styles.message}>{message}</div>}
+
+    <section className={styles.card}><h2 className={styles.cardTitle}>기본 정보</h2><div className={styles.formGrid}>
+      <label className={styles.field}><span className={styles.label}>프로젝트명<span className={styles.required}>*</span></span><input className={styles.input} value={project.title} onChange={(e)=>patch("title",e.target.value)} placeholder="프로젝트명을 입력하세요" /></label>
+      <label className={styles.field}><span className={styles.label}>지역<span className={styles.required}>*</span></span><select className={styles.select} value={project.location} onChange={(e)=>patch("location",e.target.value)}><option value="">지역을 선택하세요</option>{regions.map(region=><option key={region}>{region}</option>)}</select></label>
+      <div className={styles.field}><span className={styles.label}>평형<span className={styles.required}>*</span></span><div className={styles.areaGrid}><input className={styles.input} value={sqm} onChange={(e)=>setArea(e.target.value,pyeong)} placeholder="예) 59"/><span className={styles.unit}>㎡ (평)</span><input className={styles.input} value={pyeong} onChange={(e)=>setArea(sqm,e.target.value)} placeholder="예) 18"/></div></div>
+      <label className={styles.field}><span className={styles.label}>태그</span><input className={styles.input} value={project.tags.join(", ")} onChange={(e)=>patch("tags",e.target.value.split(",").map(v=>v.trim()))} placeholder="예) 20평대, 미니멀, 화이트" /></label>
+      <div className={styles.fieldFull}><span className={styles.label}>상태<span className={styles.required}>*</span></span><div className={styles.statusGrid}>{([ ["published","공개","모든 사용자에게 노출"],["draft","작성 중","임시 저장 상태"],["private","비공개","관리자만 볼 수 있음"],["trash","휴지통","삭제된 프로젝트"] ] as const).map(([value,label,help])=><label className={styles.statusOption} key={value}><input type="radio" name="status" value={value} checked={project.status===value} onChange={()=>patch("status",value as ProjectStatus)}/>{label}<span className={styles.statusHelp}>{help}</span></label>)}</div></div>
+      <label className={`${styles.field} ${styles.fieldFull}`}><span className={styles.label}>소개 (선택)</span><textarea className={styles.textarea} maxLength={300} value={project.seo.description} onChange={(e)=>patch("seo",{...project.seo,description:e.target.value})} placeholder="프로젝트에 대한 간단한 설명을 입력하세요 (선택사항)"/><span className={styles.muted} style={{display:"block",textAlign:"right",marginTop:8}}>{project.seo.description.length}/300</span></label>
+    </div></section>
+
+    <section className={styles.card}><h2 className={styles.cardTitle}>대표 이미지 <span className={styles.muted} style={{fontSize:12,fontWeight:400}}>선택</span></h2>{preview && <div className={styles.preview}><Image src={preview} alt="대표 이미지 미리보기" width={1400} height={800} unoptimized={preview.startsWith("data:")} /></div>}
+      <label className={styles.uploadZone} onDragOver={(e)=>e.preventDefault()} onDrop={dropCover}><UploadIcon/><p className={styles.uploadTitle}>이미지를 선택하거나 드래그하여 업로드하세요</p><p className={styles.uploadHelp}>권장 크기: 2560×1707px (3:2) / 최대 20MB / JPG, PNG, WebP</p><span className={styles.primaryButton}>↥ 파일 선택</span><input ref={coverInput} className={styles.hiddenInput} type="file" accept="image/*" onChange={(e)=>uploadCover(e)} /></label>
+      <div className={styles.detailSection}><h3>모바일 및 상세 이미지</h3><div className={styles.formGrid}><label className={styles.field}><span className={styles.label}>모바일 대표 이미지</span><input className={styles.input} type="file" accept="image/*" onChange={(e)=>uploadCover(e,true)} /></label><label className={styles.field}><span className={styles.label}>상세 이미지 여러 장</span><input className={styles.input} type="file" accept="image/*" multiple onChange={uploadDetails}/></label></div>{project.images.length>0 && <div className={styles.detailGrid}>{project.images.map((image,index)=><article className={styles.detailCard} key={image.id}><Image src={image.src} alt={image.alt} width={300} height={180} unoptimized={image.src.startsWith("data:")}/><div className={styles.detailActions}><button type="button" onClick={()=>moveImage(index,-1)} disabled={index===0}>↑</button><button type="button" onClick={()=>moveImage(index,1)} disabled={index===project.images.length-1}>↓</button><button type="button" onClick={()=>removeImage(image.id)}>삭제</button></div></article>)}</div>}</div>
+    </section>
+
+    <section className={styles.card}><h2 className={styles.cardTitle}>고급 설정</h2><div className={styles.formGrid}><label className={styles.field}><span className={styles.label}>주소용 슬러그</span><input className={styles.input} value={project.slug} onChange={(e)=>patch("slug",e.target.value)}/></label><label className={styles.field}><span className={styles.label}>평형 필터</span><select className={styles.select} value={project.category} onChange={(e)=>patch("category",e.target.value as ProjectCategory)}><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="60">60</option><option value="C">C</option></select></label><label className={styles.field}><span className={styles.label}>연도</span><input className={styles.input} type="number" value={project.year} onChange={(e)=>patch("year",Number(e.target.value))}/></label><label className={styles.field}><span className={styles.label}>카드 형태</span><select className={styles.select} value={project.cardLayout??"wide"} onChange={(e)=>patch("cardLayout",e.target.value as ProjectCardLayout)}><option value="wide">가로</option><option value="portrait">세로</option><option value="square">정사각형</option></select></label></div></section>
+    <div className={styles.note}>ⓘ 저장 후에도 언제든지 수정할 수 있습니다.</div>
   </form>;
 }
