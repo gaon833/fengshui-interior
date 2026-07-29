@@ -1,2 +1,2 @@
-v2.0.0
-Common logo system with centralized desktop offset
+v2.1.0
+Centralized navigation design system

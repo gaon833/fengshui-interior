@@ -10,7 +10,7 @@
   .detail-meta{left:40px;bottom:120px;width:240px}.detail-meta h1{font-size:24px}.detail-meta .project-type{font-size:14px}.detail-meta dd{font-size:13px}.detail-social{left:40px;bottom:50px}
 }
 @media (max-width:900px){
-  :root{--sidebar-width:min(90vw,400px);--logo-width:122px;--logo-left:20px;--logo-top:24px;--hamburger-top:20px;--hamburger-right:18px;--menu-top:108px;--menu-font-size:15.3px;--menu-gap:22px;}
+  :root{--sidebar-width:min(90vw,400px);--logo-width:122px;--logo-left:20px;--logo-top:24px;--hamburger-top:var(--mobile-hamburger-top);--hamburger-right:var(--mobile-hamburger-right);--menu-top:var(--mobile-menu-top);--menu-font-size:var(--mobile-menu-font-size);--menu-gap:var(--mobile-menu-gap);}
   .desktop-sidebar{display:none}.site-shell--fixed .site-content{margin-left:0}.site-shell--fixed .site-floating-logo{display:inline-flex}
   .simple-page{margin-right:0;padding:90px 18px 70px}.home-main{padding:100px 18px 40px}
   .project-index{padding:90px 18px 90px}.project-filter{min-height:118px;overflow-x:auto;width:max-content;gap:23px}.project-grid{grid-template-columns:1fr;row-gap:18px}
@@ -25,23 +25,22 @@
 /* Mobile refinement: independent from desktop layout */
 @media (max-width:900px){
   :root{
-    --mobile-ui-color:#777;
     --sidebar-width:63vw;
     --logo-width:98px;
   }
 
   .brand-logo{width:98px;}
   .menu-drawer{width:63vw;max-width:280px;min-width:238px;}
-  .menu-toggle span,.drawer-close span{background:var(--mobile-ui-color);}
+  .menu-toggle span,.drawer-close span{background:var(--mobile-menu-color);}
   .navigation-link,
   .navigation-link:hover,
   .navigation-link:focus,
-  .navigation-link:active{color:var(--mobile-ui-color);}
+  .navigation-link:active{color:var(--mobile-menu-color);}
   .navigation-link.is-active,
   .navigation-link.is-active:hover,
-  .navigation-link.is-active:focus{color:#555;}
-  .navigation-divider{background:var(--mobile-ui-color);opacity:1;}
-  .drawer-info,.sidebar-info{color:var(--mobile-ui-color);}
+  .navigation-link.is-active:focus{color:var(--mobile-menu-active-color);}
+  .navigation-divider{background:var(--mobile-menu-color);opacity:1;}
+  .drawer-info,.sidebar-info{color:var(--mobile-menu-color);}
 
   .project-index{padding:145px 18px 80px;}
   .project-filter{min-height:0;padding:0 0 16px;gap:22px;line-height:1;}
@@ -106,12 +105,12 @@
 }
 
 @media (max-width:900px){
-  .sidebar-social-footer{gap:15px;padding-bottom:4px;}
-  .sidebar-social-icons{gap:10px;}
-  .social-icon-link{width:25px;height:25px;}
-  .sidebar-company-info{font-size:8px;line-height:1.5;}
-  .sidebar-company-info strong{font-size:9px;}
-  .sidebar-company-info small{font-size:7px;margin-top:10px;}
+  .sidebar-social-footer{gap:var(--mobile-menu-footer-gap);padding-bottom:4px;}
+  .sidebar-social-icons{gap:var(--mobile-menu-social-gap);}
+  .social-icon-link{width:var(--mobile-menu-social-icon-size);height:var(--mobile-menu-social-icon-size);}
+  .sidebar-company-info{font-size:var(--mobile-menu-company-font-size);line-height:1.5;}
+  .sidebar-company-info strong{font-size:var(--mobile-menu-company-title-size);}
+  .sidebar-company-info small{font-size:var(--mobile-menu-company-copyright-size);margin-top:10px;}
 }
 
 /* Final mobile refinements */
