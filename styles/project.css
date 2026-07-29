@@ -213,3 +213,45 @@
     pointer-events:auto;
   }
 }
+
+/* v5.0.6 Gallery/Scrap lightbox refinement */
+.gallery-page,.scrap-page{padding-top:88px}
+.gallery-page>header,.scrap-page>header{display:none!important}
+.scrap-page{padding-right:30px;padding-left:30px;padding-bottom:80px}
+.scrap-masonry{columns:5 240px;column-gap:18px;max-width:1600px;margin:0 auto}
+.scrap-card{break-inside:avoid;margin:0 0 18px;background:transparent}
+.scrap-card>a,.scrap-card>[role="button"]{display:block;color:inherit;text-decoration:none;cursor:zoom-in}
+.scrap-card--project>a{cursor:pointer}
+.scrap-card-image{position:relative;overflow:hidden;border-radius:18px;background:#eee}
+.scrap-card-image img{display:block;width:100%;height:auto;border-radius:18px}
+.scrap-card-meta{display:none!important}
+.scrap-board-heart{position:absolute;top:13px;right:13px;z-index:4}
+.scrap-card-share{position:absolute;right:13px;bottom:13px;z-index:4}
+.gallery-card-image{cursor:zoom-in}
+.gallery-card-image:focus-visible,.scrap-card>[role="button"]:focus-visible{outline:1px solid rgba(90,90,90,.55);outline-offset:4px}
+.image-lightbox{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:28px;background:rgba(246,246,244,.42);backdrop-filter:blur(24px) saturate(.78);-webkit-backdrop-filter:blur(24px) saturate(.78);animation:lightboxFade .2s ease both}
+.image-lightbox-panel{max-width:min(94vw,1500px);max-height:94vh;display:grid;place-items:center}
+.image-lightbox-media{position:relative;display:grid;place-items:center;max-width:100%;max-height:94vh}
+.image-lightbox-media>img{display:block;width:auto;height:auto;max-width:94vw;max-height:92vh;object-fit:contain;border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.16);animation:lightboxImageIn .24s cubic-bezier(.2,.75,.25,1) both}
+.image-lightbox-heart{position:absolute;top:16px;right:16px;z-index:3}
+.image-lightbox-share{position:absolute;right:16px;bottom:16px;z-index:3}
+.image-lightbox-close{position:absolute;top:12px;left:14px;z-index:4;width:34px;height:34px;border:0;background:transparent;color:#fff;font:300 29px/1 Arial,sans-serif;cursor:pointer;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+@keyframes lightboxFade{from{opacity:0}to{opacity:1}}
+@keyframes lightboxImageIn{from{opacity:0;transform:scale(.965) translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:900px){
+  .gallery-page,.scrap-page{padding:78px 12px 50px}
+  .scrap-masonry{columns:2;column-gap:10px}
+  .scrap-card{margin-bottom:10px}
+  .scrap-card-image,.scrap-card-image img{border-radius:14px}
+  .scrap-board-heart{top:9px;right:9px}
+  .scrap-card-share{right:9px;bottom:9px}
+  .image-lightbox{padding:12px;backdrop-filter:blur(18px) saturate(.8);-webkit-backdrop-filter:blur(18px) saturate(.8)}
+  .image-lightbox-media>img{max-width:96vw;max-height:88vh;border-radius:12px}
+  .image-lightbox-heart{top:10px;right:10px}
+  .image-lightbox-share{right:10px;bottom:10px}
+  .image-lightbox-close{top:7px;left:8px}
+}
+
+/* v5.0.7 Gallery smart search */
+.gallery-search-wrap{max-width:1600px;margin:0 auto 30px;padding:0 2px}.gallery-search{height:48px;display:flex;align-items:center;gap:12px;border:1px solid rgba(120,120,120,.18);border-radius:24px;background:rgba(247,247,245,.84);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:0 18px;transition:border-color .2s ease,background .2s ease}.gallery-search:focus-within{border-color:rgba(90,90,90,.38);background:rgba(255,255,255,.94)}.gallery-search svg{width:17px;height:17px;fill:none;stroke:#777;stroke-width:1.6;stroke-linecap:round}.gallery-search input{width:100%;border:0;outline:0;background:transparent;color:#555;font:inherit;font-size:12px;letter-spacing:.02em}.gallery-search input::placeholder{color:#aaa}.gallery-search button{border:0;background:none;color:#999;font-size:20px;line-height:1;cursor:pointer;padding:2px 3px}.gallery-empty-search{min-height:42vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#888;text-align:center}.gallery-empty-search p{font-size:13px;margin:0 0 8px}.gallery-empty-search span{font-size:10px;color:#aaa}.gallery-card-image{border-radius:20px;cursor:zoom-in}.gallery-card-share{position:absolute;right:13px;bottom:13px;z-index:3}
+@media(max-width:900px){.gallery-search-wrap{margin-bottom:18px;padding:0}.gallery-search{height:43px;border-radius:22px;padding:0 14px}.gallery-search input{font-size:11px}.gallery-card-image{border-radius:14px}.gallery-card-share{right:9px;bottom:9px}}
