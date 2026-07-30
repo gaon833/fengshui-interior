@@ -5,8 +5,7 @@ import Link from "next/link";
 import type { Project } from "@/types/project";
 import ScrapButton from "./ScrapButton";
 import ShareIconButton from "./ShareIconButton";
-import dynamic from "next/dynamic";
-const AdminDeleteButton = dynamic(() => import("@/components/admin-delete/AdminDeleteChrome").then((mod) => mod.AdminDeleteButton));
+import { AdminDeleteButton } from "@/components/admin-delete/AdminDeleteChrome";
 
 export default function ProjectCard({ project, index, adminDeleteActive = false, onDeleteProject }: { project: Project; index: number; adminDeleteActive?: boolean; onDeleteProject?: (project: Project) => void }) {
   const layout = project.cardLayout ?? "wide";

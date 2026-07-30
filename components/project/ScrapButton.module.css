@@ -1,0 +1,117 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(20, 20, 20, 0.32);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: overlayIn 180ms ease-out both;
+}
+
+.modal {
+  width: min(330px, calc(100vw - 40px));
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.84);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.18);
+  color: #252525;
+  text-align: center;
+  transform-origin: center;
+  animation: modalIn 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.iconCircle {
+  width: 76px;
+  height: 76px;
+  margin: 42px auto 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #f3f3f3;
+}
+
+.icon {
+  width: 31px;
+  height: 29px;
+  fill: none;
+  stroke: #555;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.message {
+  margin: 0;
+  padding: 0 28px 38px;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.03em;
+}
+
+.action {
+  width: 100%;
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 0;
+  border-top: 1px solid #e8e8e8;
+  background: transparent;
+  color: #363636;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.action:hover {
+  background: #f7f7f7;
+  color: #111;
+}
+
+.action:focus-visible {
+  outline: 2px solid rgba(32, 32, 32, 0.34);
+  outline-offset: -4px;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 600px) {
+  .overlay { padding: 20px; }
+  .modal {
+    width: min(310px, calc(100vw - 32px));
+    border-radius: 26px;
+  }
+  .iconCircle {
+    width: 70px;
+    height: 70px;
+    margin-top: 36px;
+  }
+  .message {
+    padding-bottom: 32px;
+    font-size: 16px;
+  }
+  .action { min-height: 62px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .modal { animation: none; }
+}

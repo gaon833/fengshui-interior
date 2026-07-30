@@ -5,9 +5,7 @@ import type { Project } from "@/types/project";
 import { PROJECTS_EVENT, PROJECTS_STORAGE_KEY, readStoredProjects, saveStoredProjects } from "@/lib/project-store";
 import ProjectFilterView from "./ProjectFilterView";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
-import dynamic from "next/dynamic";
-import { confirmVisualDelete } from "@/lib/confirm-visual-delete";
-const AdminDeleteChrome = dynamic(() => import("@/components/admin-delete/AdminDeleteChrome").then((mod) => mod.AdminDeleteChrome));
+import { AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
 
 export default function ProjectStoreView({ projects }: { projects: Project[] }) {
   const deleteMode = useAdminDeleteMode();

@@ -3,10 +3,7 @@ import Image from "next/image";
 import { useSiteSettings } from "@/components/site/SiteSettingsProvider";
 import { defaultSiteSettings, SITE_SETTINGS_EVENT, SITE_SETTINGS_KEY } from "@/lib/site-settings";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
-import dynamic from "next/dynamic";
-import { confirmVisualDelete } from "@/lib/confirm-visual-delete";
-const AdminDeleteChrome = dynamic(() => import("@/components/admin-delete/AdminDeleteChrome").then((mod) => mod.AdminDeleteChrome));
-const AdminDeleteButton = dynamic(() => import("@/components/admin-delete/AdminDeleteChrome").then((mod) => mod.AdminDeleteButton));
+import { AdminDeleteButton, AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
 
 export default function HomeHero() {
   const site = useSiteSettings();

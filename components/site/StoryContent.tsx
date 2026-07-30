@@ -2,10 +2,7 @@
 import { useEffect, useState } from "react";
 import { defaultStoryContent, PAGE_CONTENT_EVENT, readLocalContent, saveLocalContent, STORY_CONTENT_KEY } from "@/lib/page-content";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
-import dynamic from "next/dynamic";
-import { confirmVisualDelete } from "@/lib/confirm-visual-delete";
-const AdminDeleteChrome = dynamic(() => import("@/components/admin-delete/AdminDeleteChrome").then((mod) => mod.AdminDeleteChrome));
-const AdminDeleteButton = dynamic(() => import("@/components/admin-delete/AdminDeleteChrome").then((mod) => mod.AdminDeleteButton));
+import { AdminDeleteButton, AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
 export default function StoryContent(){
  const [content,setContent]=useState(defaultStoryContent); const deleteMode=useAdminDeleteMode();
  useEffect(()=>{const sync=()=>setContent(readLocalContent(STORY_CONTENT_KEY,defaultStoryContent));sync();window.addEventListener(PAGE_CONTENT_EVENT,sync);window.addEventListener("storage",sync);return()=>{window.removeEventListener(PAGE_CONTENT_EVENT,sync);window.removeEventListener("storage",sync);};},[]);
