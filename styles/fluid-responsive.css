@@ -10,10 +10,6 @@
     --page-right-gap: clamp(32px, 4.2vw, 80px);
     --grid-gap: clamp(18px, 1.823vw, 35px);
 
-    --project-detail-rail-width: var(--sidebar-width);
-    --project-detail-gallery-top: clamp(120px, 10.417vw, 200px);
-    --project-detail-gallery-right: clamp(96px, 18.75vw, 360px);
-    --project-detail-gallery-bottom: clamp(90px, 8.854vw, 170px);
 
     --fluid-page-x: clamp(28px, 4.2vw, 80px);
     --fluid-page-y: clamp(96px, 7.813vw, 150px);
@@ -59,59 +55,6 @@
 
   .project-grid-column {
     gap: var(--fluid-card-gap);
-  }
-
-  /* Project detail: no duplicate offset and no 1600px hard-coded override. */
-  .detail-info {
-    width: var(--project-detail-rail-width);
-    padding-left: clamp(24px, 2.083vw, 40px);
-    padding-right: clamp(24px, 2.083vw, 40px);
-  }
-
-  .detail-meta {
-    left: clamp(24px, 2.083vw, 40px);
-    right: clamp(24px, 2.083vw, 40px);
-    bottom: clamp(110px, 10.417vw, 200px);
-  }
-
-  .detail-meta h1 {
-    font-size: clamp(25px, 1.667vw, 32px);
-  }
-
-  .detail-meta .project-type,
-  .detail-meta dd {
-    font-size: clamp(13px, .833vw, 16px);
-  }
-
-  .detail-meta dl {
-    gap:
-      clamp(28px, 2.292vw, 44px)
-      clamp(24px, 2.5vw, 48px);
-  }
-
-  .detail-gallery {
-    margin-left: 0;
-    padding:
-      var(--project-detail-gallery-top)
-      var(--project-detail-gallery-right)
-      var(--project-detail-gallery-bottom)
-      0;
-    gap: var(--fluid-section-gap);
-  }
-
-  .project-navigation {
-    margin-left: 0;
-    min-height: clamp(320px, 28.125vw, 540px);
-    padding:
-      clamp(130px, 11.458vw, 220px)
-      clamp(56px, 6.25vw, 120px)
-      clamp(110px, 9.375vw, 180px);
-    font-size: clamp(10px, .625vw, 12px);
-  }
-
-  .project-navigation .nav-arrow {
-    width: clamp(56px, 5.208vw, 100px);
-    flex-basis: clamp(56px, 5.208vw, 100px);
   }
 
   /* Gallery and SCRAP retain structural columns while spacing scales continuously. */
@@ -161,9 +104,6 @@
 /* Compact desktop/tablet keeps the rail, but values continue to interpolate. */
 @media (min-width: 901px) and (max-width: 1100px) {
   :root {
-    --project-detail-gallery-right: clamp(48px, 7vw, 77px);
-    --project-detail-gallery-top: clamp(100px, 10.9vw, 120px);
-    --project-detail-gallery-bottom: clamp(72px, 8.2vw, 90px);
     --fluid-home-x: clamp(48px, 7vw, 77px);
     --fluid-simple-right: clamp(48px, 7vw, 77px);
   }
@@ -172,9 +112,6 @@
     margin-right: var(--fluid-simple-right);
   }
 
-  .detail-meta {
-    bottom: clamp(92px, 10vw, 110px);
-  }
 }
 
 /* Mobile keeps the established one-column UI; only spacing becomes fluid. */
@@ -188,8 +125,6 @@
   .home-main,
   .simple-page,
   .project-index,
-  .detail-info,
-  .detail-gallery,
   .gallery-page,
   .scrap-page {
     padding-left: max(var(--mobile-page-x), env(safe-area-inset-left));
@@ -204,9 +139,6 @@
     gap: var(--mobile-section-gap);
   }
 
-  .detail-gallery {
-    gap: var(--mobile-section-gap);
-  }
 
   .menu-drawer {
     width: clamp(238px, 63vw, 280px);
