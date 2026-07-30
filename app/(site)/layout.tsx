@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import SiteShell from "@/components/layout/SiteShell";
 import PublicContentProtection from "@/components/site/PublicContentProtection";
 import StructuredData from "@/components/site/StructuredData";
@@ -10,7 +10,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <VisitTracker />
       <StructuredData />
       <PublicContentProtection>
-        <SiteShell>{children}</SiteShell>
+        <Suspense fallback={null}><SiteShell>{children}</SiteShell></Suspense>
       </PublicContentProtection>
     </>
   );
