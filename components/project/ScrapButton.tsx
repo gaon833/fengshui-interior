@@ -81,11 +81,9 @@ export default function ScrapButton({ item, className = "", label }: Props) {
           }}
         >
           <section className={styles.modal} role="status" aria-live="polite" aria-label="스크랩 안내">
-            <div className={styles.iconCircle} aria-hidden="true">
-              <svg className={styles.icon} viewBox="0 0 32 29" focusable="false">
-                <path d="M16 27.2 3.1 14.8C-4.1 7.9 1.1-2.8 10.2.7 12.7 1.6 14.7 3.5 16 5.9 17.3 3.5 19.3 1.6 21.8.7c9.1-3.5 14.3 7.2 7.1 14.1L16 27.2Z" />
-              </svg>
-            </div>
+            <svg className={styles.icon} aria-hidden="true" viewBox="0 0 32 29" focusable="false">
+              <path d="M16 27.2 3.1 14.8C-4.1 7.9 1.1-2.8 10.2.7 12.7 1.6 14.7 3.5 16 5.9 17.3 3.5 19.3 1.6 21.8.7c9.1-3.5 14.3 7.2 7.1 14.1L16 27.2Z" />
+            </svg>
 
             <p className={styles.message}>
               {feedback === "saved" ? "SCRAP에 저장되었습니다." : "SCRAP에서 삭제되었습니다."}
