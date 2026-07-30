@@ -1,13 +1,14 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: 2147483000;
   display: grid;
   place-items: center;
   padding: 24px;
   background: rgba(20, 20, 20, 0.52);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  isolation: isolate;
   animation: overlayIn 180ms ease-out both;
 }
 

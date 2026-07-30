@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { createPortal } from "react-dom";
 import { ENGAGEMENT_EVENT, isScrapped, toggleScrap, type ScrapItem } from "@/lib/engagement";
 import styles from "./ScrapButton.module.css";
 
@@ -11,9 +12,12 @@ type Feedback = "saved" | "removed" | null;
 export default function ScrapButton({ item, className = "", label }: Props) {
   const [active, setActive] = useState(false);
   const [feedback, setFeedback] = useState<Feedback>(null);
+  const [portalReady, setPortalReady] = useState(false);
   const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
+    setPortalReady(true);
+
     const sync = () => setActive(isScrapped(item.id));
     sync();
     window.addEventListener("storage", sync);
@@ -34,11 +38,9 @@ export default function ScrapButton({ item, className = "", label }: Props) {
     };
 
     document.addEventListener("keydown", closeOnEscape);
-    document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", closeOnEscape);
-      document.body.style.overflow = "";
     };
   }, [feedback]);
 
@@ -72,7 +74,7 @@ export default function ScrapButton({ item, className = "", label }: Props) {
         {label && <em>{label}</em>}
       </button>
 
-      {feedback && (
+      {feedback && portalReady && createPortal(
         <div
           className={styles.overlay}
           role="presentation"
@@ -101,7 +103,8 @@ export default function ScrapButton({ item, className = "", label }: Props) {
               </button>
             )}
           </section>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
