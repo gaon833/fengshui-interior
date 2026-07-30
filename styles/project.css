@@ -272,3 +272,11 @@
 .scrap-gallery-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border:1px solid rgba(70,70,70,.14);border-radius:12px;background:#222;color:#fff;font-size:12px;letter-spacing:.04em;transition:transform .2s ease,background .2s ease}
 .scrap-gallery-link:hover{background:#333;transform:translateY(-1px)}
 @media(max-width:900px){.scrap-intro{margin-bottom:24px;gap:14px;padding-bottom:16px}.scrap-intro h1{font-size:19px}.scrap-intro p{font-size:11px}.scrap-count{min-width:48px;padding:8px 10px}.scrap-empty-state{min-height:44vh;padding:48px 12px}.scrap-empty-state h2{font-size:15px}}
+
+
+/* v7.4.1 centered SCRAP save feedback */
+.scrap-save-feedback{position:fixed;left:50%;top:50%;z-index:9000;display:flex;flex-direction:column;align-items:center;gap:14px;transform:translate(-50%,-50%);min-width:230px;padding:20px 24px;border:1px solid rgba(255,255,255,.72);border-radius:12px;background:rgba(255,255,255,.82);color:#555;box-shadow:0 18px 54px rgba(35,35,35,.16);backdrop-filter:blur(20px) saturate(135%);-webkit-backdrop-filter:blur(20px) saturate(135%);font-size:12px;font-weight:400;letter-spacing:.03em;line-height:1.5;text-align:center;animation:scrapSaveFeedbackIn .22s cubic-bezier(.2,.8,.2,1) both}
+.scrap-save-feedback a{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border:1px solid rgba(70,70,70,.16);border-radius:8px;background:#222;color:#fff;font-size:10px;letter-spacing:.08em;text-decoration:none;transition:background .2s ease,transform .2s ease}
+.scrap-save-feedback a:hover{background:#333;transform:translateY(-1px)}
+@keyframes scrapSaveFeedbackIn{from{opacity:0;transform:translate(-50%,-46%)}to{opacity:1;transform:translate(-50%,-50%)}}
+@media(max-width:900px){.scrap-save-feedback{width:calc(100vw - 48px);min-width:0;max-width:320px;padding:18px 20px}}
