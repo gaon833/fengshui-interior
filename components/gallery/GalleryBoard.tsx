@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import projectsData from "@/content/projects.json";
 import type { Project } from "@/types/project";
 import ImageLightbox from "@/components/gallery/ImageLightbox";
-import GalleryMasonry from "@/components/gallery/GalleryMasonry";
+import GalleryMasonry from "@/components/gallery-v2";
 import { deleteGalleryItem, GALLERY_EVENT, hideGalleryItem, readGalleryItems, readHiddenGalleryIds, type GalleryItem } from "@/lib/gallery-store";
 import { trackGallerySearch, trackGalleryView } from "@/lib/gallery-analytics";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";

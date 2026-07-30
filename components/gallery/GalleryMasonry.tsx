@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import ScrapButton from "@/components/project/ScrapButton";
 import ShareIconButton from "@/components/project/ShareIconButton";
 import { AdminDeleteButton } from "@/components/admin-delete/AdminDeleteChrome";
@@ -37,15 +36,12 @@ export default function GalleryMasonry({ items, deleteMode, onOpen, onDelete }: 
               }
             }}
           >
-            <Image
+            {/* 원본 이미지의 실제 비율을 그대로 사용해야 5/4/3/2열 모두 자연스러운 Masonry가 유지됩니다. */}
+            <img
               src={item.src}
               alt={item.title}
-              width={1200}
-              height={1600}
-              sizes="(max-width:900px) 50vw, (max-width:1050px) 33vw, (max-width:1280px) 25vw, 20vw"
               loading="lazy"
               decoding="async"
-              unoptimized={item.src.startsWith("data:")}
             />
 
             {deleteMode ? (

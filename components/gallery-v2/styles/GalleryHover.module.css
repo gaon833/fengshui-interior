@@ -1,0 +1,50 @@
+.controls {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.heart,
+.share {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(-4px);
+  transition: opacity .18s ease, transform .18s ease !important;
+}
+
+.heart {
+  position: absolute !important;
+  top: 13px !important;
+  right: 13px !important;
+}
+
+.share {
+  position: absolute !important;
+  right: 13px !important;
+  bottom: 13px !important;
+  top: auto !important;
+}
+
+:global(article:hover) .heart,
+:global(article:hover) .share,
+:global(article:focus-within) .heart,
+:global(article:focus-within) .share {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .heart { top: 9px !important; right: 9px !important; }
+  .share { right: 9px !important; bottom: 9px !important; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .heart,
+  .share {
+    opacity: .96 !important;
+    pointer-events: auto !important;
+    transform: none;
+  }
+}

@@ -356,3 +356,33 @@
     border-radius: 14px;
   }
 }
+
+
+/* v7.4.8 — preserve each Gallery image's real aspect ratio and show controls on hover */
+.gallery-scrap-card-image .scrap-heart,
+.gallery-scrap-card-image .image-share-button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.gallery-scrap-card-image:hover .scrap-heart,
+.gallery-scrap-card-image:hover .image-share-button,
+.gallery-scrap-card-image:focus-within .scrap-heart,
+.gallery-scrap-card-image:focus-within .image-share-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+.gallery-scrap-card-image > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+@media (hover: none), (pointer: coarse) {
+  .gallery-scrap-card-image .scrap-heart,
+  .gallery-scrap-card-image .image-share-button {
+    opacity: .96;
+    pointer-events: auto;
+  }
+}

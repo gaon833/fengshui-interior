@@ -1,0 +1,45 @@
+.card {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  background: transparent;
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #eee;
+  cursor: zoom-in;
+  isolation: isolate;
+}
+
+.media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+
+.media:hover img,
+.media:focus-within img {
+  transform: scale(1.012);
+}
+
+.media:focus-visible {
+  outline: 1px solid rgba(90,90,90,.55);
+  outline-offset: 4px;
+}
+
+:global(.admin-delete-page-shell.is-gallery-delete) .media {
+  cursor: default;
+}
+
+@media (max-width: 900px) {
+  .media { border-radius: 14px; }
+  .media:hover img,
+  .media:focus-within img { transform: none; }
+}

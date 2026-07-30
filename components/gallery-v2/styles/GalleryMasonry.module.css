@@ -1,0 +1,18 @@
+.masonry {
+  --gallery-v2-gap: 16px;
+  --gallery-v2-columns: 5;
+  display: grid;
+  grid-template-columns: repeat(var(--gallery-v2-columns), minmax(0, 1fr));
+  align-items: start;
+  gap: var(--gallery-v2-gap);
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.column {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--gallery-v2-gap);
+}
