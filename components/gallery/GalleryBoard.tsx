@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useDeferredValue, useEffect, useMemo, useState } from "react";
 import projectsData from "@/content/projects.json";
 import type { Project } from "@/types/project";
 import ScrapButton from "@/components/project/ScrapButton";
@@ -10,7 +10,10 @@ import ImageLightbox from "@/components/gallery/ImageLightbox";
 import { deleteGalleryItem, GALLERY_EVENT, hideGalleryItem, readGalleryItems, readHiddenGalleryIds, type GalleryItem } from "@/lib/gallery-store";
 import { trackGallerySearch, trackGalleryView } from "@/lib/gallery-analytics";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
-import { AdminDeleteButton, AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
+import dynamic from "next/dynamic";
+import { confirmVisualDelete } from "@/lib/confirm-visual-delete";
+const AdminDeleteChrome = dynamic(() => import("@/components/admin-delete/AdminDeleteChrome").then((mod) => mod.AdminDeleteChrome));
+const AdminDeleteButton = dynamic(() => import("@/components/admin-delete/AdminDeleteChrome").then((mod) => mod.AdminDeleteButton));
 import { galleryTagsToSearchText, type GalleryTags } from "@/lib/gallery-tags";
 
 const projects = projectsData as Project[];
@@ -58,20 +61,20 @@ function tagValues(tags?: GalleryTags) {
   return [tags.space, ...tags.structures, ...tags.styles, ...tags.colors, ...tags.materials, ...tags.features].filter(Boolean);
 }
 
-function localScore(item: GalleryItem, query: string) {
+function localScore(item: GalleryItem, query: string, queryGroups: string[][]) {
   if (!query.trim()) return 1;
   const tags = item.tags;
   const tagText = tags ? galleryTagsToSearchText(tags) : "";
   const haystack = normalize([item.title, item.projectTitle, item.projectSlug, item.searchText, tagText].filter(Boolean).join(" "));
   let score = 0;
-  for (const alternatives of localTerms(query)) {
+  for (const alternatives of queryGroups) {
     const exactTagMatches = tagValues(tags).filter((tag) => alternatives.some((term) => normalize(tag) === term)).length;
     const textMatches = alternatives.filter((term) => haystack.includes(term)).length;
     if (!exactTagMatches && !textMatches) return 0;
     score += exactTagMatches * 40 + textMatches * 8;
   }
   if (haystack.includes(normalize(query))) score += 30;
-  if (tags?.space && localTerms(query).flat().includes(normalize(tags.space))) score += 60;
+  if (tags?.space && queryGroups.flat().includes(normalize(tags.space))) score += 60;
   return score;
 }
 
@@ -81,6 +84,7 @@ export default function GalleryBoard() {
   const [hiddenIds, setHiddenIds] = useState<string[]>([]);
   const [selected, setSelected] = useState<GalleryItem | null>(null);
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
   const [deleteCategory, setDeleteCategory] = useState<"ALL" | "20" | "30" | "40" | "50" | "60" | "C">("ALL");
 
   useEffect(() => {
@@ -89,7 +93,8 @@ export default function GalleryBoard() {
     return () => { window.removeEventListener("storage", sync); window.removeEventListener(GALLERY_EVENT, sync); };
   }, []);
 
-  const items = useMemo(() => [...customItems, ...seedItems].filter((item) => !hiddenIds.includes(item.id)), [customItems, hiddenIds]);
+  const hiddenIdSet = useMemo(() => new Set(hiddenIds), [hiddenIds]);
+  const items = useMemo(() => [...customItems, ...seedItems].filter((item) => !hiddenIdSet.has(item.id)), [customItems, hiddenIdSet]);
 
   const removeGalleryItem = async (item: GalleryItem) => {
     if (!confirmVisualDelete("이 GALLERY 이미지를 삭제하시겠습니까?")) return;
@@ -104,11 +109,14 @@ export default function GalleryBoard() {
     ? items.filter((item) => item.projectSlug && projectCategoryBySlug.get(item.projectSlug) === deleteCategory)
     : items, [items, deleteMode.active, deleteCategory, projectCategoryBySlug]);
 
+  const normalizedDeferredQuery = useMemo(() => normalize(deferredQuery), [deferredQuery]);
+  const queryGroups = useMemo(() => localTerms(deferredQuery), [deferredQuery]);
+
   const filteredItems = useMemo(() => categoryItems
-    .map((item) => ({ item, score: localScore(item, query) }))
+    .map((item) => ({ item, score: localScore(item, normalizedDeferredQuery, queryGroups) }))
     .filter((entry) => entry.score > 0)
     .sort((a, b) => b.score - a.score)
-    .map((entry) => entry.item), [categoryItems, query]);
+    .map((entry) => entry.item), [categoryItems, normalizedDeferredQuery, queryGroups]);
 
   const submitSearch = (event: FormEvent) => {
     event.preventDefault();

@@ -6,7 +6,9 @@ import ScrapButton from "./ScrapButton";
 import ShareIconButton from "./ShareIconButton";
 import { readStoredProjects, saveStoredProjects } from "@/lib/project-store";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
-import { AdminDeleteButton, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
+import dynamic from "next/dynamic";
+import { confirmVisualDelete } from "@/lib/confirm-visual-delete";
+const AdminDeleteButton = dynamic(() => import("@/components/admin-delete/AdminDeleteChrome").then((mod) => mod.AdminDeleteButton));
 
 export default function ProjectGallery({images,projectSlug,projectTitle}:{images:ProjectImage[];projectSlug:string;projectTitle:string}){
  const deleteMode=useAdminDeleteMode();
