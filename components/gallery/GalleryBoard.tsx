@@ -1,16 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import projectsData from "@/content/projects.json";
 import type { Project } from "@/types/project";
-import ScrapButton from "@/components/project/ScrapButton";
-import ShareIconButton from "@/components/project/ShareIconButton";
 import ImageLightbox from "@/components/gallery/ImageLightbox";
+import GalleryMasonry from "@/components/gallery/GalleryMasonry";
 import { deleteGalleryItem, GALLERY_EVENT, hideGalleryItem, readGalleryItems, readHiddenGalleryIds, type GalleryItem } from "@/lib/gallery-store";
 import { trackGallerySearch, trackGalleryView } from "@/lib/gallery-analytics";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
-import { AdminDeleteButton, AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
+import { AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
 import { galleryTagsToSearchText, type GalleryTags } from "@/lib/gallery-tags";
 
 const projects = projectsData as Project[];
@@ -131,21 +129,12 @@ export default function GalleryBoard() {
       </div>}
 
       {filteredItems.length > 0 ? (
-        <section className="gallery-masonry" aria-label="인테리어 갤러리 검색 결과">
-          {filteredItems.map((item) => (
-            <article key={item.id} className="gallery-card" aria-label={item.title}>
-              <div className="gallery-card-image" role="button" tabIndex={0} aria-label={`${item.title} 크게 보기`}
-                onClick={() => { if (!deleteMode.active) { trackGalleryView(item.id); setSelected(item); } }}
-                onKeyDown={(event) => { if (!deleteMode.active && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); trackGalleryView(item.id); setSelected(item); } }}>
-                <Image src={item.src} alt={item.title} width={1200} height={1600} sizes="(max-width:700px) 50vw, (max-width:1200px) 33vw, 25vw" loading="lazy" decoding="async" unoptimized={item.src.startsWith("data:")} />
-                {deleteMode.active ? <AdminDeleteButton label={`${item.title} 삭제`} onDelete={() => void removeGalleryItem(item)} /> : <>
-                  <ScrapButton className="gallery-card-heart" item={{ id: `gallery:${item.id}`, kind: "image", projectSlug: item.projectSlug || "gallery", projectTitle: item.projectTitle || item.title, src: item.src, alt: item.title }} />
-                  <ShareIconButton className="gallery-card-share" projectSlug={item.projectSlug} projectTitle={item.projectTitle || item.title} fallbackPath="/gallery" />
-                </>}
-              </div>
-            </article>
-          ))}
-        </section>
+        <GalleryMasonry
+          items={filteredItems}
+          deleteMode={deleteMode.active}
+          onOpen={(item) => { trackGalleryView(item.id); setSelected(item); }}
+          onDelete={(item) => void removeGalleryItem(item)}
+        />
       ) : (
         <div className="gallery-empty-search" role="status"><p>관련 이미지를 찾지 못했습니다.</p><span>다른 태그나 표현으로 검색해 보세요.</span></div>
       )}

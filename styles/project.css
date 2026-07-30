@@ -297,3 +297,62 @@
 @media (max-width: 900px) {
   .admin-delete-page-shell.is-gallery-delete .gallery-masonry { columns: 2 !important; }
 }
+
+/* v7.4.7 — Gallery UI rebuilt from the stable SCRAP masonry structure */
+.gallery-scrap-masonry {
+  --gallery-masonry-gap: 16px;
+  columns: 5;
+  column-gap: var(--gallery-masonry-gap);
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.gallery-scrap-card {
+  width: 100%;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 0 0 var(--gallery-masonry-gap);
+  background: transparent;
+}
+.gallery-scrap-card-image {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 20px;
+  background: #eee;
+  cursor: zoom-in;
+}
+.gallery-scrap-card-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: inherit;
+}
+.gallery-scrap-card-image:focus-visible {
+  outline: 1px solid rgba(90,90,90,.55);
+  outline-offset: 4px;
+}
+.admin-delete-page-shell.is-gallery-delete .gallery-scrap-card-image {
+  cursor: default;
+}
+@media (max-width: 1280px) {
+  .gallery-scrap-masonry {
+    --gallery-masonry-gap: 14px;
+    columns: 4;
+  }
+}
+@media (max-width: 1050px) {
+  .gallery-scrap-masonry {
+    --gallery-masonry-gap: 12px;
+    columns: 3;
+  }
+}
+@media (max-width: 900px) {
+  .gallery-scrap-masonry {
+    --gallery-masonry-gap: 10px;
+    columns: 2;
+  }
+  .gallery-scrap-card-image {
+    border-radius: 14px;
+  }
+}
