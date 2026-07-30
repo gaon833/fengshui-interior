@@ -4,7 +4,7 @@
   --page-top: 94px;
   --grid-gap: 35px;
 
-  /* Project detail layout: keep the information rail and gallery aligned. */
+  /* Project detail layout: screen-based spacing after the fixed 400px sidebar offset. */
   --project-detail-rail-width: 400px;
   --project-detail-gallery-top: 200px;
   --project-detail-gallery-right: 400px;
