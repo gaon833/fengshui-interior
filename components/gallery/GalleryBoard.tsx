@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FormEvent, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import projectsData from "@/content/projects.json";
 import type { Project } from "@/types/project";
 import ScrapButton from "@/components/project/ScrapButton";
@@ -76,37 +76,6 @@ function localScore(item: GalleryItem, query: string) {
 }
 
 
-function MasonryCard({ children, label }: { children: ReactNode; label: string }) {
-  const cardRef = useRef<HTMLElement | null>(null);
-  const [span, setSpan] = useState(1);
-
-  useLayoutEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const update = () => {
-      const height = card.scrollHeight;
-      setSpan(Math.max(1, Math.ceil(height / 2)));
-    };
-
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(card);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <article
-      ref={cardRef}
-      className="gallery-card"
-      style={{ "--gallery-row-span": span } as CSSProperties}
-      aria-label={label}
-    >
-      {children}
-    </article>
-  );
-}
-
 export default function GalleryBoard() {
   const deleteMode = useAdminDeleteMode();
   const [customItems, setCustomItems] = useState<GalleryItem[]>([]);
@@ -164,7 +133,7 @@ export default function GalleryBoard() {
       {filteredItems.length > 0 ? (
         <section className="gallery-masonry" aria-label="인테리어 갤러리 검색 결과">
           {filteredItems.map((item) => (
-            <MasonryCard key={item.id} label={item.title}>
+            <article key={item.id} className="gallery-card" aria-label={item.title}>
               <div className="gallery-card-image" role="button" tabIndex={0} aria-label={`${item.title} 크게 보기`}
                 onClick={() => { if (!deleteMode.active) { trackGalleryView(item.id); setSelected(item); } }}
                 onKeyDown={(event) => { if (!deleteMode.active && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); trackGalleryView(item.id); setSelected(item); } }}>
@@ -174,7 +143,7 @@ export default function GalleryBoard() {
                   <ShareIconButton className="gallery-card-share" projectSlug={item.projectSlug} projectTitle={item.projectTitle || item.title} fallbackPath="/gallery" />
                 </>}
               </div>
-            </MasonryCard>
+            </article>
           ))}
         </section>
       ) : (
