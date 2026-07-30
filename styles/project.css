@@ -264,14 +264,14 @@
 .scrap-intro p{margin:0;color:#666;font-size:12px;line-height:1.7;letter-spacing:.01em}
 .scrap-intro .scrap-device-note{color:#999}
 .scrap-count{flex:none;min-width:54px;padding:9px 13px;border:1px solid rgba(80,80,80,.12);border-radius:12px;background:rgba(255,255,255,.72);color:#666;font-size:11px;text-align:center;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.scrap-empty-state{min-height:48vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:64px 24px;color:#777}
+.scrap-empty-state{position:fixed;inset:0 0 0 400px;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;color:#777;pointer-events:none}.scrap-empty-state>*{pointer-events:auto}
 .scrap-empty-heart{display:block;margin-bottom:20px;color:#aaa;font-size:42px;font-weight:200;line-height:1}
 .scrap-empty-state h2{margin:0 0 14px;color:#555;font-size:17px;font-weight:500}
 .scrap-empty-state p{max-width:440px;margin:0 0 10px;font-size:12px;line-height:1.8}
 .scrap-empty-state small{margin-bottom:26px;color:#aaa;font-size:11px}
 .scrap-gallery-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border:1px solid rgba(70,70,70,.14);border-radius:12px;background:#222;color:#fff;font-size:12px;letter-spacing:.04em;transition:transform .2s ease,background .2s ease}
 .scrap-gallery-link:hover{background:#333;transform:translateY(-1px)}
-@media(max-width:900px){.scrap-intro{margin-bottom:24px;gap:14px;padding-bottom:16px}.scrap-intro h1{font-size:19px}.scrap-intro p{font-size:11px}.scrap-count{min-width:48px;padding:8px 10px}.scrap-empty-state{min-height:44vh;padding:48px 12px}.scrap-empty-state h2{font-size:15px}}
+@media(max-width:900px){.scrap-intro{margin-bottom:24px;gap:14px;padding-bottom:16px}.scrap-intro h1{font-size:19px}.scrap-intro p{font-size:11px}.scrap-count{min-width:48px;padding:8px 10px}.scrap-empty-state{inset:0;padding:24px 12px}.scrap-empty-state h2{font-size:15px}}
 
 /* v7.4.6 — true column masonry: equal horizontal and vertical spacing, no row-sized empty gaps */
 .admin-delete-page-shell.is-gallery-delete .gallery-masonry {

@@ -17,13 +17,13 @@
 /* v7.5.5 프로젝트 이미지 업로드 구조 */
 .coverUploadGrid{display:grid;grid-template-columns:1fr 1fr;gap:24px 30px}
 .coverUploadField{display:flex;flex-direction:column;gap:10px;min-width:0}
-.coverUploadBox{position:relative;min-height:250px;border:1px solid #dedede;border-radius:16px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;overflow:hidden;cursor:pointer;transition:.18s ease;text-align:center;padding:24px}
+.coverUploadBox{position:relative;min-height:180px;border:1px solid #dedede;border-radius:16px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;overflow:hidden;cursor:pointer;transition:.18s ease;text-align:center;padding:24px}
 .coverUploadBox:hover{border-color:#aaa;background:#fcfcfc}
 .coverUploadBox .uploadIcon{width:38px;height:38px;margin:0;color:#777}
 .coverUploadText{color:#555;font-size:14px;font-weight:500}
 .coverUploadHelp{max-width:90%;color:#999;font-size:12px;line-height:1.5}
 .coverPreviewImage{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#f7f7f7}
-.detailUploadZone{min-height:250px;border:1px dashed #cfcfcf;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:34px;background:#fff;cursor:pointer;transition:.18s ease}
+.detailUploadZone{min-height:540px;border:1px dashed #cfcfcf;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:34px;background:#fff;cursor:pointer;transition:.18s ease}
 .detailUploadZone:hover{border-color:#888;background:#fcfcfc}
 .detailUploadZone .uploadIcon{width:44px;height:44px;margin-bottom:16px;color:#777}
-@media(max-width:760px){.coverUploadGrid{grid-template-columns:1fr}.coverUploadBox{min-height:220px}.detailUploadZone{min-height:220px}}
+@media(max-width:760px){.coverUploadGrid{grid-template-columns:1fr}.coverUploadBox{min-height:160px}.detailUploadZone{min-height:480px}}
