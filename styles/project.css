@@ -25,19 +25,19 @@
 .project-empty { padding:80px 0; color:#8c8c8c; }
 
 .project-detail-page { min-height:100vh; background:#fff; color:#111; }
-.detail-info { position:fixed; left:0; top:0; bottom:0; width:800px; padding:72px 20px 28px; background:#fff; z-index:20; }
-.detail-meta { position:absolute; left:120px; bottom:228px; width:360px; }
+.detail-info { position:fixed; left:0; top:0; bottom:0; width:var(--project-detail-rail-width); padding:72px 20px 28px; background:#fff; z-index:20; }
+.detail-meta { position:absolute; left:40px; right:40px; bottom:200px; width:auto; }
 .detail-meta h1 { margin:0 0 10px; color:var(--site-strong-color); font-size:32px; font-weight:400; line-height:1.05; letter-spacing:-.015em; }
 .detail-meta .project-type { margin:0 0 42px; color:#7d7d7d; font-size:16px; font-weight:400; line-height:1.15; }
 .detail-meta dl { margin:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:44px 48px; }
 .detail-meta dl div { display:block; }
 .detail-meta dt { margin:0 0 10px; color:#929292; font-size:12px; font-weight:400; line-height:1.1; }
 .detail-meta dd { margin:0; color:var(--site-strong-color); font-size:16px; font-weight:400; line-height:1.2; }
-.detail-gallery { margin-left:800px; padding:200px 300px 110px 0; display:flex; flex-direction:column; gap:70px; }
+.detail-gallery { margin-left:var(--project-detail-rail-width); padding:var(--project-detail-gallery-top) var(--project-detail-gallery-right) var(--project-detail-gallery-bottom) 0; display:flex; flex-direction:column; gap:70px; }
 .detail-photo { margin:0; width:100%; display:flex; justify-content:center; }
 .detail-photo.landscape img { display:block; width:100%; height:auto; }
 .detail-photo.portrait img { display:block; width:auto; max-width:62%; height:auto; }
-.project-navigation { margin-left:800px; padding:220px 120px 180px 120px; display:grid; grid-template-columns:1fr 1fr; align-items:center; min-height:540px; color:#8f8f8f; font-size:12px; font-weight:400; }
+.project-navigation { margin-left:var(--project-detail-rail-width); padding:220px 120px 180px 120px; display:grid; grid-template-columns:1fr 1fr; align-items:center; min-height:540px; color:#8f8f8f; font-size:12px; font-weight:400; }
 .project-navigation > div:last-child { text-align:right; }
 .project-navigation a { color:#8f8f8f; display:inline-flex; align-items:center; gap:10px; }
 .project-navigation .prev::before, .project-navigation .next::after { content:""; width:100px; height:1px; background:#8f8f8f; display:inline-block; }

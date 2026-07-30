@@ -4,6 +4,12 @@
   --page-top: 94px;
   --grid-gap: 35px;
 
+  /* Project detail layout: keep the information rail and gallery aligned. */
+  --project-detail-rail-width: 400px;
+  --project-detail-gallery-top: 200px;
+  --project-detail-gallery-right: 400px;
+  --project-detail-gallery-bottom: 200px;
+
   --logo-width: 145px;
   --logo-top: 30px;
   --logo-left: 130px;
