@@ -7,8 +7,8 @@
   /* Project detail layout: screen-based spacing after the fixed 400px sidebar offset. */
   --project-detail-rail-width: 400px;
   --project-detail-gallery-top: 200px;
-  --project-detail-gallery-right: 400px;
-  --project-detail-gallery-bottom: 200px;
+  --project-detail-gallery-right: 360px;
+  --project-detail-gallery-bottom: 170px;
 
   --logo-width: 145px;
   --logo-top: 30px;
