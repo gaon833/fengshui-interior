@@ -13,7 +13,9 @@ export default function ScrapBoard() {
   const [selected, setSelected] = useState<ScrapItem | null>(null);
 
   useEffect(() => {
-    const sync = () => setItems(readScraps());
+    const sync = () => setItems([...readScraps()].sort((a, b) =>
+      (Date.parse(b.savedAt) || 0) - (Date.parse(a.savedAt) || 0)
+    ));
     sync();
     window.addEventListener("storage", sync);
     window.addEventListener(ENGAGEMENT_EVENT, sync);

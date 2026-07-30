@@ -14,10 +14,17 @@ function allProjects(): Project[] {
   return (projectsData as Project[]).map(normalizeProject);
 }
 
+function newestProjectFirst(a: Project, b: Project) {
+  const aTime = Date.parse(a.updatedAt || a.createdAt || "") || 0;
+  const bTime = Date.parse(b.updatedAt || b.createdAt || "") || 0;
+  if (aTime !== bTime) return bTime - aTime;
+  return (b.order ?? 0) - (a.order ?? 0);
+}
+
 export function getProjects(): Project[] {
   return allProjects()
     .filter((project) => project.status === "published")
-    .sort((a, b) => a.order - b.order);
+    .sort(newestProjectFirst);
 }
 
 export function getAdminProjects(): Project[] {

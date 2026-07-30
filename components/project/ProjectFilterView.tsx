@@ -9,11 +9,18 @@ type Category = (typeof categories)[number];
 
 export default function ProjectFilterView({ projects, adminDeleteActive = false, onDeleteProject }: { projects: Project[]; adminDeleteActive?: boolean; onDeleteProject?: (project: Project) => void }) {
   const [activeCategory, setActiveCategory] = useState<Category>("ALL");
+  const newestProjects = useMemo(() => [...projects].sort((a, b) => {
+    const aTime = Date.parse(a.updatedAt || a.createdAt || "") || 0;
+    const bTime = Date.parse(b.updatedAt || b.createdAt || "") || 0;
+    if (aTime !== bTime) return bTime - aTime;
+    return (b.order ?? 0) - (a.order ?? 0);
+  }), [projects]);
+
   const filteredProjects = useMemo(
     () => activeCategory === "ALL"
-      ? projects
-      : projects.filter((project) => project.category === activeCategory),
-    [activeCategory, projects],
+      ? newestProjects
+      : newestProjects.filter((project) => project.category === activeCategory),
+    [activeCategory, newestProjects],
   );
 
   return (

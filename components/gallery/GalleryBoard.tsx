@@ -88,7 +88,9 @@ export default function GalleryBoard() {
     return () => { window.removeEventListener("storage", sync); window.removeEventListener(GALLERY_EVENT, sync); };
   }, []);
 
-  const items = useMemo(() => [...customItems, ...seedItems].filter((item) => !hiddenIds.includes(item.id)), [customItems, hiddenIds]);
+  const items = useMemo(() => [...customItems, ...seedItems]
+    .filter((item) => !hiddenIds.includes(item.id))
+    .sort((a, b) => (Date.parse(b.createdAt) || 0) - (Date.parse(a.createdAt) || 0)), [customItems, hiddenIds]);
 
   const removeGalleryItem = async (item: GalleryItem) => {
     if (!confirmVisualDelete("이 GALLERY 이미지를 삭제하시겠습니까?")) return;
@@ -106,7 +108,7 @@ export default function GalleryBoard() {
   const filteredItems = useMemo(() => categoryItems
     .map((item) => ({ item, score: localScore(item, query) }))
     .filter((entry) => entry.score > 0)
-    .sort((a, b) => b.score - a.score)
+    .sort((a, b) => b.score - a.score || (Date.parse(b.item.createdAt) || 0) - (Date.parse(a.item.createdAt) || 0))
     .map((entry) => entry.item), [categoryItems, query]);
 
   const submitSearch = (event: FormEvent) => {
