@@ -16,7 +16,7 @@ export default function ProcessSettingsForm() {
   const move=(index:number,direction:-1|1)=>setForm((current)=>{const next=[...current.steps];const target=index+direction;if(target<0||target>=next.length)return current;[next[index],next[target]]=[next[target],next[index]];return{...current,steps:next};});
   const reset=()=>{if(!window.confirm("PROCESS 내용을 기본값으로 복원할까요?"))return;localStorage.removeItem(PROCESS_CONTENT_KEY);setForm(defaultProcessContent);showAdminToast("PROCESS가 기본값으로 복원되었습니다.","success");};
   return <form onSubmit={save}>
-    <div className="admin-heading"><div><h1>PROCESS 관리</h1><p>상담과 시공 진행 단계를 관리합니다.</p></div><button type="submit" className="admin-primary-button">저장</button></div>
+    <div className="admin-heading"><div><p>상담과 시공 진행 단계를 관리합니다.</p></div><button type="submit" className="admin-primary-button">저장</button></div>
     <div className="editor-grid">
       <section className="editor-panel"><h2>페이지 기본 정보</h2>
         <label>페이지 제목<input value={form.pageTitle} onChange={(e)=>setForm({...form,pageTitle:e.target.value})}/></label>

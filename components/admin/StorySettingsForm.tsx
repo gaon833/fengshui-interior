@@ -17,7 +17,7 @@ export default function StorySettingsForm() {
   const save = (event: FormEvent) => { event.preventDefault(); saveLocalContent(STORY_CONTENT_KEY, form); showAdminToast("OUR STORY가 저장되었습니다.", "success"); };
   const reset = () => { if (!window.confirm("OUR STORY 내용을 기본값으로 복원할까요?")) return; localStorage.removeItem(STORY_CONTENT_KEY); setForm(defaultStoryContent); showAdminToast("OUR STORY가 기본값으로 복원되었습니다.", "success"); };
   return <form onSubmit={save}>
-    <div className="admin-heading"><div><h1>OUR STORY 관리</h1><p>회사 소개와 브랜드 철학을 관리합니다.</p></div><button type="submit" className="admin-primary-button">저장</button></div>
+    <div className="admin-heading"><div><p>회사 소개와 브랜드 철학을 관리합니다.</p></div><button type="submit" className="admin-primary-button">저장</button></div>
     <div className="editor-grid">
       <section className="editor-panel"><h2>회사 소개</h2>
         <label>페이지 제목<input value={form.pageTitle} onChange={(e)=>update("pageTitle",e.target.value)} /></label>
