@@ -45,7 +45,7 @@ export default function ScrapButton({ item, className = "", label }: Props) {
   const showFeedback = (next: Exclude<Feedback, null>) => {
     if (timerRef.current !== null) window.clearTimeout(timerRef.current);
     setFeedback(next);
-    timerRef.current = window.setTimeout(() => setFeedback(null), 2200);
+    timerRef.current = window.setTimeout(() => setFeedback(null), 1800);
   };
 
   const onClick = (event: MouseEvent<HTMLButtonElement>) => {
