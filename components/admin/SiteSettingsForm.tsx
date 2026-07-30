@@ -5,6 +5,7 @@ import { defaultSiteSettings, mergeSiteSettings, SITE_SETTINGS_EVENT, SITE_SETTI
 import { showAdminToast } from "@/lib/admin-toast";
 import { IMAGE_GUIDES, guideText, confirmImageRatio, type ImageGuide } from "@/lib/image-guidelines";
 import { optimizeImageFile } from "@/lib/image-optimizer";
+import AdminFilePicker from "@/components/admin/AdminFilePicker";
 
 const read = () => {
   try { const raw = localStorage.getItem(SITE_SETTINGS_KEY); return raw ? mergeSiteSettings(JSON.parse(raw)) : mergeSiteSettings(defaultSiteSettings); }
@@ -43,7 +44,7 @@ export default function SiteSettingsForm() {
   };
   const reset = () => { if (!window.confirm("사이트 설정을 기본값으로 복원할까요?")) return; localStorage.removeItem(SITE_SETTINGS_KEY); setSite(mergeSiteSettings(defaultSiteSettings)); window.dispatchEvent(new Event(SITE_SETTINGS_EVENT)); const text = "기본 설정으로 복원되었습니다."; setMessage(text); showAdminToast(text, "success"); };
   const field = (label: string, path: string, value: string, type="text") => <label>{label}<input type={type} value={value || ""} onChange={(e) => set(path, e.target.value)} /></label>;
-  const imageField = (label: string, path: string, value: string, guide: ImageGuide) => <label>{label} <span className="admin-image-guide">{guideText(guide)}</span><input value={value || ""} onChange={(e) => set(path, e.target.value)} /><input type="file" accept="image/*" onChange={(e) => upload(path, e, guide)} />{value ? <span className="admin-upload-preview"><img src={value} alt={`${label} 미리보기`} /></span> : null}</label>;
+  const imageField = (label: string, path: string, value: string, guide: ImageGuide) => <label>{label} <span className="admin-image-guide">{guideText(guide)}</span><input value={value || ""} onChange={(e) => set(path, e.target.value)} /><AdminFilePicker onChange={(e) => upload(path, e, guide)} help="클릭하여 이미지를 선택하세요" />{value ? <span className="admin-upload-preview"><img src={value} alt={`${label} 미리보기`} /></span> : null}</label>;
   return <form onSubmit={save}>
     <div className="editor-grid">
       <section className="editor-panel"><h2>브랜드와 대표 이미지</h2>

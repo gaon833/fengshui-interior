@@ -4,6 +4,7 @@ import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { defaultProcessContent, imageFileToDataUrl, PROCESS_CONTENT_KEY, readLocalContent, saveLocalContent, type ProcessContent } from "@/lib/page-content";
 import { showAdminToast } from "@/lib/admin-toast";
 import { IMAGE_GUIDES, guideText, confirmImageRatio } from "@/lib/image-guidelines";
+import AdminFilePicker from "@/components/admin/AdminFilePicker";
 
 export default function ProcessSettingsForm() {
   const [form, setForm] = useState<ProcessContent>(defaultProcessContent);
@@ -16,12 +17,11 @@ export default function ProcessSettingsForm() {
   const move=(index:number,direction:-1|1)=>setForm((current)=>{const next=[...current.steps];const target=index+direction;if(target<0||target>=next.length)return current;[next[index],next[target]]=[next[target],next[index]];return{...current,steps:next};});
   const reset=()=>{if(!window.confirm("PROCESS 내용을 기본값으로 복원할까요?"))return;localStorage.removeItem(PROCESS_CONTENT_KEY);setForm(defaultProcessContent);showAdminToast("PROCESS가 기본값으로 복원되었습니다.","success");};
   return <form onSubmit={save}>
-    <div className="admin-heading"><div><h1>PROCESS 관리</h1><p>상담과 시공 진행 단계를 관리합니다.</p></div><button type="submit" className="admin-primary-button">저장</button></div>
     <div className="editor-grid">
       <section className="editor-panel"><h2>페이지 기본 정보</h2>
         <label>페이지 제목<input value={form.pageTitle} onChange={(e)=>setForm({...form,pageTitle:e.target.value})}/></label>
         <label>소개 문구<textarea value={form.introduction} onChange={(e)=>setForm({...form,introduction:e.target.value})}/></label>
-        <label>대표 이미지 <span className="admin-image-guide">{guideText(IMAGE_GUIDES.process)}</span><input value={form.image} onChange={(e)=>setForm({...form,image:e.target.value})} placeholder="/images/service-cover.jpg"/><input type="file" accept="image/*" onChange={upload}/>{form.image ? <span className="admin-upload-preview"><img src={form.image} alt="PROCESS 대표 이미지 미리보기" /></span> : null}</label>
+        <label>대표 이미지 <span className="admin-image-guide">{guideText(IMAGE_GUIDES.process)}</span><input value={form.image} onChange={(e)=>setForm({...form,image:e.target.value})} placeholder="/images/service-cover.jpg"/><AdminFilePicker onChange={upload} help="클릭하여 대표 이미지를 선택하세요" />{form.image ? <span className="admin-upload-preview"><img src={form.image} alt="PROCESS 대표 이미지 미리보기" /></span> : null}</label>
       </section>
       <section className="editor-panel"><h2>진행 단계</h2>
         {form.steps.map((step,index)=><div className="admin-process-step" key={step.id}><div className="admin-step-actions"><strong>{index+1}단계</strong><button type="button" onClick={()=>move(index,-1)}>↑</button><button type="button" onClick={()=>move(index,1)}>↓</button><button type="button" onClick={()=>removeStep(index)}>삭제</button></div><label>제목<input value={step.title} onChange={(e)=>updateStep(index,"title",e.target.value)}/></label><label>설명<textarea value={step.description} onChange={(e)=>updateStep(index,"description",e.target.value)}/></label></div>)}

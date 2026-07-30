@@ -328,3 +328,48 @@
   .admin-content .admin-step-actions button,
   .admin-content .order-buttons button{min-width:36px!important;min-height:36px!important}
 }
+
+/* v7.5.2 관리자 제목·업로드 UI 통일 */
+.admin-content > h1,
+.admin-heading h1,
+.editor-header h1,
+.admin-page h1,
+.admin-page h2,
+.admin-page h3 {
+  color: #8d8d8d;
+}
+.admin-file-picker {
+  position: relative;
+  display: flex !important;
+  min-height: 108px;
+  width: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px !important;
+  margin-top: 8px;
+  padding: 20px;
+  border: 1px solid #dedede;
+  border-radius: 14px;
+  background: #fff;
+  color: #777 !important;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease;
+}
+.admin-file-picker:hover { border-color: #aaa; background: #fcfcfc; }
+.admin-file-picker.is-disabled { opacity: .5; cursor: not-allowed; }
+.admin-file-picker-icon { font-size: 17px; line-height: 1; color: #777; }
+.admin-file-picker strong { color: #666; font-size: 14px; font-weight: 500; }
+.admin-file-picker small { color: #999; font-size: 12px; font-weight: 400; }
+.admin-file-picker input[type="file"] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}

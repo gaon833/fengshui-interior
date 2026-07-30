@@ -169,7 +169,7 @@ export default function GalleryManager() {
   return <div className="admin-stack">
     <section className="admin-card admin-form">
       <div className="admin-heading"><div><h1>GALLERY 관리</h1><p>사진을 선택하고 공간·스타일 태그를 직접 확정한 뒤 저장합니다.</p></div></div>
-      <label>이미지 <small>한 번에 최대 10장 · 원본 비율 유지</small><input type="file" accept="image/*" multiple disabled={processing} onChange={(event) => void onFiles(event.target.files)} /></label>
+      <label>이미지 <small>한 번에 최대 10장 · 원본 비율 유지</small><span className="admin-file-picker"><span className="admin-file-picker-icon" aria-hidden="true">↥</span><strong>파일 선택</strong><small>클릭하거나 이미지를 끌어오세요</small><input type="file" accept="image/*" multiple disabled={processing} onChange={(event) => void onFiles(event.target.files)} /></span></label>
 
       {readyTasks.length > 0 && <section className="gallery-common-tags">
         <div className="gallery-tag-section-heading"><div><h2>전체 사진 공통 태그</h2><p>여기서 고른 태그를 선택한 모든 사진에 한 번에 적용할 수 있습니다.</p></div><button type="button" className="admin-secondary-button" onClick={applyCommonTags}>전체 {readyTasks.length}장에 적용</button></div>

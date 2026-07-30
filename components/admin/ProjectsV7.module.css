@@ -8,3 +8,8 @@
 .note{padding:15px 18px;border:1px solid #e4e4e4;border-radius:14px;color:#777;font-size:13px;background:#fff}.message{margin-bottom:18px;padding:14px 18px;border:1px solid #ddd;border-radius:13px;background:#fff;color:#555}
 @media(max-width:1100px){.toolbar{grid-template-columns:1fr 180px}.toolbar>:last-child{grid-column:1/-1}.tableHeader,.row{grid-template-columns:86px 1.2fr .7fr .8fr .6fr 180px}.tableHeader>:nth-child(5),.row>:nth-child(5){display:none}.detailGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.header,.editorHeader{display:block}.headerActions,.editorActions{margin-top:20px}.toolbar{grid-template-columns:1fr}.toolbar>:last-child{grid-column:auto}.tableCard{border-radius:18px}.tableHeader{display:none}.row{grid-template-columns:72px 1fr auto;min-height:90px;padding:16px}.row>:nth-child(3),.row>:nth-child(4),.row>:nth-child(5),.row>:nth-child(6){display:none}.rowActions{flex-direction:column;gap:6px}.actionButton{height:34px}.formGrid{grid-template-columns:1fr}.fieldFull{grid-column:auto}.statusGrid{grid-template-columns:1fr}.statusOption{border-right:0;border-bottom:1px solid #e6e6e6}.statusOption:last-child{border-bottom:0}.uploadZone{min-height:320px}.detailGrid{grid-template-columns:1fr}.secondaryUploadGrid{grid-template-columns:1fr}.card{padding:20px}.title,.editorTitle{font-size:28px}}
+
+/* v7.5.2 관리자 공통 회색 타이포그래피 */
+.page{color:#777}
+.title,.editorTitle,.cardTitle,.projectName{color:#8d8d8d}
+.projectName{font-weight:500}
