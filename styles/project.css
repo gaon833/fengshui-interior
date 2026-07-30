@@ -37,7 +37,7 @@
 .detail-photo { margin:0; width:100%; display:flex; justify-content:center; }
 .detail-photo.landscape img { display:block; width:100%; height:auto; }
 .detail-photo.portrait img { display:block; width:auto; max-width:62%; height:auto; }
-.project-navigation { margin-left:800px; padding:220px 120px 180px 120px; display:grid; grid-template-columns:1fr 1fr; align-items:center; min-height:540px; color:#8f8f8f; font-size:12px; font-weight:400; }
+.project-navigation { margin-left:800px; padding:220px 300px 180px 0; display:grid; grid-template-columns:1fr 1fr; align-items:center; min-height:540px; color:#8f8f8f; font-size:12px; font-weight:400; }
 .project-navigation > div:last-child { text-align:right; }
 .project-navigation a { color:#8f8f8f; display:inline-flex; align-items:center; gap:10px; }
 .project-navigation .prev::before, .project-navigation .next::after { content:""; width:100px; height:1px; background:#8f8f8f; display:inline-block; }
