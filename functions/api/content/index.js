@@ -1,0 +1,3 @@
+import { json } from "../../_shared/admin-auth.js";
+import { ensureCmsContentTable, getCmsContent } from "../../_shared/cms-content.js";
+export async function onRequestGet(context){try{if(!context.env.DB)return json({ok:false,error:"D1 바인딩 DB가 없습니다."},503);await ensureCmsContentTable(context.env.DB);const url=new URL(context.request.url);const key=url.searchParams.get("key");if(!key)return json({ok:false,error:"key가 필요합니다."},400);return json({ok:true,value:await getCmsContent(context.env.DB,key)});}catch(error){return json({ok:false,error:error instanceof Error?error.message:"불러오기에 실패했습니다."},500)}}

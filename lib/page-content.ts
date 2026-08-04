@@ -1,4 +1,5 @@
 import { optimizeImageFile } from "@/lib/image-optimizer";
+import { fetchCmsContent, saveCmsContent } from "@/lib/cms-content-client";
 
 export const STORY_CONTENT_KEY = "fengshui-story-content-v1";
 export const PROCESS_CONTENT_KEY = "fengshui-process-content-v1";
@@ -55,5 +56,18 @@ export function saveLocalContent<T>(key: string, value: T) {
 }
 
 export async function imageFileToDataUrl(file: File): Promise<string> {
-  return optimizeImageFile(file, { maxWidth: 1600, maxHeight: 2400, quality: 0.84 });
+  return optimizeImageFile(file, { maxWidth: 2400, maxHeight: 3200, quality: 0.90 });
+}
+
+export async function fetchPageContent<T>(serverKey: "story" | "process", localKey: string, fallback: T, admin = false): Promise<T> {
+  const local = readLocalContent(localKey, fallback);
+  const remote = await fetchCmsContent<T>(serverKey, local, admin);
+  try { window.localStorage.setItem(localKey, JSON.stringify(remote)); } catch {}
+  return remote;
+}
+
+export async function savePageContent<T>(serverKey: "story" | "process", localKey: string, value: T): Promise<T> {
+  const stored = await saveCmsContent<T>(serverKey, value);
+  saveLocalContent(localKey, stored);
+  return stored;
 }

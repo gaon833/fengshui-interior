@@ -9,6 +9,7 @@ import {
   SITE_SETTINGS_KEY,
   type SiteSettings,
 } from "@/lib/site-settings";
+import { fetchCmsContent, saveCmsContent } from "@/lib/cms-content-client";
 
 function readSettings(): SiteSettings {
   try {
@@ -27,7 +28,7 @@ export default function ContactSettingsForm() {
   );
 
   useEffect(() => {
-    setForm(readSettings());
+    const local=readSettings(); setForm(local); void fetchCmsContent<SiteSettings>("site", local, true).then((remote)=>setForm(mergeSiteSettings(remote)));
   }, []);
 
   const update = (path: string, value: string) => {
@@ -44,11 +45,10 @@ export default function ContactSettingsForm() {
     });
   };
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    window.localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(form));
-    window.dispatchEvent(new Event(SITE_SETTINGS_EVENT));
-    showAdminToast("상담 정보가 저장되었습니다.", "success");
+    try { const stored=await saveCmsContent<SiteSettings>("site", form); window.localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(stored)); setForm(mergeSiteSettings(stored)); window.dispatchEvent(new Event(SITE_SETTINGS_EVENT)); showAdminToast("상담 정보가 D1에 저장되었습니다.", "success"); }
+    catch(error){ showAdminToast(error instanceof Error?error.message:"서버 저장에 실패했습니다.","error"); }
   };
 
   return (
@@ -75,7 +75,7 @@ export default function ContactSettingsForm() {
           <h2>SNS 링크</h2>
           <label>블로그 주소<input value={form.blogUrl} onChange={(e) => update("blogUrl", e.target.value)} placeholder="https://blog.naver.com/..." /></label>
           <label>인스타그램 주소<input value={form.instagramUrl} onChange={(e) => update("instagramUrl", e.target.value)} placeholder="https://instagram.com/..." /></label>
-          <p className="admin-note">현재는 브라우저 저장 방식입니다. 데이터베이스 연결 후 모든 기기에서 공통으로 관리할 수 있습니다.</p>
+          <p className="admin-note">D1에 저장되어 모든 기기에서 동일하게 표시됩니다.</p>
         </section>
       </div>
     </form>

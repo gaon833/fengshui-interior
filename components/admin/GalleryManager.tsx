@@ -124,7 +124,7 @@ export default function GalleryManager() {
       await runPool(selected.map((file, index) => ({ file, task: nextTasks[index] })), OPTIMIZE_CONCURRENCY, async ({ file, task }) => {
         patchTask(task.id, { status: "optimizing", error: undefined });
         try {
-          const optimized = await optimizeImageFile(file, { maxWidth: 1600, maxHeight: 2400, quality: .84 });
+          const optimized = await optimizeImageFile(file, { maxWidth: 2400, maxHeight: 3200, quality: .90 });
           if (items.some((item) => item.src === optimized)) {
             patchTask(task.id, { status: "failed", error: "이미 등록된 동일한 이미지입니다." });
             return;

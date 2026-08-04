@@ -6,6 +6,7 @@ import { showAdminToast } from "@/lib/admin-toast";
 import { IMAGE_GUIDES, guideText, confirmImageRatio, type ImageGuide } from "@/lib/image-guidelines";
 import { optimizeImageFile } from "@/lib/image-optimizer";
 import AdminFilePicker from "@/components/admin/AdminFilePicker";
+import { fetchCmsContent, saveCmsContent } from "@/lib/cms-content-client";
 
 const read = () => {
   try { const raw = localStorage.getItem(SITE_SETTINGS_KEY); return raw ? mergeSiteSettings(JSON.parse(raw)) : mergeSiteSettings(defaultSiteSettings); }
@@ -13,14 +14,14 @@ const read = () => {
 };
 
 async function imageToDataUrl(file: File): Promise<string> {
-  return optimizeImageFile(file, { maxWidth: 1600, maxHeight: 2400, quality: 0.84 });
+  return optimizeImageFile(file, { maxWidth: 2400, maxHeight: 3200, quality: 0.90 });
 }
 
 
 export default function SiteSettingsForm() {
   const [site, setSite] = useState<SiteSettings>(() => mergeSiteSettings(defaultSiteSettings));
   const [message, setMessage] = useState("");
-  useEffect(() => setSite(read()), []);
+  useEffect(() => { const local=read(); setSite(local); void fetchCmsContent<SiteSettings>("site", local, true).then((remote)=>{ const merged=mergeSiteSettings(remote); setSite(merged); localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(merged)); }); }, []);
   const set = (path: string, value: string) => setSite((current) => {
     const next = structuredClone(current) as any; const keys = path.split("."); let target = next;
     keys.slice(0, -1).forEach((key) => target = target[key]); target[keys.at(-1)!] = value; return next;
@@ -29,7 +30,7 @@ export default function SiteSettingsForm() {
     const file = event.target.files?.[0]; if (!file) return;
     try { if (!(await confirmImageRatio(file, guide))) { event.target.value = ""; return; } set(path, await imageToDataUrl(file)); const text = `${file.name} 업로드가 완료되었습니다. 저장 버튼을 눌러 적용하세요.`; setMessage(text); showAdminToast(text, "success"); } catch (error) { const text = error instanceof Error ? error.message : "업로드에 실패했습니다."; setMessage(text); showAdminToast(text, "error"); }
   };
-  const save = (event: FormEvent) => {
+  const save = async (event: FormEvent) => {
     event.preventDefault();
     try {
       const normalized = structuredClone(site);
@@ -38,11 +39,12 @@ export default function SiteSettingsForm() {
       normalized.reservationUrl = normalized.reservationUrl?.trim() || "";
       normalized.contact.kakaoUrl = normalized.contact.kakaoUrl?.trim() || "";
       normalized.contact.naverTalkUrl = normalized.contact.naverTalkUrl?.trim() || "";
-      localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(normalized));
-      setSite(normalized); window.dispatchEvent(new Event(SITE_SETTINGS_EVENT)); const text = "설정이 저장되었습니다."; setMessage(text); showAdminToast(text, "success"); }
-    catch { const text = "저장에 실패했습니다. 이미지 용량을 줄여주세요."; setMessage(text); showAdminToast(text, "error"); }
+      const stored = await saveCmsContent<SiteSettings>("site", normalized);
+      localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(stored));
+      setSite(mergeSiteSettings(stored)); window.dispatchEvent(new Event(SITE_SETTINGS_EVENT)); const text = "설정이 D1/R2에 저장되었습니다."; setMessage(text); showAdminToast(text, "success"); }
+    catch (error) { const text = error instanceof Error ? error.message : "서버 저장에 실패했습니다."; setMessage(text); showAdminToast(text, "error"); }
   };
-  const reset = () => { if (!window.confirm("사이트 설정을 기본값으로 복원할까요?")) return; localStorage.removeItem(SITE_SETTINGS_KEY); setSite(mergeSiteSettings(defaultSiteSettings)); window.dispatchEvent(new Event(SITE_SETTINGS_EVENT)); const text = "기본 설정으로 복원되었습니다."; setMessage(text); showAdminToast(text, "success"); };
+  const reset = async () => { if (!window.confirm("사이트 설정을 기본값으로 복원할까요?")) return; try { const stored=await saveCmsContent<SiteSettings>("site", mergeSiteSettings(defaultSiteSettings)); localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(stored)); setSite(mergeSiteSettings(stored)); window.dispatchEvent(new Event(SITE_SETTINGS_EVENT)); const text="기본 설정이 서버에 복원되었습니다.";setMessage(text);showAdminToast(text,"success"); } catch(error){showAdminToast(error instanceof Error?error.message:"복원에 실패했습니다.","error");} };
   const field = (label: string, path: string, value: string, type="text") => <label>{label}<input type={type} value={value || ""} onChange={(e) => set(path, e.target.value)} /></label>;
   const imageField = (label: string, path: string, value: string, guide: ImageGuide) => <label>{label} <span className="admin-image-guide">{guideText(guide)}</span><input value={value || ""} onChange={(e) => set(path, e.target.value)} /><AdminFilePicker onChange={(e) => upload(path, e, guide)} help="클릭하여 이미지를 선택하세요" />{value ? <span className="admin-upload-preview"><img src={value} alt={`${label} 미리보기`} /></span> : null}</label>;
   return <form onSubmit={save}>
@@ -78,6 +80,6 @@ export default function SiteSettingsForm() {
         {imageField("파비콘", "seo.favicon", site.seo.favicon || site.logo, IMAGE_GUIDES.favicon)}
       </section>
     </div>
-    <div className="admin-form-actions"><button type="submit">설정 저장</button><button type="button" onClick={reset}>기본값 복원</button></div>
+    <div className="admin-form-actions"><button type="submit">설정 저장</button><button type="button" onClick={()=>void reset()}>기본값 복원</button></div>
   </form>;
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Project } from "@/types/project";
-import { PROJECTS_EVENT, PROJECTS_STORAGE_KEY, readStoredProjects, saveStoredProjects } from "@/lib/project-store";
+import { PROJECTS_EVENT, PROJECTS_STORAGE_KEY, fetchServerProjects, readStoredProjects, saveStoredProjects } from "@/lib/project-store";
 import ProjectFilterView from "./ProjectFilterView";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
 import { AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
@@ -16,12 +16,14 @@ export default function ProjectStoreView({ projects }: { projects: Project[] }) 
   }, [deleteMode.active]);
 
   useEffect(() => {
+    let active = true;
     if (deleteSessionActive && !window.localStorage.getItem(PROJECTS_STORAGE_KEY)) saveStoredProjects(projects);
     const sync = () => setItems(readStoredProjects(projects).filter((item) => item.status === "published"));
-    sync();
+    void fetchServerProjects(projects, deleteSessionActive).then((next) => { if (active) setItems(next.filter((item) => item.status === "published")); });
     window.addEventListener("storage", sync);
     window.addEventListener(PROJECTS_EVENT, sync);
     return () => {
+      active = false;
       window.removeEventListener("storage", sync);
       window.removeEventListener(PROJECTS_EVENT, sync);
     };

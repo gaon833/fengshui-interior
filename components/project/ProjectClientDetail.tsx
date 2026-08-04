@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
 import { AdminDeleteChrome } from "@/components/admin-delete/AdminDeleteChrome";
 import type { Project } from "@/types/project";
-import { readStoredProjects } from "@/lib/project-store";
+import { fetchServerProjects } from "@/lib/project-store";
 import ProjectInfo from "./ProjectInfo";
 import ProjectGallery from "./ProjectGallery";
 import ScrapButton from "./ScrapButton";
@@ -18,7 +18,8 @@ export default function ProjectClientDetail({ defaults }: { defaults: Project[] 
   const searchParams = useSearchParams();
   const deleteMode = useAdminDeleteMode();
   const slug = searchParams.get("slug") ?? "";
-  const projects = useMemo(() => readStoredProjects(defaults).filter((item) => item.status === "published"), [defaults]);
+  const [projects, setProjects] = useState<Project[]>(defaults.filter((item) => item.status === "published"));
+  useEffect(() => { let active = true; void fetchServerProjects(defaults, deleteMode.active).then((next) => { if (active) setProjects(next.filter((item) => item.status === "published")); }); return () => { active = false; }; }, [defaults, deleteMode.active]);
   const index = projects.findIndex((item) => item.slug === slug);
   const project = index >= 0 ? projects[index] : undefined;
 

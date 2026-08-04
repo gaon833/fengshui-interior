@@ -5,7 +5,7 @@ import projectsData from "@/content/projects.json";
 import type { Project } from "@/types/project";
 import ImageLightbox from "@/components/gallery/ImageLightbox";
 import GalleryMasonry from "@/components/gallery-v2";
-import { deleteGalleryItem, GALLERY_EVENT, hideGalleryItem, readGalleryItems, readHiddenGalleryIds, type GalleryItem } from "@/lib/gallery-store";
+import { deleteGalleryItem, fetchGalleryItems, GALLERY_EVENT, hideGalleryItem, readGalleryItems, readHiddenGalleryIds, type GalleryItem } from "@/lib/gallery-store";
 import { trackGallerySearch, trackGalleryView } from "@/lib/gallery-analytics";
 import { useAdminDeleteMode } from "@/lib/admin-delete-mode";
 import { AdminDeleteChrome, confirmVisualDelete } from "@/components/admin-delete/AdminDeleteChrome";
@@ -84,7 +84,7 @@ export default function GalleryBoard() {
 
   useEffect(() => {
     const sync = () => { setCustomItems(readGalleryItems()); setHiddenIds(readHiddenGalleryIds()); };
-    sync(); window.addEventListener("storage", sync); window.addEventListener(GALLERY_EVENT, sync);
+    sync(); void fetchGalleryItems(false).then(setCustomItems); window.addEventListener("storage", sync); window.addEventListener(GALLERY_EVENT, sync);
     return () => { window.removeEventListener("storage", sync); window.removeEventListener(GALLERY_EVENT, sync); };
   }, []);
 
@@ -94,7 +94,7 @@ export default function GalleryBoard() {
 
   const removeGalleryItem = async (item: GalleryItem) => {
     if (!confirmVisualDelete("이 GALLERY 이미지를 삭제하시겠습니까?")) return;
-    if (item.id.startsWith("seed:")) hideGalleryItem(item.id); else deleteGalleryItem(item.id);
+    if (item.id.startsWith("seed:")) hideGalleryItem(item.id); else await deleteGalleryItem(item.id);
     setSelected(null);
     await fetch("/api/admin/content-delete", { method: "POST", headers: { "content-type": "application/json" }, credentials: "include", body: JSON.stringify({ kind: "gallery", id: item.id }) }).catch(() => undefined);
   };

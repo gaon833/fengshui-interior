@@ -1,21 +1,21 @@
 "use client";
 
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
-import { defaultProcessContent, imageFileToDataUrl, PROCESS_CONTENT_KEY, readLocalContent, saveLocalContent, type ProcessContent } from "@/lib/page-content";
+import { defaultProcessContent, imageFileToDataUrl, PROCESS_CONTENT_KEY, fetchPageContent, readLocalContent, saveLocalContent, savePageContent, type ProcessContent } from "@/lib/page-content";
 import { showAdminToast } from "@/lib/admin-toast";
 import { IMAGE_GUIDES, guideText, confirmImageRatio } from "@/lib/image-guidelines";
 import AdminFilePicker from "@/components/admin/AdminFilePicker";
 
 export default function ProcessSettingsForm() {
   const [form, setForm] = useState<ProcessContent>(defaultProcessContent);
-  useEffect(() => setForm(readLocalContent(PROCESS_CONTENT_KEY, defaultProcessContent)), []);
+  useEffect(() => { const local=readLocalContent(PROCESS_CONTENT_KEY, defaultProcessContent); setForm(local); void fetchPageContent("process", PROCESS_CONTENT_KEY, defaultProcessContent, true).then(setForm); }, []);
   const upload = async (event: ChangeEvent<HTMLInputElement>) => { const file=event.target.files?.[0]; if(!file)return; try { if (!(await confirmImageRatio(file, IMAGE_GUIDES.process))) { event.target.value = ""; return; } const image = await imageFileToDataUrl(file); setForm((v)=>({...v,image})); showAdminToast("대표 이미지가 업로드되었습니다. 저장 버튼을 눌러 적용하세요.","success"); } catch(error){showAdminToast(error instanceof Error?error.message:"이미지 업로드에 실패했습니다.","error");} };
-  const save = (event: FormEvent) => { event.preventDefault(); saveLocalContent(PROCESS_CONTENT_KEY, form); showAdminToast("PROCESS가 저장되었습니다.", "success"); };
+  const save = async (event: FormEvent) => { event.preventDefault(); try { const stored=await savePageContent("process", PROCESS_CONTENT_KEY, form); setForm(stored); showAdminToast("PROCESS가 D1/R2에 저장되었습니다.", "success"); } catch(error){ showAdminToast(error instanceof Error?error.message:"서버 저장에 실패했습니다.","error"); } };
   const updateStep = (index:number,key:"title"|"description",value:string)=>setForm((current)=>({...current,steps:current.steps.map((step,i)=>i===index?{...step,[key]:value}:step)}));
   const addStep=()=>setForm((current)=>({...current,steps:[...current.steps,{id:`step-${Date.now()}`,title:"새 단계",description:""}]}));
   const removeStep=(index:number)=>{if(!window.confirm("이 단계를 삭제할까요?"))return;setForm((current)=>({...current,steps:current.steps.filter((_,i)=>i!==index)}));showAdminToast("진행 단계가 삭제되었습니다. 저장 버튼을 눌러 적용하세요.","success");};
   const move=(index:number,direction:-1|1)=>setForm((current)=>{const next=[...current.steps];const target=index+direction;if(target<0||target>=next.length)return current;[next[index],next[target]]=[next[target],next[index]];return{...current,steps:next};});
-  const reset=()=>{if(!window.confirm("PROCESS 내용을 기본값으로 복원할까요?"))return;localStorage.removeItem(PROCESS_CONTENT_KEY);setForm(defaultProcessContent);showAdminToast("PROCESS가 기본값으로 복원되었습니다.","success");};
+  const reset=async()=>{if(!window.confirm("PROCESS 내용을 기본값으로 복원할까요?"))return;try{const stored=await savePageContent("process",PROCESS_CONTENT_KEY,defaultProcessContent);setForm(stored);showAdminToast("PROCESS가 서버 기본값으로 복원되었습니다.","success")}catch(error){showAdminToast(error instanceof Error?error.message:"복원에 실패했습니다.","error")}};
   return <form onSubmit={save}>
     <div className="editor-grid">
       <section className="editor-panel"><h2>페이지 기본 정보</h2>
@@ -28,6 +28,6 @@ export default function ProcessSettingsForm() {
         <button type="button" onClick={addStep}>단계 추가</button>
       </section>
     </div>
-    <div className="admin-form-actions"><button type="submit">저장</button><button type="button" onClick={reset}>기본값 복원</button></div>
+    <div className="admin-form-actions"><button type="submit">저장</button><button type="button" onClick={()=>void reset()}>기본값 복원</button></div>
   </form>;
 }

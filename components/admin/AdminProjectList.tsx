@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Project, ProjectStatus } from "@/types/project";
-import { PROJECTS_EVENT, readStoredProjects, saveStoredProjects } from "@/lib/project-store";
+import { PROJECTS_EVENT, fetchServerProjects, readStoredProjects, saveStoredProjects, syncProjectsToServer } from "@/lib/project-store";
 import { showAdminToast } from "@/lib/admin-toast";
 import styles from "./ProjectsV7.module.css";
 
@@ -25,9 +25,11 @@ export default function AdminProjectList({ projects }: { projects: Project[] }) 
   const [page, setPage] = useState(1);
 
   useEffect(() => {
+    let active = true;
     const sync = () => setItems(readStoredProjects(projects));
-    sync(); window.addEventListener(PROJECTS_EVENT, sync); window.addEventListener("storage", sync);
-    return () => { window.removeEventListener(PROJECTS_EVENT, sync); window.removeEventListener("storage", sync); };
+    void fetchServerProjects(projects, true).then((next) => { if (active) setItems(next); });
+    window.addEventListener(PROJECTS_EVENT, sync); window.addEventListener("storage", sync);
+    return () => { active = false; window.removeEventListener(PROJECTS_EVENT, sync); window.removeEventListener("storage", sync); };
   }, [projects]);
 
   const filteredProjects = useMemo(() => {
@@ -49,13 +51,13 @@ export default function AdminProjectList({ projects }: { projects: Project[] }) 
     const next = ordered.map((item, order) => ({ ...item, order: order + 1, updatedAt: new Date().toISOString() }));
     saveStoredProjects(next); setItems(next); showAdminToast("프로젝트 노출 순서가 변경되었습니다.", "success");
   };
-  const restoreDefaults = () => { if (!window.confirm("기본 프로젝트 목록으로 복원할까요?")) return; window.localStorage.removeItem("fengshui-admin-projects-v3"); showAdminToast("기본 프로젝트 목록으로 복원되었습니다.", "success"); window.setTimeout(() => window.location.reload(), 450); };
+  const restoreDefaults = async () => { if (!window.confirm("기본 프로젝트 목록으로 복원할까요?")) return; try { const stored=await syncProjectsToServer(projects); window.localStorage.setItem("fengshui-admin-projects-v3", JSON.stringify(stored)); setItems(stored); showAdminToast("기본 프로젝트 목록이 서버에 복원되었습니다.", "success"); } catch(error){ showAdminToast(error instanceof Error?error.message:"복원에 실패했습니다.","error"); } };
 
   return <>
     <div className={styles.toolbar}>
       <div className={styles.searchWrap}><span className={styles.searchIcon}><Icon name="search" /></span><input className={styles.search} type="search" value={query} onChange={(e) => {setQuery(e.target.value);setPage(1);}} placeholder="제목, 지역, 평형, 태그 검색" aria-label="프로젝트 검색" /></div>
       <select className={styles.select} value={status} onChange={(e) => {setStatus(e.target.value as "all" | ProjectStatus);setPage(1);}} aria-label="프로젝트 상태 필터"><option value="all">전체 상태</option><option value="published">공개</option><option value="draft">작성 중</option><option value="private">비공개</option><option value="trash">휴지통</option></select>
-      <button className={styles.button} type="button" onClick={restoreDefaults}><Icon name="restore" />기본 프로젝트 복원</button>
+      <button className={styles.button} type="button" onClick={()=>void restoreDefaults()}><Icon name="restore" />기본 프로젝트 복원</button>
     </div>
     <div className={styles.tableCard}>
       <div className={styles.tableHeader}><span>순서</span><span>프로젝트명</span><span>지역</span><span>평형</span><span>태그</span><span>상태</span><span>관리</span></div>

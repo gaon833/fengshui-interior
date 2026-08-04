@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { defaultSiteSettings, mergeSiteSettings, SITE_SETTINGS_EVENT, SITE_SETTINGS_KEY, type SiteSettings } from "@/lib/site-settings";
+import { fetchCmsContent } from "@/lib/cms-content-client";
 
 const SiteSettingsContext = createContext<SiteSettings>(mergeSiteSettings(defaultSiteSettings));
 
@@ -19,6 +20,7 @@ export default function SiteSettingsProvider({ children }: { children: ReactNode
   useEffect(() => {
     const sync = () => setSettings(readSettings());
     sync();
+    void fetchCmsContent<SiteSettings>("site", readSettings()).then((remote)=>{ const merged=mergeSiteSettings(remote); setSettings(merged); try{window.localStorage.setItem(SITE_SETTINGS_KEY,JSON.stringify(merged));}catch{} });
     window.addEventListener("storage", sync);
     window.addEventListener(SITE_SETTINGS_EVENT, sync);
     return () => {
