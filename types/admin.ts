@@ -7,9 +7,3 @@ export type AdminUser = {
   role: AdminRole;
 };
 
-export type BackupManifest = {
-  id: string;
-  createdAt: string;
-  projectCount: number;
-  note: string;
-};

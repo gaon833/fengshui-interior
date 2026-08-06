@@ -1,1 +1,1 @@
-7.5.19-project-list-hide-trash
+7.5.20-remove-backup
