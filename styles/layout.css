@@ -51,6 +51,14 @@ body, button, input, select, textarea, a, h1, h2, h3, h4, h5, h6, p, dt, dd, spa
 .simple-page p { max-width:600px; margin:0; color:#7d7d7d; font-size:16px; font-weight:400; line-height:1.7; }
 .simple-page-image, .simple-page-media { margin-top:0; }
 .simple-page-layout { padding-top:var(--content-image-top); }
+
+/* OUR STORY desktop composition: wider canvas and roughly 200px higher. */
+@media (min-width:1101px) {
+  .simple-page--story {
+    margin-right:100px;
+    padding-top:0;
+  }
+}
 .home-main__image--mobile { display:none; }
 .scroll-aware-header { transition:opacity .22s ease, transform .22s ease; }
 .site-shell--header-hidden .scroll-aware-header { opacity:0; transform:translateY(-18px); pointer-events:none; }
