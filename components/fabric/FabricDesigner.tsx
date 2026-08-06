@@ -17,24 +17,68 @@ const BLUE = "#28aaf7";
 const GRID = 20;
 
 function uid(prefix="page"){return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2,8)}`}
-function pageSize(mode:Mode){
-  if(typeof window==="undefined") return mode==="mobile"?{width:390,height:844}:{width:1420,height:900};
-  return mode==="mobile"?{width:390,height:Math.max(700,window.innerHeight)}:{width:Math.max(900,window.innerWidth-500),height:Math.max(700,window.innerHeight)};
+const COMMON_PAGE_SIZE:Record<Mode,{width:number;height:number}> = {
+  desktop:{width:1420,height:900},
+  mobile:{width:390,height:844},
+};
+function pageSize(mode:Mode){return COMMON_PAGE_SIZE[mode]}
+function scaleFabricJson(json:any,sx:number,sy:number){
+  const next=cloneJson(json||EMPTY_JSON);
+  const scaleObject=(obj:any)=>{
+    if(!obj||typeof obj!=="object")return;
+    if(typeof obj.left==="number")obj.left*=sx;
+    if(typeof obj.top==="number")obj.top*=sy;
+    if(typeof obj.scaleX==="number")obj.scaleX*=sx; else obj.scaleX=sx;
+    if(typeof obj.scaleY==="number")obj.scaleY*=sy; else obj.scaleY=sy;
+    const children=obj.objects||obj._objects;
+    if(Array.isArray(children))children.forEach(scaleObject);
+  };
+  (next.objects||[]).forEach(scaleObject);
+  return next;
+}
+function normalizePage(page:FabricPage,mode:Mode):FabricPage{
+  const target=pageSize(mode);
+  const oldW=Math.max(1,Number(page.width||target.width));
+  const oldH=Math.max(1,Number(page.height||target.height));
+  if(oldW===target.width&&oldH===target.height)return page;
+  return {...page,width:target.width,height:target.height,json:scaleFabricJson(page.json,target.width/oldW,target.height/oldH)};
 }
 function blankPage(mode:Mode):FabricPage{const size=pageSize(mode);return{id:uid(),...size,json:structuredClone(EMPTY_JSON)}}
-function ensureDoc(doc:FabricDocument|undefined,mode:Mode):FabricDocument{return doc?.pages?.length?doc:{version:1,pages:[blankPage(mode)]}}
+function ensureDoc(doc:FabricDocument|undefined,mode:Mode):FabricDocument{
+  return doc?.pages?.length?{...doc,pages:doc.pages.map(p=>normalizePage(p,mode))}:{version:1,pages:[blankPage(mode)]};
+}
 function cloneJson<T>(value:T):T{return JSON.parse(JSON.stringify(value))}
 function getKind(obj:any){return obj?.data?.kind || (obj?.type==="i-text"?"text":obj?.type==="image"?"image":obj?.type||"object")}
-function styleObject(obj:any){obj.set({borderColor:BLUE,cornerColor:"#fff",cornerStrokeColor:BLUE,cornerStyle:"rect",cornerSize:10,transparentCorners:false,padding:0});obj.setCoords?.();return obj}
-function objectName(obj:any,index=0){const kind=getKind(obj);const names:Record<string,string>={text:"텍스트",image:"이미지",rect:"사각형",circle:"원",ellipse:"타원",triangle:"삼각형",star:"별",hline:"가로선",vline:"세로선",drawing:"드로잉",svg:"SVG",group:"그룹"};return `${names[kind]||kind} ${index+1}`}
+const LAYER_NAMES:Record<string,string>={text:"텍스트",image:"이미지",rect:"사각형",circle:"원",ellipse:"타원",triangle:"삼각형",star:"별",hline:"가로선",vline:"세로선",drawing:"드로잉",svg:"SVG",group:"그룹"};
+function ensureLayerMeta(obj:any,index=0){
+  if(!obj)return obj;
+  const data={...(obj.data||{})};
+  if(!data.layerId)data.layerId=uid("layer");
+  if(!data.layerName)data.layerName=`${LAYER_NAMES[getKind(obj)]||getKind(obj)} ${index+1}`;
+  obj.set?.("data",data);
+  const children=obj.getObjects?.()||obj._objects||[];
+  children.forEach((child:any,i:number)=>ensureLayerMeta(child,i));
+  return obj;
+}
+function renewLayerMeta(obj:any,index=0){
+  if(!obj)return obj;
+  const data={...(obj.data||{}),layerId:uid("layer")};
+  if(!data.layerName)data.layerName=`${LAYER_NAMES[getKind(obj)]||getKind(obj)} ${index+1}`;
+  obj.set?.("data",data);
+  const children=obj.getObjects?.()||obj._objects||[];
+  children.forEach((child:any,i:number)=>renewLayerMeta(child,i));
+  return obj;
+}
+function styleObject(obj:any){ensureLayerMeta(obj);obj.set({borderColor:BLUE,cornerColor:"#fff",cornerStrokeColor:BLUE,cornerStyle:"rect",cornerSize:10,transparentCorners:false,padding:0});obj.setCoords?.();return obj}
+function objectName(obj:any,index=0){return obj?.data?.layerName || `${LAYER_NAMES[getKind(obj)]||getKind(obj)} ${index+1}`}
 
 function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb}:{page:FabricPage;grid:boolean;zoom:number;draw:DrawSettings;onReady:(id:string,r:FabricRuntime|null)=>void;onChange:(id:string,json:any)=>void;onSelect:(inspector:Inspector)=>void;onThumb:(id:string,url:string)=>void}){
- const canvasRef=useRef<HTMLCanvasElement|null>(null); const hostRef=useRef<HTMLDivElement|null>(null); const runtime=useRef<FabricRuntime|null>(null); const [fit,setFit]=useState(1); const [guide,setGuide]=useState<GuideState|null>(null); const loading=useRef(true); const lastJson=useRef(JSON.stringify(page.json||EMPTY_JSON));
+ const canvasRef=useRef<HTMLCanvasElement|null>(null); const hostRef=useRef<HTMLDivElement|null>(null); const runtime=useRef<FabricRuntime|null>(null); const [fit,setFit]=useState(1); const [guide,setGuide]=useState<GuideState|null>(null); const loading=useRef(true); const lastJson=useRef(JSON.stringify(page.json||EMPTY_JSON)); const selectedLayerId=useRef<string|null>(null);
  useEffect(()=>{const host=hostRef.current;if(!host)return;const update=()=>setFit(Math.min(1,Math.max(.18,host.clientWidth/page.width)));update();const ro=new ResizeObserver(update);ro.observe(host);return()=>ro.disconnect()},[page.width]);
  useEffect(()=>{let dead=false; let canvas:any=null;
-   (async()=>{const fabric=await import("fabric");if(dead||!canvasRef.current)return;canvas=new fabric.Canvas(canvasRef.current,{width:page.width,height:page.height,preserveObjectStacking:true,selection:true,backgroundColor:"#fff"});runtime.current={canvas,fabric};onReady(page.id,runtime.current);loading.current=true;await canvas.loadFromJSON(page.json||EMPTY_JSON);canvas.getObjects().forEach((o:any)=>styleObject(o));canvas.requestRenderAll();loading.current=false;
-     const snapshot=()=>{if(loading.current)return;const json=canvas.toObject(["data"]);const raw=JSON.stringify(json);lastJson.current=raw;onChange(page.id,json);requestAnimationFrame(()=>{try{onThumb(page.id,canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}})};
-     const select=()=>{const obj=canvas.getActiveObject();onSelect(obj?{pageId:page.id,object:obj}:null)};
+   (async()=>{const fabric=await import("fabric");if(dead||!canvasRef.current)return;canvas=new fabric.Canvas(canvasRef.current,{width:page.width,height:page.height,preserveObjectStacking:true,selection:true,backgroundColor:"#fff"});runtime.current={canvas,fabric};onReady(page.id,runtime.current);loading.current=true;await canvas.loadFromJSON(page.json||EMPTY_JSON);canvas.getObjects().forEach((o:any,i:number)=>{ensureLayerMeta(o,i);styleObject(o)});canvas.requestRenderAll();loading.current=false;
+     const snapshot=()=>{if(loading.current)return;canvas.getObjects().forEach((o:any,i:number)=>ensureLayerMeta(o,i));const json=canvas.toObject(["data"]);const raw=JSON.stringify(json);lastJson.current=raw;onChange(page.id,json);requestAnimationFrame(()=>{try{onThumb(page.id,canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}})};
+     const select=()=>{const obj=canvas.getActiveObject();selectedLayerId.current=obj?.data?.layerId||null;onSelect(obj?{pageId:page.id,object:obj}:null)};
      const snapMove=(event:any)=>{const obj=event.target;if(!obj)return;let left=Number(obj.left||0),top=Number(obj.top||0);if(grid){left=Math.round(left/GRID)*GRID;top=Math.round(top/GRID)*GRID;obj.set({left,top})}
        const box=obj.getBoundingRect();const xs=[0,page.width/2,page.width],ys=[0,page.height/2,page.height];for(const other of canvas.getObjects()){if(other===obj||other.excludeFromExport)continue;const b=other.getBoundingRect();xs.push(b.left,b.left+b.width/2,b.left+b.width);ys.push(b.top,b.top+b.height/2,b.top+b.height)}
        const obx=[box.left,box.left+box.width/2,box.left+box.width],oby=[box.top,box.top+box.height/2,box.top+box.height];let gx:number[]=[];let gy:number[]=[];const threshold=8;
@@ -42,13 +86,30 @@ function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb}:{pag
        const box2=obj.getBoundingRect();const oby2=[box2.top,box2.top+box2.height/2,box2.top+box2.height];for(const ty of ys){let best:number|null=null;for(const oy of oby2){const diff=ty-oy;if(Math.abs(diff)<=threshold&&(best===null||Math.abs(diff)<Math.abs(best)))best=diff}if(best!==null){obj.set({top:Number(obj.top||0)+best});gy=[ty];break}}
        obj.setCoords();const b3=obj.getBoundingRect();setGuide({x:gx,y:gy,distances:{left:Math.round(b3.left),right:Math.round(page.width-(b3.left+b3.width)),top:Math.round(b3.top),bottom:Math.round(page.height-(b3.top+b3.height))}});canvas.requestRenderAll();
      };
-     canvas.on("selection:created",select);canvas.on("selection:updated",select);canvas.on("selection:cleared",()=>onSelect(null));canvas.on("object:moving",snapMove);canvas.on("object:scaling",(e:any)=>snapMove(e));canvas.on("object:rotating",()=>setGuide(null));canvas.on("object:modified",()=>{setGuide(null);snapshot();select()});canvas.on("object:added",snapshot);canvas.on("object:removed",snapshot);canvas.on("path:created",(e:any)=>{if(e?.path){e.path.set({data:{kind:"drawing"}});styleObject(e.path)}snapshot()});
+     canvas.on("selection:created",select);canvas.on("selection:updated",select);canvas.on("selection:cleared",()=>{if(!loading.current){selectedLayerId.current=null;onSelect(null)}});canvas.on("object:moving",snapMove);canvas.on("object:scaling",(e:any)=>snapMove(e));canvas.on("object:rotating",()=>setGuide(null));canvas.on("object:modified",()=>{setGuide(null);snapshot();select()});canvas.on("object:added",snapshot);canvas.on("object:removed",snapshot);canvas.on("path:created",(e:any)=>{if(e?.path){e.path.set({data:{...(e.path.data||{}),kind:"drawing"}});ensureLayerMeta(e.path,canvas.getObjects().length-1);styleObject(e.path)}snapshot()});
      requestAnimationFrame(()=>{try{onThumb(page.id,canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}})
    })();
    return()=>{dead=true;onReady(page.id,null);runtime.current=null;canvas?.dispose?.()}
  },[page.id,page.width,page.height,grid]);
  useEffect(()=>{const r=runtime.current;if(!r)return;const {canvas,fabric}=r;canvas.isDrawingMode=draw.enabled;if(draw.enabled){const Brush=draw.type==="spray"?fabric.SprayBrush:draw.type==="circle"?fabric.CircleBrush:fabric.PencilBrush;const brush=new Brush(canvas);brush.color=draw.color;brush.width=draw.width;canvas.freeDrawingBrush=brush;canvas.discardActiveObject();canvas.requestRenderAll()}},[draw.enabled,draw.type,draw.color,draw.width]);
- useEffect(()=>{const r=runtime.current;if(!r||loading.current)return;const raw=JSON.stringify(page.json||EMPTY_JSON);if(raw===lastJson.current)return;loading.current=true;void r.canvas.loadFromJSON(page.json||EMPTY_JSON).then(()=>{r.canvas.getObjects().forEach((o:any)=>styleObject(o));lastJson.current=raw;loading.current=false;r.canvas.requestRenderAll();requestAnimationFrame(()=>{try{onThumb(page.id,r.canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}})})},[page.json]);
+ useEffect(()=>{const r=runtime.current;if(!r||loading.current)return;const raw=JSON.stringify(page.json||EMPTY_JSON);if(raw===lastJson.current)return;
+   // Inspector-side edits already changed the live Fabric canvas. If incoming JSON is identical,
+   // do not reload the canvas because loadFromJSON clears the current selection/inspector.
+   r.canvas.getObjects().forEach((o:any,i:number)=>ensureLayerMeta(o,i));
+   const liveRaw=JSON.stringify(r.canvas.toObject(["data"]));
+   if(liveRaw===raw){lastJson.current=raw;r.canvas.requestRenderAll();return}
+   const keepLayerId=selectedLayerId.current;
+   loading.current=true;
+   void r.canvas.loadFromJSON(page.json||EMPTY_JSON).then(()=>{
+     r.canvas.getObjects().forEach((o:any,i:number)=>{ensureLayerMeta(o,i);styleObject(o)});
+     lastJson.current=raw;loading.current=false;
+     if(keepLayerId){
+       const restored=r.canvas.getObjects().find((o:any)=>o?.data?.layerId===keepLayerId);
+       if(restored){r.canvas.setActiveObject(restored);selectedLayerId.current=keepLayerId;onSelect({pageId:page.id,object:restored})}
+     }
+     r.canvas.requestRenderAll();
+     requestAnimationFrame(()=>{try{onThumb(page.id,r.canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}})
+   })},[page.json]);
  const scale=fit*zoom;
  return <div ref={hostRef} className="fabric-page-host"><div className="fabric-page-scaled" style={{width:page.width*scale,height:page.height*scale}}><div className={`fabric-page-inner ${grid?"is-grid":""}`} style={{width:page.width,height:page.height,transform:`scale(${scale})`}}><div className="fabric-ruler fabric-ruler-x"/><div className="fabric-ruler fabric-ruler-y"/><canvas ref={canvasRef}/>{guide&&<GuideOverlay page={page} guide={guide}/>}</div></div></div>
 }
@@ -56,12 +117,23 @@ function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb}:{pag
 export default function FabricDesigner({value,onChange,pageLabel}:Props){
  const [mode,setMode]=useState<Mode>("desktop"); const [grid,setGrid]=useState(true); const [activePage,setActivePage]=useState(""); const [inspector,setInspector]=useState<Inspector>(null); const [thumbs,setThumbs]=useState<Record<string,string>>({}); const [zoom,setZoom]=useState(1); const [draw,setDraw]=useState<DrawSettings>({enabled:false,type:"pencil",color:"#222222",width:6}); const runtime=useRef<Record<string,FabricRuntime>>({}); const fileRef=useRef<HTMLInputElement|null>(null); const svgRef=useRef<HTMLInputElement|null>(null); const history=useRef<FabricResponsiveDocument[]>([]); const future=useRef<FabricResponsiveDocument[]>([]); const clipboard=useRef<any>(null); const skipHistory=useRef(false);
  const normalized=useMemo(()=>({desktop:ensureDoc(value?.desktop,"desktop"),mobile:ensureDoc(value?.mobile,"mobile")}),[value]); const doc=normalized[mode]; const pageId=activePage&&doc.pages.some(p=>p.id===activePage)?activePage:doc.pages[0]?.id||"";
+ const normalizedPersisted=useRef(false);
  useEffect(()=>{if(!activePage&&doc.pages[0])setActivePage(doc.pages[0].id)},[mode,doc.pages.length]);
+ useEffect(()=>{
+   if(normalizedPersisted.current)return;
+   const source=value;
+   if(!source)return;
+   const hasMismatch=(m:Mode)=>(source[m]?.pages||[]).some((p:any)=>p.width!==COMMON_PAGE_SIZE[m].width||p.height!==COMMON_PAGE_SIZE[m].height);
+   if(hasMismatch("desktop")||hasMismatch("mobile")){
+     normalizedPersisted.current=true;
+     onChange(normalized);
+   }
+ },[value,normalized,onChange]);
  const commit=(next:FabricResponsiveDocument,record=true)=>{if(record&&!skipHistory.current){history.current.push(cloneJson(normalized));if(history.current.length>60)history.current.shift();future.current=[]}onChange(next)};
  const updateDoc=(nextDoc:FabricDocument,record=true)=>commit({...normalized,[mode]:nextDoc},record);
  const updatePageJson=(id:string,json:any)=>{const next={...doc,pages:doc.pages.map(p=>p.id===id?{...p,json}:p)};commit({...normalized,[mode]:next},true)};
  const pageRuntime=()=>runtime.current[pageId];
- const snapshot=()=>{const r=pageRuntime();if(!r)return;updatePageJson(pageId,r.canvas.toObject(["data"]))};
+ const snapshot=()=>{const r=pageRuntime();if(!r)return;r.canvas.getObjects().forEach((o:any,i:number)=>ensureLayerMeta(o,i));updatePageJson(pageId,r.canvas.toObject(["data"]))};
  const isLegacyRectLine=(obj:any)=>["hline","vline"].includes(getKind(obj))&&obj?.type==="rect";
  const visualLineWidth=(obj:any)=>{
    const k=getKind(obj);
@@ -87,7 +159,7 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
    }
    obj.setCoords?.();r.canvas.requestRenderAll();setInspector({pageId,object:obj});snapshot();
  };
- const addObject=(obj:any)=>{const r=pageRuntime();if(!r)return;setDraw(x=>({...x,enabled:false}));styleObject(obj);r.canvas.add(obj);r.canvas.setActiveObject(obj);r.canvas.centerObject(obj);r.canvas.requestRenderAll()};
+ const addObject=(obj:any)=>{const r=pageRuntime();if(!r)return;setDraw(x=>({...x,enabled:false}));ensureLayerMeta(obj,r.canvas.getObjects().length);styleObject(obj);r.canvas.add(obj);r.canvas.setActiveObject(obj);r.canvas.centerObject(obj);r.canvas.requestRenderAll()};
  const addText=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.IText("텍스트를 입력하세요",{left:80,top:80,fontSize:32,fontFamily:"Arial",fill:"#3d2b20",data:{kind:"text"}}))};
  const addRect=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Rect({left:100,top:100,width:320,height:180,fill:"#ffffff",stroke:"#6c625c",strokeWidth:1,data:{kind:"rect"}}))};
  const addCircle=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Circle({left:120,top:120,radius:90,fill:"#f3eee9",stroke:"#6c625c",strokeWidth:1,data:{kind:"circle"}}))};
@@ -100,11 +172,11 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
  const onFile=async(e:React.ChangeEvent<HTMLInputElement>)=>{const file=e.target.files?.[0];e.target.value="";if(!file)return;try{const src=await imageFileToDataUrl(file);const r=pageRuntime();if(!r)return;const img=await r.fabric.FabricImage.fromURL(src);img.set({left:120,top:120,data:{kind:"image",filters:{brightness:0,contrast:0,blur:0,grayscale:false}}});const max=Math.min(720,doc.pages.find(p=>p.id===pageId)?.width||720);if(img.width>max)img.scaleToWidth(max);addObject(img)}catch(err){showAdminToast(err instanceof Error?err.message:"이미지 처리 실패","error")}};
  const addSvg=()=>svgRef.current?.click();
  const onSvg=async(e:React.ChangeEvent<HTMLInputElement>)=>{const file=e.target.files?.[0];e.target.value="";if(!file)return;try{const text=await file.text();const r=pageRuntime();if(!r)return;const parsed=await r.fabric.loadSVGFromString(text);const objects=(parsed.objects||[]).filter(Boolean);if(!objects.length)throw new Error("SVG에서 표시 가능한 요소를 찾지 못했습니다.");const obj=r.fabric.util.groupSVGElements(objects,parsed.options||{});obj.set({left:120,top:120,data:{kind:"svg"}});const max=Math.min(650,doc.pages.find(p=>p.id===pageId)?.width||650);if(obj.width>max)obj.scaleToWidth(max);addObject(obj)}catch(err){showAdminToast(err instanceof Error?err.message:"SVG 불러오기 실패","error")}};
- const duplicate=()=>{const r=pageRuntime();const obj=r?.canvas.getActiveObject();if(!r||!obj)return;void obj.clone(["data"]).then((cl:any)=>{cl.set({left:Number(cl.left||0)+24,top:Number(cl.top||0)+24});styleObject(cl);r.canvas.add(cl);r.canvas.setActiveObject(cl);r.canvas.requestRenderAll()})};
+ const duplicate=()=>{const r=pageRuntime();const obj=r?.canvas.getActiveObject();if(!r||!obj)return;void obj.clone(["data"]).then((cl:any)=>{cl.set({left:Number(cl.left||0)+24,top:Number(cl.top||0)+24});renewLayerMeta(cl,r.canvas.getObjects().length);styleObject(cl);r.canvas.add(cl);r.canvas.setActiveObject(cl);r.canvas.requestRenderAll()})};
  const copy=()=>{const r=pageRuntime();const obj=r?.canvas.getActiveObject();if(!r||!obj)return;void obj.clone(["data"]).then((cl:any)=>{clipboard.current=cl;showAdminToast("복사했습니다.","success")})};
- const paste=()=>{const r=pageRuntime();if(!r||!clipboard.current)return;void clipboard.current.clone(["data"]).then((cl:any)=>{cl.set({left:Number(cl.left||0)+28,top:Number(cl.top||0)+28,evented:true});styleObject(cl);r.canvas.add(cl);r.canvas.setActiveObject(cl);r.canvas.requestRenderAll();clipboard.current=cl})};
+ const paste=()=>{const r=pageRuntime();if(!r||!clipboard.current)return;void clipboard.current.clone(["data"]).then((cl:any)=>{cl.set({left:Number(cl.left||0)+28,top:Number(cl.top||0)+28,evented:true});renewLayerMeta(cl,r.canvas.getObjects().length);styleObject(cl);r.canvas.add(cl);r.canvas.setActiveObject(cl);r.canvas.requestRenderAll();clipboard.current=cl})};
  const remove=()=>{const r=pageRuntime();const obj=r?.canvas.getActiveObject();if(!r||!obj)return;if(obj.type==="activeselection"||obj.type==="activeSelection")obj.getObjects().forEach((o:any)=>r.canvas.remove(o));else r.canvas.remove(obj);r.canvas.discardActiveObject();r.canvas.requestRenderAll();setInspector(null)};
- const groupSelection=()=>{const r=pageRuntime();const active=r?.canvas.getActiveObject();if(!r||!active||!active.getObjects)return;const objects=active.getObjects();if(objects.length<2)return;const group=new r.fabric.Group(objects,{data:{kind:"group"}});r.canvas.discardActiveObject();objects.forEach((o:any)=>r.canvas.remove(o));styleObject(group);r.canvas.add(group);r.canvas.setActiveObject(group);r.canvas.requestRenderAll();snapshot()};
+ const groupSelection=()=>{const r=pageRuntime();const active=r?.canvas.getActiveObject();if(!r||!active||!active.getObjects)return;const objects=active.getObjects();if(objects.length<2)return;const group=new r.fabric.Group(objects,{data:{kind:"group",layerId:uid("layer"),layerName:`그룹 ${r.canvas.getObjects().length+1}`}});r.canvas.discardActiveObject();objects.forEach((o:any)=>r.canvas.remove(o));styleObject(group);r.canvas.add(group);r.canvas.setActiveObject(group);r.canvas.requestRenderAll();snapshot()};
  const ungroup=()=>{const r=pageRuntime();const group=r?.canvas.getActiveObject();if(!r||!group||getKind(group)!=="group"||!group.removeAll)return;const plane=group.calcTransformMatrix();const objects=group.removeAll();r.canvas.remove(group);for(const o of objects){r.fabric.util.sendObjectToPlane(o,plane,undefined);styleObject(o);r.canvas.add(o)}const selection=new r.fabric.ActiveSelection(objects,{canvas:r.canvas});r.canvas.setActiveObject(selection);r.canvas.requestRenderAll();snapshot()};
  const layer=(action:"front"|"forward"|"backward"|"back")=>{const r=pageRuntime();const obj=r?.canvas.getActiveObject();if(!r||!obj)return;({front:()=>r.canvas.bringObjectToFront(obj),forward:()=>r.canvas.bringObjectForward(obj),backward:()=>r.canvas.sendObjectBackwards(obj),back:()=>r.canvas.sendObjectToBack(obj)})[action]();r.canvas.requestRenderAll();snapshot()};
  const setProp=(key:string,val:any)=>{const r=pageRuntime();const obj=r?.canvas.getActiveObject();if(!r||!obj)return;obj.set(key,val);obj.setCoords();r.canvas.requestRenderAll();setInspector({pageId,object:obj});snapshot()};
@@ -119,13 +191,13 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
  const dupPage=()=>{const idx=doc.pages.findIndex(p=>p.id===pageId);if(idx<0)return;const src=doc.pages[idx];const cp={...cloneJson(src),id:uid(),json:cloneJson(src.json)};const pages=[...doc.pages];pages.splice(idx+1,0,cp);updateDoc({...doc,pages});setActivePage(cp.id)};
  const deletePage=()=>{if(doc.pages.length<=1){showAdminToast("마지막 페이지는 삭제할 수 없습니다.","error");return}if(!confirm("현재 페이지를 삭제할까요?"))return;const idx=doc.pages.findIndex(p=>p.id===pageId);const pages=doc.pages.filter(p=>p.id!==pageId);updateDoc({...doc,pages});setActivePage(pages[Math.max(0,idx-1)]?.id||pages[0].id)};
  const movePage=(dir:-1|1)=>{const idx=doc.pages.findIndex(p=>p.id===pageId);const t=idx+dir;if(idx<0||t<0||t>=doc.pages.length)return;const pages=[...doc.pages];[pages[idx],pages[t]]=[pages[t],pages[idx]];updateDoc({...doc,pages})};
- const resizeCurrent=()=>{const p=doc.pages.find(p=>p.id===pageId);const r=pageRuntime();if(!p||!r)return;const size=pageSize(mode),sx=size.width/p.width,sy=size.height/p.height;r.canvas.getObjects().forEach((o:any)=>{o.set({left:Number(o.left||0)*sx,top:Number(o.top||0)*sy,scaleX:Number(o.scaleX||1)*sx,scaleY:Number(o.scaleY||1)*sy});o.setCoords()});const json=r.canvas.toObject(["data"]);updateDoc({...doc,pages:doc.pages.map(x=>x.id===p.id?{...x,...size,json}:x)})};
+ const resizeCurrent=()=>{const r=pageRuntime();const p=doc.pages.find(p=>p.id===pageId);if(!r||!p)return;const size=pageSize(mode);if(p.width===size.width&&p.height===size.height){showAdminToast("이미 공통 규격입니다.","success");return}const sx=size.width/p.width,sy=size.height/p.height;r.canvas.getObjects().forEach((o:any)=>{o.set({left:Number(o.left||0)*sx,top:Number(o.top||0)*sy,scaleX:Number(o.scaleX||1)*sx,scaleY:Number(o.scaleY||1)*sy});o.setCoords()});const json=r.canvas.toObject(["data"]);updateDoc({...doc,pages:doc.pages.map(x=>x.id===p.id?{...x,...size,json}:x)});showAdminToast("공통 페이지 규격으로 맞췄습니다.","success")};
  const undo=()=>{const prev=history.current.pop();if(!prev)return;future.current.push(cloneJson(normalized));skipHistory.current=true;onChange(prev);setTimeout(()=>{skipHistory.current=false},0)}; const redo=()=>{const next=future.current.pop();if(!next)return;history.current.push(cloneJson(normalized));skipHistory.current=true;onChange(next);setTimeout(()=>{skipHistory.current=false},0)};
  const selected=inspector?.object;const kind=getKind(selected);const imageFilters=selected?.data?.filters||{brightness:0,contrast:0,blur:0,grayscale:false};
  const activeObjects=pageRuntime()?.canvas?.getObjects?.()||[];
  return <section className="fabric-editor-shell fabric-full-editor">
   <input ref={fileRef} type="file" accept="image/*" hidden onChange={onFile}/><input ref={svgRef} type="file" accept="image/svg+xml,.svg" hidden onChange={onSvg}/>
-  <header className="fabric-editor-top"><strong>{pageLabel} · Fabric Full Editor</strong><div className="fabric-mode"><button type="button" className={mode==="desktop"?"is-active":""} onClick={()=>{setMode("desktop");setInspector(null);setActivePage("")}}>Desktop</button><button type="button" className={mode==="mobile"?"is-active":""} onClick={()=>{setMode("mobile");setInspector(null);setActivePage("")}}>Mobile</button></div><button type="button" onClick={undo} disabled={!history.current.length}>↶ Undo</button><button type="button" onClick={redo} disabled={!future.current.length}>↷ Redo</button><button type="button" className={grid?"is-active":""} onClick={()=>setGrid(v=>!v)}>Grid {grid?"ON":"OFF"}</button><label className="fabric-zoom">Zoom <input type="range" min="0.45" max="1.6" step="0.05" value={zoom} onChange={e=>setZoom(Number(e.target.value))}/><span>{Math.round(zoom*100)}%</span></label><button type="button" onClick={()=>setZoom(1)}>100%</button><button type="button" onClick={resizeCurrent}>현재 화면 비율로 맞춤</button></header>
+  <header className="fabric-editor-top"><strong>{pageLabel} · Fabric Full Editor</strong><div className="fabric-mode"><button type="button" className={mode==="desktop"?"is-active":""} onClick={()=>{setMode("desktop");setInspector(null);setActivePage("")}}>Desktop</button><button type="button" className={mode==="mobile"?"is-active":""} onClick={()=>{setMode("mobile");setInspector(null);setActivePage("")}}>Mobile</button></div><button type="button" onClick={undo} disabled={!history.current.length}>↶ Undo</button><button type="button" onClick={redo} disabled={!future.current.length}>↷ Redo</button><button type="button" className={grid?"is-active":""} onClick={()=>setGrid(v=>!v)}>Grid {grid?"ON":"OFF"}</button><label className="fabric-zoom">Zoom <input type="range" min="0.45" max="1.6" step="0.05" value={zoom} onChange={e=>setZoom(Number(e.target.value))}/><span>{Math.round(zoom*100)}%</span></label><button type="button" onClick={()=>setZoom(1)}>100%</button><button type="button" onClick={resizeCurrent}>공통 규격으로 맞춤</button></header>
   <div className="fabric-editor-main">
    <aside className="fabric-tools fabric-tools-full">
     <div className="fabric-tool-section"><h4>추가</h4><button type="button" onClick={addText}><b>T</b><span>텍스트</span></button><button type="button" onClick={addImage}><b>▧</b><span>이미지</span></button><button type="button" onClick={addSvg}><b>◇</b><span>SVG</span></button></div>
@@ -148,7 +220,7 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
       {kind==="image"&&<section><h4>이미지 필터</h4><label>밝기<input type="range" min="-1" max="1" step="0.05" value={imageFilters.brightness||0} onChange={e=>setImageFilter("brightness",Number(e.target.value))}/></label><label>대비<input type="range" min="-1" max="1" step="0.05" value={imageFilters.contrast||0} onChange={e=>setImageFilter("contrast",Number(e.target.value))}/></label><label>블러<input type="range" min="0" max="1" step="0.05" value={imageFilters.blur||0} onChange={e=>setImageFilter("blur",Number(e.target.value))}/></label><label className="fabric-check"><input type="checkbox" checked={!!imageFilters.grayscale} onChange={e=>setImageFilter("grayscale",e.target.checked)}/> 흑백</label><div className="fabric-inline-actions"><button type="button" onClick={()=>{setImageFilter("brightness",0);setImageFilter("contrast",0);setImageFilter("blur",0);setImageFilter("grayscale",false)}}>필터 초기화</button></div></section>}
       <section><h4>레이어</h4><div className="fabric-layer-actions"><button type="button" onClick={()=>layer("front")}>맨 앞으로</button><button type="button" onClick={()=>layer("forward")}>앞으로</button><button type="button" onClick={()=>layer("backward")}>뒤로</button><button type="button" onClick={()=>layer("back")}>맨 뒤로</button></div></section>
      </>:<p>캔버스에서 요소를 선택하세요.</p>}
-    <section className="fabric-layer-list"><h4>현재 페이지 레이어</h4>{[...activeObjects].reverse().map((o:any,i:number)=><button type="button" key={`${getKind(o)}-${i}`} onClick={()=>{const r=pageRuntime();if(!r)return;r.canvas.setActiveObject(o);r.canvas.requestRenderAll();setInspector({pageId,object:o})}}><span>{objectName(o,activeObjects.length-1-i)}</span><small>{o.visible===false?"숨김":o.lockMovementX?"잠금":""}</small></button>)}</section>
+    <section className="fabric-layer-list"><h4>현재 페이지 레이어</h4>{[...activeObjects].reverse().map((o:any,i:number)=><button type="button" key={o?.data?.layerId||`${getKind(o)}-${i}`} onClick={()=>{const r=pageRuntime();if(!r)return;r.canvas.setActiveObject(o);r.canvas.requestRenderAll();setInspector({pageId,object:o})}}><span>{objectName(o,activeObjects.length-1-i)}</span><small>{o.visible===false?"숨김":o.lockMovementX?"잠금":""}</small></button>)}</section>
    </aside>
   </div>
   <footer className="fabric-pages-bar"><div className="fabric-thumbs">{doc.pages.map((p,i)=><button type="button" key={p.id} className={p.id===pageId?"is-active":""} onClick={()=>{setActivePage(p.id);document.getElementById(`fabric-page-${p.id}`)?.scrollIntoView({behavior:"smooth",block:"center"})}}>{thumbs[p.id]?<img src={thumbs[p.id]} alt=""/>:<span>{i+1}</span>}<small>{i+1}</small></button>)}</div><div className="fabric-page-buttons"><button type="button" onClick={addPage}>+ 페이지 추가</button><button type="button" onClick={dupPage}>페이지 복제</button><button type="button" onClick={()=>movePage(-1)}>← 순서</button><button type="button" onClick={()=>movePage(1)}>순서 →</button><button type="button" onClick={deletePage}>페이지 삭제</button></div></footer>
