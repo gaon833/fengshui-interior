@@ -25,7 +25,7 @@ const MOBILE_HEIGHT = 844;
 
 function buildStore() {
   const key = process.env.NEXT_PUBLIC_POLOTNO_KEY || "";
-  return key ? createStore({ key, showCredit: true }) : createStore({ showCredit: true });
+  return createStore({ key, showCredit: true });
 }
 
 function ensurePage(store: any, mode: Mode) {
