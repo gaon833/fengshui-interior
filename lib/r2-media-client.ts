@@ -59,15 +59,20 @@ export async function uploadKnownContentImages<T>(key: string, value: T, uploade
     if (isDataImage(next?.seo?.favicon)) next.seo.favicon = await uploadDataImage(next.seo.favicon, "site", "favicon", uploaded);
   } else if (key === "story" || key === "process") {
     if (isDataImage(next?.image)) next.image = await uploadDataImage(next.image, "page", key, uploaded);
+    const uploadFabricObjects = async (objects: any[], mode: string, pageIndex: number, prefix = "") => {
+      for (let oi=0; oi<objects.length; oi+=1) {
+        const obj = objects[oi];
+        const label = `${prefix}o${oi+1}`;
+        if (isDataImage(obj?.src)) obj.src = await uploadDataImage(obj.src, `fabric-${key}-${mode}`, `p${pageIndex+1}-${label}`, uploaded);
+        if (Array.isArray(obj?.objects)) await uploadFabricObjects(obj.objects, mode, pageIndex, `${label}-`);
+      }
+    };
     for (const mode of ["desktop", "mobile"]) {
       const pages = next?.fabric?.[mode]?.pages;
       if (!Array.isArray(pages)) continue;
       for (let pi=0; pi<pages.length; pi+=1) {
         const objects = pages[pi]?.json?.objects;
-        if (!Array.isArray(objects)) continue;
-        for (let oi=0; oi<objects.length; oi+=1) {
-          if (isDataImage(objects[oi]?.src)) objects[oi].src = await uploadDataImage(objects[oi].src, `fabric-${key}-${mode}`, `p${pi+1}-o${oi+1}`, uploaded);
-        }
+        if (Array.isArray(objects)) await uploadFabricObjects(objects, mode, pi);
       }
     }
   }

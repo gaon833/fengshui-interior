@@ -53,13 +53,20 @@ export async function materializeKnownImages(bucket, key, value) {
     if (next.seo?.favicon) next.seo.favicon = await materializeImage(bucket, next.seo.favicon, "site", "favicon");
   } else if (key === "story" || key === "process") {
     if (next.image) next.image = await materializeImage(bucket, next.image, "page", key);
+    const materializeFabricObjects = async (objects, mode, pageIndex, prefix = "") => {
+      for (let oi=0; oi<objects.length; oi+=1) {
+        const obj = objects[oi];
+        const label = `${prefix}o${oi+1}`;
+        if (obj?.src) obj.src = await materializeImage(bucket, obj.src, `fabric-${key}-${mode}`, `p${pageIndex+1}-${label}`);
+        if (Array.isArray(obj?.objects)) await materializeFabricObjects(obj.objects, mode, pageIndex, `${label}-`);
+      }
+    };
     for (const mode of ["desktop", "mobile"]) {
       const pages = next?.fabric?.[mode]?.pages;
       if (!Array.isArray(pages)) continue;
       for (let pi=0; pi<pages.length; pi+=1) {
         const objects = pages[pi]?.json?.objects;
-        if (!Array.isArray(objects)) continue;
-        for (let oi=0; oi<objects.length; oi+=1) if (objects[oi]?.src) objects[oi].src = await materializeImage(bucket, objects[oi].src, `fabric-${key}-${mode}`, `p${pi+1}-o${oi+1}`);
+        if (Array.isArray(objects)) await materializeFabricObjects(objects, mode, pi);
       }
     }
   }
@@ -86,7 +93,13 @@ export async function cleanupReplacedContentImages(bucket, key, previous, next) 
     pairs.push([previous?.image, next?.image]);
     const collect = (value) => {
       const urls = new Set();
-      for (const mode of ["desktop", "mobile"]) for (const page of value?.fabric?.[mode]?.pages || []) for (const obj of page?.json?.objects || []) if (typeof obj?.src === "string") urls.add(obj.src);
+      const walk = (objects) => {
+        for (const obj of objects || []) {
+          if (typeof obj?.src === "string") urls.add(obj.src);
+          if (Array.isArray(obj?.objects)) walk(obj.objects);
+        }
+      };
+      for (const mode of ["desktop", "mobile"]) for (const page of value?.fabric?.[mode]?.pages || []) walk(page?.json?.objects || []);
       return urls;
     };
     const prevUrls=collect(previous), nextUrls=collect(next);
