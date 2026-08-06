@@ -9,7 +9,7 @@ const KEY="fengshui-gallery-v2";
 const LEGACY_KEY="fengshui-gallery-v1";
 const HIDDEN_KEY="fengshui-gallery-hidden-v1";
 export const GALLERY_EVENT="fengshui-gallery-updated";
-export const GALLERY_CLIENT_VERSION="7.5.16";
+export const GALLERY_CLIENT_VERSION="7.5.18";
 const R2_HEALTH_ROUTE="/api/admin/r2-health";
 
 function normalize(items:GalleryItem[]){return [...items].sort((a,b)=>(Date.parse(b.createdAt)||0)-(Date.parse(a.createdAt)||0))}

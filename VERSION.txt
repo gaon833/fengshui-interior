@@ -1,1 +1,1 @@
-7.5.16-r2-atomic-gallery
+7.5.18-project-r2-permanent-delete

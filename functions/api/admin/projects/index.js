@@ -96,3 +96,44 @@ export async function onRequestPut(context) {
     return json({ ok: false, error: error instanceof Error ? error.message : "프로젝트 동기화에 실패했습니다." }, 500);
   }
 }
+
+
+export async function onRequestDelete(context) {
+  try {
+    const auth = await requireAdmin(context);
+    if (auth.response) return auth.response;
+
+    const url = new URL(context.request.url);
+    const id = String(url.searchParams.get("id") || "").trim();
+    if (!id) return json({ ok: false, error: "삭제할 프로젝트 ID가 없습니다." }, 400);
+
+    // 삭제 전에 D1의 원본 데이터를 읽어 R2 이미지 키를 확보한다.
+    const existing = await getProjectById(auth.db, id);
+    if (!existing) return json({ ok: true, deleted: false, id });
+
+    // D1에서 영구 삭제를 먼저 확정한다.
+    await auth.db.prepare("DELETE FROM cms_projects WHERE id = ?").bind(id).run();
+
+    // D1 삭제 성공 후 해당 프로젝트가 참조하던 R2 이미지를 정리한다.
+    // R2 정리 실패 때문에 이미 확정된 D1 삭제를 되돌리지는 않는다.
+    let r2CleanupOk = true;
+    let r2CleanupError = "";
+    try {
+      await cleanupProjectImages(context.env.PROJECT_MEDIA, existing);
+    } catch (error) {
+      r2CleanupOk = false;
+      r2CleanupError = error instanceof Error ? error.message : "R2 이미지 정리에 실패했습니다.";
+      console.error("[projects permanent delete] R2 cleanup failed", { id, error: r2CleanupError });
+    }
+
+    return json({
+      ok: true,
+      deleted: true,
+      id,
+      r2CleanupOk,
+      r2CleanupError,
+    });
+  } catch (error) {
+    return json({ ok: false, error: error instanceof Error ? error.message : "프로젝트 영구 삭제에 실패했습니다." }, 500);
+  }
+}

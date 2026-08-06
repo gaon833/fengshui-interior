@@ -123,3 +123,24 @@ export function makeProjectImage(src: string, title: string, order: number): Pro
     isCover: false,
   };
 }
+
+export async function deleteProjectPermanentlyFromServer(id: string): Promise<{ r2CleanupOk: boolean; r2CleanupError: string }> {
+  const response = await fetch(`/api/admin/projects?id=${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    credentials: "include",
+    cache: "no-store",
+  });
+  const data = await response.json().catch(() => null) as {
+    ok?: boolean;
+    deleted?: boolean;
+    r2CleanupOk?: boolean;
+    r2CleanupError?: string;
+    error?: string;
+  } | null;
+  if (!response.ok || !data?.ok) throw new Error(data?.error || "프로젝트 영구 삭제에 실패했습니다.");
+  return {
+    r2CleanupOk: data.r2CleanupOk !== false,
+    r2CleanupError: String(data.r2CleanupError || ""),
+  };
+}
+

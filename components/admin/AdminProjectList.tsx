@@ -34,7 +34,7 @@ export default function AdminProjectList({ projects }: { projects: Project[] }) 
 
   const filteredProjects = useMemo(() => {
     const normalized = query.trim().toLowerCase();
-    return [...items].sort((a,b)=>a.order-b.order).filter((project) => {
+    return [...items].sort((a,b)=>(b.order ?? 0)-(a.order ?? 0)).filter((project) => {
       if (status !== "all" && project.status !== status) return false;
       if (!normalized) return true;
       return [project.title, project.location, project.area, project.category, project.status, ...project.tags].join(" ").toLowerCase().includes(normalized);
@@ -45,10 +45,12 @@ export default function AdminProjectList({ projects }: { projects: Project[] }) 
   const visible = filteredProjects.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const move = (id: string, direction: -1 | 1) => {
-    const ordered = [...items].sort((a, b) => a.order - b.order); const index = ordered.findIndex((item) => item.id === id); const target = index + direction;
+    const ordered = [...items].sort((a, b) => (b.order ?? 0) - (a.order ?? 0)); const index = ordered.findIndex((item) => item.id === id); const target = index + direction;
     if (index < 0 || target < 0 || target >= ordered.length) return;
     [ordered[index], ordered[target]] = [ordered[target], ordered[index]];
-    const next = ordered.map((item, order) => ({ ...item, order: order + 1, updatedAt: new Date().toISOString() }));
+    const total = ordered.length;
+    const now = new Date().toISOString();
+    const next = ordered.map((item, index) => ({ ...item, order: total - index, updatedAt: now }));
     saveStoredProjects(next); setItems(next); showAdminToast("프로젝트 노출 순서가 변경되었습니다.", "success");
   };
   const restoreDefaults = async () => { if (!window.confirm("기본 프로젝트 목록으로 복원할까요?")) return; try { const stored=await syncProjectsToServer(projects); window.localStorage.setItem("fengshui-admin-projects-v3", JSON.stringify(stored)); setItems(stored); showAdminToast("기본 프로젝트 목록이 서버에 복원되었습니다.", "success"); } catch(error){ showAdminToast(error instanceof Error?error.message:"복원에 실패했습니다.","error"); } };
