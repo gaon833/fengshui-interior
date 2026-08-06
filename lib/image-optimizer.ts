@@ -32,8 +32,8 @@ export async function optimizeImageFile(
   const sourceHeight = image.naturalHeight || image.height;
   if (!sourceWidth || !sourceHeight) throw new Error("이미지 크기를 확인하지 못했습니다.");
 
-  const maxWidth = options.maxWidth ?? 1600;
-  const maxHeight = options.maxHeight ?? 2400;
+  const maxWidth = options.maxWidth ?? 1920;
+  const maxHeight = options.maxHeight ?? 1920;
   const scale = Math.min(1, maxWidth / sourceWidth, maxHeight / sourceHeight);
   const width = Math.max(1, Math.round(sourceWidth * scale));
   const height = Math.max(1, Math.round(sourceHeight * scale));
@@ -48,6 +48,6 @@ export async function optimizeImageFile(
   context.drawImage(image, 0, 0, width, height);
 
   const format = options.format ?? "image/webp";
-  const quality = options.quality ?? 0.84;
+  const quality = options.quality ?? 0.87;
   return canvas.toDataURL(format, quality);
 }

@@ -1,1 +1,1 @@
-7.5.20-remove-backup
+7.5.21-auto-image-optimization

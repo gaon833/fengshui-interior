@@ -9,16 +9,16 @@ export type ImageGuide = {
 
 export const IMAGE_GUIDES = {
   logo: { label: "로고", guide: "권장 업로드 1600px 이상 · PNG 투명 배경 권장", orientation: "landscape" },
-  mainPc: { label: "가로", guide: "권장 업로드 3200 × 2100px", orientation: "landscape" },
-  mainMobile: { label: "세로", guide: "권장 업로드 가로 3200px · 원본 비율 유지", orientation: "portrait" },
-  og: { label: "가로", guide: "권장 업로드 2400 × 1260px", orientation: "landscape" },
+  mainPc: { label: "가로", guide: "고화질 원본 업로드 · 자동 최적화", orientation: "landscape" },
+  mainMobile: { label: "세로", guide: "고화질 원본 업로드 · 자동 최적화", orientation: "portrait" },
+  og: { label: "가로", guide: "고화질 원본 업로드 · 자동 최적화", orientation: "landscape" },
   favicon: { label: "정사각형", guide: "권장 업로드 1024 × 1024px · PNG 권장", orientation: "square" },
-  story: { label: "세로", guide: "권장 업로드 가로 3200px · 원본 비율 유지", orientation: "portrait" },
-  process: { label: "가로", guide: "권장 업로드 3200 × 2100px", orientation: "landscape" },
-  projectPc: { label: "가로", guide: "권장 업로드 3200 × 2100px", orientation: "landscape" },
-  projectMobile: { label: "세로", guide: "권장 업로드 가로 3200px · 원본 비율 유지", orientation: "portrait" },
-  detailLandscape: { label: "가로", guide: "권장 업로드 3200 × 2100px", orientation: "landscape" },
-  detailPortrait: { label: "세로", guide: "권장 업로드 가로 3200px · 원본 비율 유지", orientation: "portrait" },
+  story: { label: "세로", guide: "고화질 원본 업로드 · 자동 최적화", orientation: "portrait" },
+  process: { label: "가로", guide: "고화질 원본 업로드 · 자동 최적화", orientation: "landscape" },
+  projectPc: { label: "가로", guide: "고화질 원본 업로드 · 자동 최적화", orientation: "landscape" },
+  projectMobile: { label: "세로", guide: "고화질 원본 업로드 · 자동 최적화", orientation: "portrait" },
+  detailLandscape: { label: "가로", guide: "고화질 원본 업로드 · 자동 최적화", orientation: "landscape" },
+  detailPortrait: { label: "세로", guide: "고화질 원본 업로드 · 자동 최적화", orientation: "portrait" },
 } satisfies Record<string, ImageGuide>;
 
 export const guideText = (guide: ImageGuide) => guide.guide ?? `${guide.label}${guide.width && guide.height ? ` (${guide.width} × ${guide.height}px)` : ""}${guide.note ? ` · ${guide.note}` : ""}`;

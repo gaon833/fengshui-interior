@@ -56,7 +56,7 @@ export function saveLocalContent<T>(key: string, value: T) {
 }
 
 export async function imageFileToDataUrl(file: File): Promise<string> {
-  return optimizeImageFile(file, { maxWidth: 2400, maxHeight: 3200, quality: 0.90 });
+  return optimizeImageFile(file, { maxWidth: 1920, maxHeight: 1920, quality: 0.87 });
 }
 
 export async function fetchPageContent<T>(serverKey: "story" | "process", localKey: string, fallback: T, admin = false): Promise<T> {
