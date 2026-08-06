@@ -24,7 +24,7 @@ function safeSegment(value) {
 
 function decodeDataUrl(value) {
   if (typeof value !== "string" || !value.startsWith("data:image/")) return null;
-  const match = value.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/s);
+  const match = value.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,([\s\S]+)$/);
   if (!match) throw new Error("지원하지 않는 이미지 데이터입니다.");
   const mime = match[1].toLowerCase();
   const allowed = new Set(["image/webp", "image/jpeg", "image/png", "image/gif"]);
