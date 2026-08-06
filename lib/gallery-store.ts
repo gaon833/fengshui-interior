@@ -10,7 +10,7 @@ function cache(items:GalleryItem[]){if(typeof window==="undefined")return;window
 export async function fetchGalleryItems(admin=false):Promise<GalleryItem[]>{try{const r=await fetch(admin?"/api/admin/gallery":"/api/gallery",{credentials:admin?"include":"same-origin",cache:"no-store"});const d=await r.json().catch(()=>null) as {ok?:boolean;items?:GalleryItem[]}|null;if(!r.ok||!d?.ok||!Array.isArray(d.items))throw new Error();if(admin&&d.items.length===0){const legacy=readGalleryItems();const migratable=legacy.filter(item=>typeof item.src==="string"&&item.src.startsWith("data:image/"));if(migratable.length){const migrated=await saveGalleryItemsToServer(migratable);cache([...migrated,...legacy.filter(item=>!migratable.some(m=>m.id===item.id))]);return normalize([...migrated,...legacy.filter(item=>!migratable.some(m=>m.id===item.id))])}}cache(d.items);return normalize(d.items)}catch{return readGalleryItems()}}
 
 function dataUrlToBlob(value:string):Blob{
-  const match=value.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/s);
+  const match=value.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,([\s\S]+)$/);
   if(!match)throw new Error("업로드할 이미지 데이터가 올바르지 않습니다.");
   const binary=atob(match[2]);
   const bytes=new Uint8Array(binary.length);
