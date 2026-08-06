@@ -69,7 +69,18 @@ function renewLayerMeta(obj:any,index=0){
   children.forEach((child:any,i:number)=>renewLayerMeta(child,i));
   return obj;
 }
-function styleObject(obj:any){ensureLayerMeta(obj);obj.set({borderColor:BLUE,cornerColor:"#fff",cornerStrokeColor:BLUE,cornerStyle:"rect",cornerSize:10,transparentCorners:false,padding:0});obj.setCoords?.();return obj}
+function styleObject(obj:any){
+  ensureLayerMeta(obj);
+  obj.set({
+    borderColor:BLUE,cornerColor:"#fff",cornerStrokeColor:BLUE,cornerStyle:"rect",
+    cornerSize:10,transparentCorners:false,padding:0,
+    selectable:true,evented:true,hasControls:true,hasBorders:true,
+    lockMovementX:false,lockMovementY:false,
+  });
+  // Respect explicitly persisted lock state only.
+  if(obj?.data?.locked)obj.set({lockMovementX:true,lockMovementY:true,lockScalingX:true,lockScalingY:true,lockRotation:true,hasControls:false});
+  obj.setCoords?.();return obj
+}
 function objectName(obj:any,index=0){return obj?.data?.layerName || `${LAYER_NAMES[getKind(obj)]||getKind(obj)} ${index+1}`}
 
 function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb}:{page:FabricPage;grid:boolean;zoom:number;draw:DrawSettings;onReady:(id:string,r:FabricRuntime|null)=>void;onChange:(id:string,json:any)=>void;onSelect:(inspector:Inspector)=>void;onThumb:(id:string,url:string)=>void}){
@@ -120,6 +131,25 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
  const normalizedPersisted=useRef(false);
  useEffect(()=>{if(!activePage&&doc.pages[0])setActivePage(doc.pages[0].id)},[mode,doc.pages.length]);
  useEffect(()=>{
+   const onKey=(e:KeyboardEvent)=>{
+     if(e.key!=="Delete"&&e.key!=="Backspace")return;
+     const target=e.target as HTMLElement|null;
+     const tag=target?.tagName?.toLowerCase();
+     if(tag==="input"||tag==="textarea"||tag==="select"||target?.isContentEditable)return;
+     const r=pageRuntime();const obj=r?.canvas.getActiveObject();if(!r||!obj)return;
+     if(obj.isEditing)return;
+     e.preventDefault();
+     if(obj.type==="activeselection"||obj.type==="activeSelection"){
+       obj.getObjects().forEach((o:any)=>r.canvas.remove(o));
+     }else{
+       r.canvas.remove(obj);
+     }
+     r.canvas.discardActiveObject();r.canvas.requestRenderAll();setInspector(null);snapshot();
+   };
+   window.addEventListener("keydown",onKey);
+   return()=>window.removeEventListener("keydown",onKey);
+ },[pageId,mode]);
+ useEffect(()=>{
    if(normalizedPersisted.current)return;
    const source=value;
    if(!source)return;
@@ -166,8 +196,8 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
  const addEllipse=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Ellipse({left:120,top:120,rx:130,ry:80,fill:"#f3eee9",stroke:"#6c625c",strokeWidth:1,data:{kind:"ellipse"}}))};
  const addTriangle=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Triangle({left:120,top:120,width:220,height:190,fill:"#f3eee9",stroke:"#6c625c",strokeWidth:1,data:{kind:"triangle"}}))};
  const addStar=()=>{const r=pageRuntime();if(!r)return;const pts=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rad=i%2===0?100:45;pts.push({x:Math.cos(a)*rad,y:Math.sin(a)*rad})}addObject(new r.fabric.Polygon(pts,{left:160,top:140,fill:"#f3eee9",stroke:"#6c625c",strokeWidth:1,data:{kind:"star"}}))};
- const addHLine=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Line([0,0,360,0],{left:100,top:180,stroke:"#6c625c",strokeWidth:1,fill:"transparent",data:{kind:"hline"},strokeUniform:true}))};
- const addVLine=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Line([0,0,0,360],{left:200,top:100,stroke:"#6c625c",strokeWidth:1,fill:"transparent",data:{kind:"vline"},strokeUniform:true}))};
+ const addHLine=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Line([0,0,360,0],{left:100,top:180,stroke:"#6c625c",strokeWidth:1,fill:"transparent",data:{kind:"hline"},strokeUniform:true,selectable:true,evented:true,lockMovementX:false,lockMovementY:false}))};
+ const addVLine=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Line([0,0,0,360],{left:200,top:100,stroke:"#6c625c",strokeWidth:1,fill:"transparent",data:{kind:"vline"},strokeUniform:true,selectable:true,evented:true,lockMovementX:false,lockMovementY:false}))};
  const addImage=()=>fileRef.current?.click();
  const onFile=async(e:React.ChangeEvent<HTMLInputElement>)=>{const file=e.target.files?.[0];e.target.value="";if(!file)return;try{const src=await imageFileToDataUrl(file);const r=pageRuntime();if(!r)return;const img=await r.fabric.FabricImage.fromURL(src);img.set({left:120,top:120,data:{kind:"image",filters:{brightness:0,contrast:0,blur:0,grayscale:false}}});const max=Math.min(720,doc.pages.find(p=>p.id===pageId)?.width||720);if(img.width>max)img.scaleToWidth(max);addObject(img)}catch(err){showAdminToast(err instanceof Error?err.message:"이미지 처리 실패","error")}};
  const addSvg=()=>svgRef.current?.click();
@@ -203,7 +233,7 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
     <div className="fabric-tool-section"><h4>추가</h4><button type="button" onClick={addText}><b>T</b><span>텍스트</span></button><button type="button" onClick={addImage}><b>▧</b><span>이미지</span></button><button type="button" onClick={addSvg}><b>◇</b><span>SVG</span></button></div>
     <div className="fabric-tool-section"><h4>도형</h4><button type="button" onClick={addRect}><b>□</b><span>사각형</span></button><button type="button" onClick={addCircle}><b>○</b><span>원</span></button><button type="button" onClick={addEllipse}><b>⬭</b><span>타원</span></button><button type="button" onClick={addTriangle}><b>△</b><span>삼각형</span></button><button type="button" onClick={addStar}><b>☆</b><span>별</span></button><button type="button" onClick={addHLine}><b>━</b><span>가로선</span></button><button type="button" onClick={addVLine}><b>┃</b><span>세로선</span></button></div>
     <div className="fabric-tool-section"><h4>드로잉</h4><button type="button" className={draw.enabled?"is-active":""} onClick={()=>setDraw(x=>({...x,enabled:!x.enabled}))}><b>✎</b><span>{draw.enabled?"선택 모드":"그리기"}</span></button><select value={draw.type} onChange={e=>setDraw(x=>({...x,type:e.target.value as BrushType}))}><option value="pencil">Pencil</option><option value="spray">Spray</option><option value="circle">Circle</option></select><input aria-label="브러시 색상" type="color" value={draw.color} onChange={e=>setDraw(x=>({...x,color:e.target.value}))}/><input aria-label="브러시 굵기" type="range" min="1" max="60" value={draw.width} onChange={e=>setDraw(x=>({...x,width:Number(e.target.value)}))}/></div>
-    <div className="fabric-tool-section"><h4>편집</h4><button type="button" onClick={copy}><b>⧉</b><span>복사</span></button><button type="button" onClick={paste}><b>▣</b><span>붙여넣기</span></button><button type="button" onClick={duplicate}><b>⧉</b><span>복제</span></button><button type="button" onClick={groupSelection}><b>⊞</b><span>그룹</span></button><button type="button" onClick={ungroup}><b>⊟</b><span>그룹해제</span></button><button type="button" onClick={remove}><b>⌫</b><span>삭제</span></button></div>
+    <div className="fabric-tool-section"><h4>편집</h4><small className="fabric-tool-hint">선택 후 Delete / Backspace 삭제</small><button type="button" onClick={copy}><b>⧉</b><span>복사</span></button><button type="button" onClick={paste}><b>▣</b><span>붙여넣기</span></button><button type="button" onClick={duplicate}><b>⧉</b><span>복제</span></button><button type="button" onClick={groupSelection}><b>⊞</b><span>그룹</span></button><button type="button" onClick={ungroup}><b>⊟</b><span>그룹해제</span></button><button type="button" onClick={remove}><b>⌫</b><span>삭제</span></button></div>
    </aside>
    <div className={`fabric-workspace ${grid?"show-grid":""}`}>{doc.pages.map((page,index)=><div key={page.id} id={`fabric-page-${page.id}`} className={`fabric-page-card ${page.id===pageId?"is-active":""}`} onMouseDown={()=>setActivePage(page.id)}><div className="fabric-page-label">{index+1} PAGE · {page.width}×{page.height}</div><CanvasPage page={page} grid={grid} zoom={zoom} draw={page.id===pageId?draw:{...draw,enabled:false}} onReady={(id,r)=>{if(r)runtime.current[id]=r;else delete runtime.current[id]}} onChange={updatePageJson} onSelect={(v)=>{setInspector(v);if(v)setActivePage(v.pageId)}} onThumb={(id,url)=>setThumbs(x=>({...x,[id]:url}))}/></div>)}</div>
    <aside className="fabric-inspector fabric-inspector-full"><h3>{selected?`${kind} 설정`:"페이지 / 요소 설정"}</h3>
