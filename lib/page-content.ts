@@ -1,10 +1,11 @@
 import { optimizeImageFile } from "@/lib/image-optimizer";
 import { fetchCmsContent, saveCmsContent } from "@/lib/cms-content-client";
-import type { VisualDocument } from "@/lib/visual-editor";
 
 export const STORY_CONTENT_KEY = "fengshui-story-content-v1";
 export const PROCESS_CONTENT_KEY = "fengshui-process-content-v1";
 export const PAGE_CONTENT_EVENT = "fengshui-page-content-updated";
+
+export type PolotnoDesign = Record<string, unknown> | null;
 
 export type StoryContent = {
   pageTitle: string;
@@ -12,7 +13,8 @@ export type StoryContent = {
   image: string;
   philosophyTitle: string;
   philosophyBody: string;
-  visual?: VisualDocument;
+  polotnoDesktop?: PolotnoDesign;
+  polotnoMobile?: PolotnoDesign;
 };
 
 export type ProcessStep = { id: string; title: string; description: string };
@@ -21,7 +23,8 @@ export type ProcessContent = {
   introduction: string;
   image: string;
   steps: ProcessStep[];
-  visual?: VisualDocument;
+  polotnoDesktop?: PolotnoDesign;
+  polotnoMobile?: PolotnoDesign;
 };
 
 export const defaultStoryContent: StoryContent = {
@@ -30,6 +33,8 @@ export const defaultStoryContent: StoryContent = {
   image: "",
   philosophyTitle: "공간과 사람의 조화",
   philosophyBody: "공간의 흐름과 사람의 생활을 함께 고려하는 인테리어 스튜디오입니다.",
+  polotnoDesktop: null,
+  polotnoMobile: null,
 };
 
 export const defaultProcessContent: ProcessContent = {
@@ -41,6 +46,8 @@ export const defaultProcessContent: ProcessContent = {
     { id: "step-2", title: "현장 진단", description: "현장을 살펴보고 공간의 흐름과 필요한 개선점을 정리합니다." },
     { id: "step-3", title: "디자인 및 시공", description: "확정된 방향을 바탕으로 디자인과 시공을 진행합니다." },
   ],
+  polotnoDesktop: null,
+  polotnoMobile: null,
 };
 
 export function readLocalContent<T>(key: string, fallback: T): T {

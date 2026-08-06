@@ -45,6 +45,29 @@ export async function materializeImage(bucket, value, namespace, label) {
   return `/api/project-media/${encodeURIComponent(key)}`;
 }
 
+
+async function materializePolotnoImages(bucket, design, namespace) {
+  if (!design || typeof design !== "object") return;
+  const visit = async (node, path) => {
+    if (!node || typeof node !== "object") return;
+    if (node.type === "image" && node.src) node.src = await materializeImage(bucket, node.src, namespace, path);
+    if (Array.isArray(node.children)) for (let i=0;i<node.children.length;i+=1) await visit(node.children[i], `${path}-${i+1}`);
+  };
+  if (Array.isArray(design.pages)) for (let p=0;p<design.pages.length;p+=1) {
+    const page=design.pages[p]; if (Array.isArray(page?.children)) for (let i=0;i<page.children.length;i+=1) await visit(page.children[i], `page-${p+1}-item-${i+1}`);
+  }
+}
+function collectPolotnoManagedImages(design) {
+  const found = new Set();
+  const visit = (node) => {
+    if (!node || typeof node !== "object") return;
+    if (node.type === "image" && managedMediaKey(node.src)) found.add(node.src);
+    if (Array.isArray(node.children)) node.children.forEach(visit);
+  };
+  if (Array.isArray(design?.pages)) design.pages.forEach(page => (page?.children || []).forEach(visit));
+  return found;
+}
+
 export async function materializeKnownImages(bucket, key, value) {
   const next = structuredClone(value);
   if (key === "site") {
@@ -53,15 +76,8 @@ export async function materializeKnownImages(bucket, key, value) {
     if (next.seo?.favicon) next.seo.favicon = await materializeImage(bucket, next.seo.favicon, "site", "favicon");
   } else if (key === "story" || key === "process") {
     if (next.image) next.image = await materializeImage(bucket, next.image, "page", key);
-    if (Array.isArray(next?.visual?.pages)) {
-      for (let p = 0; p < next.visual.pages.length; p += 1) {
-        const elements = next.visual.pages[p]?.elements;
-        if (!Array.isArray(elements)) continue;
-        for (let i = 0; i < elements.length; i += 1) {
-          if (elements[i]?.type === "image" && elements[i]?.src) elements[i].src = await materializeImage(bucket, elements[i].src, `page-${key}-${p + 1}`, `element-${i + 1}`);
-        }
-      }
-    }
+    await materializePolotnoImages(bucket, next.polotnoDesktop, `polotno-${key}-desktop`);
+    await materializePolotnoImages(bucket, next.polotnoMobile, `polotno-${key}-mobile`);
   }
   return next;
 }
@@ -84,9 +100,9 @@ export async function cleanupReplacedContentImages(bucket, key, previous, next) 
     pairs.push([previous?.seo?.ogImage, next?.seo?.ogImage], [previous?.seo?.favicon, next?.seo?.favicon]);
   } else if (key === "story" || key === "process") {
     pairs.push([previous?.image, next?.image]);
-    const nextVisual = new Set();
-    for (const page of next?.visual?.pages || []) for (const element of page?.elements || []) if (element?.type === "image" && element?.src) nextVisual.add(element.src);
-    for (const page of previous?.visual?.pages || []) for (const element of page?.elements || []) if (element?.type === "image" && element?.src && !nextVisual.has(element.src)) pairs.push([element.src, null]);
+    const oldDesign = new Set([...collectPolotnoManagedImages(previous?.polotnoDesktop), ...collectPolotnoManagedImages(previous?.polotnoMobile)]);
+    const newDesign = new Set([...collectPolotnoManagedImages(next?.polotnoDesktop), ...collectPolotnoManagedImages(next?.polotnoMobile)]);
+    for (const url of oldDesign) if (!newDesign.has(url)) pairs.push([url, null]);
   }
   for (const [oldValue, newValue] of pairs) if (oldValue && oldValue !== newValue) await deleteManagedImage(bucket, oldValue);
 }

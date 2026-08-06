@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import site from "@/content/site.json";
 import "@/styles/globals.css";
+import "polotno/ui.css";
 import SiteSettingsProvider from "@/components/site/SiteSettingsProvider";
 
 const siteUrl = site.siteUrl || "https://fengshui-interior.pages.dev";
