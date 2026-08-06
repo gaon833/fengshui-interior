@@ -51,19 +51,6 @@ export async function uploadProjectDataImages<T>(project: T, uploaded?: string[]
   return next;
 }
 
-
-async function uploadPolotnoImages(design: any, namespace: string, uploaded?: string[]) {
-  if (!design || typeof design !== "object") return;
-  const visit = async (node: any, path: string) => {
-    if (!node || typeof node !== "object") return;
-    if (node.type === "image" && isDataImage(node.src)) node.src = await uploadDataImage(node.src, namespace, path, uploaded);
-    if (Array.isArray(node.children)) for (let i=0;i<node.children.length;i+=1) await visit(node.children[i], `${path}-${i+1}`);
-  };
-  if (Array.isArray(design.pages)) for (let p=0;p<design.pages.length;p+=1) {
-    const page=design.pages[p]; if (Array.isArray(page?.children)) for (let i=0;i<page.children.length;i+=1) await visit(page.children[i], `page-${p+1}-item-${i+1}`);
-  }
-}
-
 export async function uploadKnownContentImages<T>(key: string, value: T, uploaded?: string[]): Promise<T> {
   const next: any = structuredClone(value);
   if (key === "site") {
@@ -72,8 +59,17 @@ export async function uploadKnownContentImages<T>(key: string, value: T, uploade
     if (isDataImage(next?.seo?.favicon)) next.seo.favicon = await uploadDataImage(next.seo.favicon, "site", "favicon", uploaded);
   } else if (key === "story" || key === "process") {
     if (isDataImage(next?.image)) next.image = await uploadDataImage(next.image, "page", key, uploaded);
-    await uploadPolotnoImages(next?.polotnoDesktop, `polotno-${key}-desktop`, uploaded);
-    await uploadPolotnoImages(next?.polotnoMobile, `polotno-${key}-mobile`, uploaded);
+    if (Array.isArray(next?.visual?.pages)) {
+      for (let p = 0; p < next.visual.pages.length; p += 1) {
+        const elements = next.visual.pages[p]?.elements;
+        if (!Array.isArray(elements)) continue;
+        for (let i = 0; i < elements.length; i += 1) {
+          if (elements[i]?.type === "image" && isDataImage(elements[i]?.src)) {
+            elements[i].src = await uploadDataImage(elements[i].src, `page-${key}-${p + 1}`, `element-${i + 1}`, uploaded);
+          }
+        }
+      }
+    }
   }
   return next as T;
 }
