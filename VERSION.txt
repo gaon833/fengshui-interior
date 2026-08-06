@@ -1,1 +1,1 @@
-7.5.10-r2-gallery-direct
+7.5.11-r2-binary-gallery

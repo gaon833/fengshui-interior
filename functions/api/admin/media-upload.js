@@ -30,14 +30,17 @@ export async function onRequestPost(context) {
     const length = Number(context.request.headers.get("content-length") || 0);
     if (length > 12 * 1024 * 1024) return json({ ok: false, error: "최적화된 이미지는 12MB 이하만 업로드할 수 있습니다." }, 413);
     const body = await context.request.arrayBuffer();
+    console.log("[R2 media-upload] request", { contentType, bytes: body.byteLength });
     if (!body.byteLength) return json({ ok: false, error: "이미지 데이터가 비어 있습니다." }, 400);
     if (body.byteLength > 12 * 1024 * 1024) return json({ ok: false, error: "최적화된 이미지는 12MB 이하만 업로드할 수 있습니다." }, 413);
     const namespace = safeSegment(context.request.headers.get("x-media-namespace") || "media");
     const label = safeSegment(context.request.headers.get("x-media-label") || "image");
     const key = `${namespace}--${label}--${crypto.randomUUID()}.${extFor(contentType)}`;
     await auth.bucket.put(key, body, { httpMetadata: { contentType, cacheControl: "public, max-age=31536000, immutable" } });
+    console.log("[R2 media-upload] stored", { key, bytes: body.byteLength });
     return json({ ok: true, url: `/api/project-media/${encodeURIComponent(key)}` });
   } catch (error) {
+    console.error("[R2 media-upload] failed", error);
     return json({ ok: false, error: error instanceof Error ? error.message : "이미지 업로드에 실패했습니다." }, 500);
   }
 }
