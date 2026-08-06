@@ -5,7 +5,7 @@ import { createStore } from "polotno/model/store";
 import type { PolotnoDesign } from "@/lib/page-content";
 
 type Props={desktop:PolotnoDesign;mobile:PolotnoDesign;label:string};
-function buildStore(){const key=process.env.NEXT_PUBLIC_POLOTNO_KEY||"";return key?createStore({key,showCredit:true}):createStore({showCredit:true})}
+function buildStore(){const key=process.env.NEXT_PUBLIC_POLOTNO_KEY||"";return createStore({ key, showCredit: true })}
 export default function PolotnoViewer({desktop,mobile,label}:Props){
  const [isMobile,setIsMobile]=useState(false); const [ready,setReady]=useState(false); const store=useMemo(()=>buildStore(),[]);
  useEffect(()=>{const sync=()=>setIsMobile(window.innerWidth<=768);sync();window.addEventListener("resize",sync);return()=>window.removeEventListener("resize",sync)},[]);
