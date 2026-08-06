@@ -636,10 +636,6 @@ textarea{
   font-weight:620!important;
 }
 .admin-delete-page-shell.is-project-delete .project-card-subtitle,
-.admin-delete-page-shell.is-project-delete .project-card-year{
-  font-size:10px!important;
-  color:#8f8f8a!important;
-}
 @media(max-width:1100px){
   .admin-delete-page-shell.is-project-delete .project-delete-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .admin-delete-page-shell.is-gallery-delete .gallery-masonry{columns:2!important;}

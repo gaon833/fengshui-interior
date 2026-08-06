@@ -1,1 +1,1 @@
-7.5.21-auto-image-optimization
+7.5.22-remove-project-year

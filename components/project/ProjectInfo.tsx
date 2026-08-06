@@ -21,10 +21,6 @@ export default function ProjectInfo({ project }: { project: Project }) {
             <dt>위치</dt>
             <dd>{project.location}</dd>
           </div>
-          <div>
-            <dt>연도</dt>
-            <dd>{project.year}</dd>
-          </div>
         </dl>
       </section>
     </aside>

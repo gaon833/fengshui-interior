@@ -22,7 +22,7 @@ export default function ProjectCard({ project, index, adminDeleteActive = false,
         </>}
       </div>
       <Link className="project-card-meta" href={adminDeleteActive ? `/project/view/?slug=${encodeURIComponent(project.slug)}&adminDelete=1&returnTo=%2Fadmin%2Fprojects` : `/project/view/?slug=${encodeURIComponent(project.slug)}`}>
-        <div><h2>{project.title}</h2><p>{project.location} · {project.area}</p></div><span className="project-card-year">{project.year}</span>
+        <div><h2>{project.title}</h2><p>{project.location} · {project.area}</p></div>
       </Link>
     </article>
   );
