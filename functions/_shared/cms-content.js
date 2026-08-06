@@ -51,10 +51,13 @@ export async function materializeKnownImages(bucket, key, value) {
     for (const field of ["logo", "mainImage", "mobileMainImage"]) if (next[field]) next[field] = await materializeImage(bucket, next[field], "site", field);
     if (next.seo?.ogImage) next.seo.ogImage = await materializeImage(bucket, next.seo.ogImage, "site", "og");
     if (next.seo?.favicon) next.seo.favicon = await materializeImage(bucket, next.seo.favicon, "site", "favicon");
-  } else if (key === "story" && next.image) {
-    next.image = await materializeImage(bucket, next.image, "page", "story");
-  } else if (key === "process" && next.image) {
-    next.image = await materializeImage(bucket, next.image, "page", "process");
+  } else if (key === "story" || key === "process") {
+    if (next.image) next.image = await materializeImage(bucket, next.image, "page", key);
+    if (Array.isArray(next.blocks)) {
+      for (let i=0;i<next.blocks.length;i+=1) {
+        if (next.blocks[i]?.type === "image" && next.blocks[i]?.src) next.blocks[i].src = await materializeImage(bucket,next.blocks[i].src,`page-${key}`,`block-${i+1}`);
+      }
+    }
   }
   return next;
 }
@@ -75,6 +78,10 @@ export async function cleanupReplacedContentImages(bucket, key, previous, next) 
   if (key === "site") {
     for (const field of ["logo", "mainImage", "mobileMainImage"]) pairs.push([previous?.[field], next?.[field]]);
     pairs.push([previous?.seo?.ogImage, next?.seo?.ogImage], [previous?.seo?.favicon, next?.seo?.favicon]);
-  } else if (key === "story" || key === "process") pairs.push([previous?.image, next?.image]);
+  } else if (key === "story" || key === "process") {
+    pairs.push([previous?.image, next?.image]);
+    const nextUrls=new Set((next?.blocks||[]).map(block=>block?.src).filter(Boolean));
+    for (const block of previous?.blocks||[]) if (block?.src && !nextUrls.has(block.src)) pairs.push([block.src, null]);
+  }
   for (const [oldValue, newValue] of pairs) if (oldValue && oldValue !== newValue) await deleteManagedImage(bucket, oldValue);
 }

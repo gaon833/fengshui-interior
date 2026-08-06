@@ -78,3 +78,7 @@ body, button, input, select, textarea, a, h1, h2, h3, h4, h5, h6, p, dt, dd, spa
     transition-duration: 0.01ms !important;
   }
 }
+
+/* v7.7 freeform public pages */
+.freeform-public{position:relative;width:100%;min-height:1100px;margin:0;overflow:hidden;background:#fff}.freeform-public-block{position:absolute;left:var(--dx);top:var(--dy);width:var(--dw);height:var(--dh)}.freeform-public-block img{display:block;width:100%;height:100%}.freeform-public-block>div{width:100%;height:100%;line-height:1.55;overflow:hidden}
+@media(max-width:768px){.freeform-public{min-height:900px}.freeform-public-block{left:var(--mx);top:var(--my);width:var(--mw);height:var(--mh)}}

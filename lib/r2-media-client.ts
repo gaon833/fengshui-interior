@@ -57,8 +57,15 @@ export async function uploadKnownContentImages<T>(key: string, value: T, uploade
     for (const field of ["logo", "mainImage", "mobileMainImage"]) if (isDataImage(next?.[field])) next[field] = await uploadDataImage(next[field], "site", field, uploaded);
     if (isDataImage(next?.seo?.ogImage)) next.seo.ogImage = await uploadDataImage(next.seo.ogImage, "site", "og", uploaded);
     if (isDataImage(next?.seo?.favicon)) next.seo.favicon = await uploadDataImage(next.seo.favicon, "site", "favicon", uploaded);
-  } else if ((key === "story" || key === "process") && isDataImage(next?.image)) {
-    next.image = await uploadDataImage(next.image, "page", key, uploaded);
+  } else if (key === "story" || key === "process") {
+    if (isDataImage(next?.image)) next.image = await uploadDataImage(next.image, "page", key, uploaded);
+    if (Array.isArray(next?.blocks)) {
+      for (let i=0;i<next.blocks.length;i+=1) {
+        if (next.blocks[i]?.type === "image" && isDataImage(next.blocks[i]?.src)) {
+          next.blocks[i].src = await uploadDataImage(next.blocks[i].src, `page-${key}`, `block-${i+1}`, uploaded);
+        }
+      }
+    }
   }
   return next as T;
 }
