@@ -1,5 +1,5 @@
 import { ensureAdminTables, json, validateSession } from "../../_shared/admin-auth.js";
-const VERSION="7.5.15";
+const VERSION="7.5.16";
 function safeSegment(value){return String(value||"media").replace(/[^a-zA-Z0-9_-]+/g,"-").slice(0,80)||"media"}
 function extFor(contentType){if(contentType==="image/jpeg")return"jpg";if(contentType==="image/png")return"png";if(contentType==="image/gif")return"gif";return"webp"}
 async function requireAdmin(context){
@@ -20,7 +20,7 @@ export async function onRequestPost(context){
     const length=Number(context.request.headers.get("content-length")||0);
     if(length>12*1024*1024)return json({ok:false,error:"최적화된 이미지는 12MB 이하만 업로드할 수 있습니다.",version:VERSION},413);
     const body=await context.request.arrayBuffer();
-    console.log("[R2 media-upload v7.5.15] request",{contentType,bytes:body.byteLength,client:context.request.headers.get("x-gallery-client-version")||""});
+    console.log("[R2 media-upload v7.5.16] request",{contentType,bytes:body.byteLength,client:context.request.headers.get("x-gallery-client-version")||""});
     if(!body.byteLength)return json({ok:false,error:"이미지 데이터가 비어 있습니다.",version:VERSION},400);
     if(body.byteLength>12*1024*1024)return json({ok:false,error:"최적화된 이미지는 12MB 이하만 업로드할 수 있습니다.",version:VERSION},413);
     const namespace=safeSegment(context.request.headers.get("x-media-namespace")||"media");
@@ -29,11 +29,11 @@ export async function onRequestPost(context){
     await auth.bucket.put(key,body,{httpMetadata:{contentType,cacheControl:"public, max-age=31536000, immutable"}});
     const head=await auth.bucket.head(key);
     if(!head||Number(head.size)!==body.byteLength)throw new Error("R2 저장 직후 크기 검증에 실패했습니다.");
-    console.log("[R2 media-upload v7.5.15] stored",{key,bytes:body.byteLength});
+    console.log("[R2 media-upload v7.5.16] stored",{key,bytes:body.byteLength});
     return json({ok:true,url:`/api/project-media/${encodeURIComponent(key)}`,bytes:body.byteLength,version:VERSION});
   }catch(error){
     if(key&&context.env.PROJECT_MEDIA)await context.env.PROJECT_MEDIA.delete(key).catch(()=>undefined);
-    console.error("[R2 media-upload v7.5.15] failed",error);
+    console.error("[R2 media-upload v7.5.16] failed",error);
     return json({ok:false,error:error instanceof Error?error.message:"이미지 업로드에 실패했습니다.",version:VERSION},500);
   }
 }
