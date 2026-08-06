@@ -8,7 +8,7 @@ import type { Project, ProjectCardLayout, ProjectCategory, ProjectStatus } from 
 import { cacheStoredProjects, fetchServerProjects, fileToDataUrl, makeProjectImage, readStoredProjects, saveProjectToServer } from "@/lib/project-store";
 import { showAdminToast } from "@/lib/admin-toast";
 import { IMAGE_GUIDES, guideText, confirmImageRatio } from "@/lib/image-guidelines";
-import styles from "./ProjectsV7.module.css";
+import styles from "./Projects.module.css";
 
 const blank = (): Project => ({ id: `project-${Date.now()}`, slug: `project-${Date.now()}`, title: "", category: "30", useType: "Residential", location: "", area: "", year: new Date().getFullYear(), tags: [], coverImage: "", mobileCoverImage: "", images: [], order: 999, status: "published", featured: false, cardLayout: "wide", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), seo: { title: "", description: "", ogImage: "" }, revisions: [] });
 const regions = ["서울","경기","인천","부산","대구","대전","광주","울산","세종","강원","충북","충남","전북","전남","경북","경남","제주"];

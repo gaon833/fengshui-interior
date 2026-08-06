@@ -6,7 +6,7 @@ import { addGalleryItems, fetchGalleryItems, GALLERY_CLIENT_VERSION, GALLERY_EVE
 import { optimizeImageFile } from "@/lib/image-optimizer";
 import { showAdminToast } from "@/lib/admin-toast";
 import { EMPTY_GALLERY_TAGS, GALLERY_TAG_OPTIONS, galleryTagsToSearchText, type GalleryTags } from "@/lib/gallery-tags";
-import styles from "./GalleryManagerV7.module.css";
+import styles from "./GalleryManager.module.css";
 
 const MAX_BATCH = 10;
 const OPTIMIZE_CONCURRENCY = 2;

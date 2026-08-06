@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { Project, ProjectStatus } from "@/types/project";
 import { PROJECTS_EVENT, fetchServerProjects, readStoredProjects, saveStoredProjects, syncProjectsToServer } from "@/lib/project-store";
 import { showAdminToast } from "@/lib/admin-toast";
-import styles from "./ProjectsV7.module.css";
+import styles from "./Projects.module.css";
 
 const statusLabels: Record<ProjectStatus, string> = { published: "공개", draft: "작성 중", private: "비공개", trash: "휴지통" };
 const PAGE_SIZE = 6;

@@ -1,0 +1,37 @@
+/* Public visual-delete mode. Kept separate from shared layout/project styles. */
+.site-shell--delete-mode {
+  display:block;
+  min-height:100vh;
+}
+.site-shell--delete-mode .site-content {
+  width:100%;
+  max-width:none;
+  margin-left:0;
+}
+.site-shell--delete-mode .gallery-page {
+  padding:46px 30px 80px;
+}
+.site-shell--delete-mode .project-index {
+  padding:46px 30px 110px;
+}
+.site-shell--delete-mode .admin-delete-page-shell {
+  width:100%;
+  max-width:none;
+  margin:0;
+}
+.site-shell--delete-mode .admin-delete-page-shell.is-gallery-delete .gallery-masonry {
+  margin-left:auto;
+  margin-right:auto;
+}
+.site-shell--delete-mode .admin-delete-page-shell.is-project-delete .project-filter,
+.site-shell--delete-mode .admin-delete-page-shell.is-project-delete .project-grid-wrap {
+  width:min(100%, 1600px);
+  margin-left:auto;
+  margin-right:auto;
+}
+@media (max-width:900px) {
+  .site-shell--delete-mode .gallery-page,
+  .site-shell--delete-mode .project-index {
+    padding:26px 14px 60px;
+  }
+}
