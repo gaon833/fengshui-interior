@@ -5,10 +5,11 @@ export const STORY_CONTENT_KEY = "fengshui-story-content-v1";
 export const PROCESS_CONTENT_KEY = "fengshui-process-content-v1";
 export const PAGE_CONTENT_EVENT = "fengshui-page-content-updated";
 
-export type FreeformLayout = { x:number; y:number; w:number; h:number; z:number };
+export type FreeformLayout = { x:number; y:number; w:number; h:number; z:number; page?:number };
 export type FreeformBlock = {
-  id:string; type:"text"|"image"; text?:string; src?:string; alt?:string;
+  id:string; type:"text"|"image"|"rect"|"hline"|"vline"; text?:string; src?:string; alt?:string;
   fontSize?:number; align?:"left"|"center"|"right"; color?:string; fit?:"cover"|"contain";
+  strokeColor?:string; strokeWidth?:number; fillColor?:string; opacity?:number; radius?:number;
   layouts:{desktop:FreeformLayout;mobile:FreeformLayout};
 };
 
