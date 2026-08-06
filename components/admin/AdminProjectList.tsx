@@ -34,11 +34,14 @@ export default function AdminProjectList({ projects }: { projects: Project[] }) 
 
   const filteredProjects = useMemo(() => {
     const normalized = query.trim().toLowerCase();
-    return [...items].sort((a,b)=>(b.order ?? 0)-(a.order ?? 0)).filter((project) => {
-      if (status !== "all" && project.status !== status) return false;
-      if (!normalized) return true;
-      return [project.title, project.location, project.area, project.category, project.status, ...project.tags].join(" ").toLowerCase().includes(normalized);
-    });
+    return [...items]
+      .filter((project) => project.status !== "trash")
+      .sort((a,b)=>(b.order ?? 0)-(a.order ?? 0))
+      .filter((project) => {
+        if (status !== "all" && project.status !== status) return false;
+        if (!normalized) return true;
+        return [project.title, project.location, project.area, project.category, project.status, ...project.tags].join(" ").toLowerCase().includes(normalized);
+      });
   }, [items, query, status]);
   const totalPages = Math.max(1, Math.ceil(filteredProjects.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
@@ -58,7 +61,7 @@ export default function AdminProjectList({ projects }: { projects: Project[] }) 
   return <>
     <div className={styles.toolbar}>
       <div className={styles.searchWrap}><span className={styles.searchIcon}><Icon name="search" /></span><input className={styles.search} type="search" value={query} onChange={(e) => {setQuery(e.target.value);setPage(1);}} placeholder="제목, 지역, 평형, 태그 검색" aria-label="프로젝트 검색" /></div>
-      <select className={styles.select} value={status} onChange={(e) => {setStatus(e.target.value as "all" | ProjectStatus);setPage(1);}} aria-label="프로젝트 상태 필터"><option value="all">전체 상태</option><option value="published">공개</option><option value="draft">작성 중</option><option value="private">비공개</option><option value="trash">휴지통</option></select>
+      <select className={styles.select} value={status} onChange={(e) => {setStatus(e.target.value as "all" | ProjectStatus);setPage(1);}} aria-label="프로젝트 상태 필터"><option value="all">전체 상태</option><option value="published">공개</option><option value="draft">작성 중</option><option value="private">비공개</option></select>
       <button className={styles.button} type="button" onClick={()=>void restoreDefaults()}><Icon name="restore" />기본 프로젝트 복원</button>
     </div>
     <div className={styles.tableCard}>
