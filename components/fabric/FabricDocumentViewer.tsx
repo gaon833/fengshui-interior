@@ -1,0 +1,8 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
+import type { FabricDocument, FabricPage, FabricResponsiveDocument } from "@/lib/page-content";
+
+type Props={document:FabricResponsiveDocument;label:string};
+function CanvasViewer({page,index}:{page:FabricPage;index:number}){const ref=useRef<HTMLCanvasElement|null>(null);useEffect(()=>{let dead=false;let c:any;void (async()=>{const {StaticCanvas}=await import("fabric");if(dead||!ref.current)return;c=new StaticCanvas(ref.current,{width:page.width,height:page.height,backgroundColor:"#fff",renderOnAddRemove:false});await c.loadFromJSON(page.json||{objects:[]});c.requestRenderAll();const el=c.lowerCanvasEl;el.style.width="100%";el.style.height="auto";el.style.display="block"})();return()=>{dead=true;c?.dispose?.()}},[page.id,page.width,page.height,page.json]);return <div className="fabric-public-page" style={{aspectRatio:`${page.width}/${page.height}`}}><canvas ref={ref} aria-label={`${index+1} page`}/></div>}
+function Doc({doc}:{doc:FabricDocument}){return <>{doc.pages.map((p,i)=><CanvasViewer key={p.id} page={p} index={i}/>)}</>}
+export default function FabricDocumentViewer({document,label}:Props){const [mobile,setMobile]=useState(false);useEffect(()=>{const f=()=>setMobile(innerWidth<=768);f();addEventListener("resize",f);return()=>removeEventListener("resize",f)},[]);const preferred=mobile?document.mobile:document.desktop;const fallback=mobile?document.desktop:document.mobile;const hasObjects=(d:FabricDocument)=>d.pages?.some(p=>Array.isArray((p.json as any)?.objects)&&((p.json as any).objects.length>0));const doc=hasObjects(preferred)?preferred:fallback;return <section className="fabric-public-document" aria-label={label}><Doc doc={doc}/></section>}

@@ -373,6 +373,3 @@
   overflow: hidden;
   pointer-events: none;
 }
-
-/* v8.1 Polotno visual editor */
-.polotno-admin-editor{display:grid;gap:10px}.polotno-admin-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.polotno-admin-bar strong{margin-right:auto}.polotno-admin-bar button{border:1px solid #d8d8d8;background:#fff;padding:8px 11px;cursor:pointer}.polotno-admin-bar button.is-active{background:#222;color:#fff;border-color:#222}.polotno-key-warning{padding:10px 12px;background:#fff8d9;border:1px solid #e8d77b;font-size:12px;line-height:1.5}.polotno-admin-shell{height:78vh;min-height:680px;border:1px solid #ddd;background:#f3f3f3;overflow:hidden}.polotno-loading{display:grid;place-items:center;min-height:300px;color:#777}

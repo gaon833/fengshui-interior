@@ -51,19 +51,6 @@ export async function uploadProjectDataImages<T>(project: T, uploaded?: string[]
   return next;
 }
 
-
-async function uploadPolotnoImages(design: any, namespace: string, uploaded?: string[]) {
-  if (!design || typeof design !== "object") return;
-  const visit = async (node: any, path: string) => {
-    if (!node || typeof node !== "object") return;
-    if (node.type === "image" && isDataImage(node.src)) node.src = await uploadDataImage(node.src, namespace, path, uploaded);
-    if (Array.isArray(node.children)) for (let i=0;i<node.children.length;i+=1) await visit(node.children[i], `${path}-${i+1}`);
-  };
-  if (Array.isArray(design.pages)) for (let p=0;p<design.pages.length;p+=1) {
-    const page=design.pages[p]; if (Array.isArray(page?.children)) for (let i=0;i<page.children.length;i+=1) await visit(page.children[i], `page-${p+1}-item-${i+1}`);
-  }
-}
-
 export async function uploadKnownContentImages<T>(key: string, value: T, uploaded?: string[]): Promise<T> {
   const next: any = structuredClone(value);
   if (key === "site") {
@@ -72,8 +59,17 @@ export async function uploadKnownContentImages<T>(key: string, value: T, uploade
     if (isDataImage(next?.seo?.favicon)) next.seo.favicon = await uploadDataImage(next.seo.favicon, "site", "favicon", uploaded);
   } else if (key === "story" || key === "process") {
     if (isDataImage(next?.image)) next.image = await uploadDataImage(next.image, "page", key, uploaded);
-    await uploadPolotnoImages(next?.polotnoDesktop, `polotno-${key}-desktop`, uploaded);
-    await uploadPolotnoImages(next?.polotnoMobile, `polotno-${key}-mobile`, uploaded);
+    for (const mode of ["desktop", "mobile"]) {
+      const pages = next?.fabric?.[mode]?.pages;
+      if (!Array.isArray(pages)) continue;
+      for (let pi=0; pi<pages.length; pi+=1) {
+        const objects = pages[pi]?.json?.objects;
+        if (!Array.isArray(objects)) continue;
+        for (let oi=0; oi<objects.length; oi+=1) {
+          if (isDataImage(objects[oi]?.src)) objects[oi].src = await uploadDataImage(objects[oi].src, `fabric-${key}-${mode}`, `p${pi+1}-o${oi+1}`, uploaded);
+        }
+      }
+    }
   }
   return next as T;
 }

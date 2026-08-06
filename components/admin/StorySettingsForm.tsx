@@ -1,14 +1,6 @@
 "use client";
-import { useCallback, useEffect, useState, type FormEvent } from "react";
-import { defaultStoryContent, fetchPageContent, readLocalContent, savePageContent, STORY_CONTENT_KEY, type PolotnoDesign, type StoryContent } from "@/lib/page-content";
+import { useEffect, useState, type FormEvent } from "react";
+import { defaultStoryContent, fetchPageContent, readLocalContent, savePageContent, STORY_CONTENT_KEY, type StoryContent, emptyFabricResponsiveDocument } from "@/lib/page-content";
 import { showAdminToast } from "@/lib/admin-toast";
-import PolotnoDesignerClient from "@/components/polotno/PolotnoDesignerClient";
-export default function StorySettingsForm(){
- const [form,setForm]=useState<StoryContent>(defaultStoryContent);
- const [loaded,setLoaded]=useState(false);
- useEffect(()=>{const local=readLocalContent(STORY_CONTENT_KEY,defaultStoryContent);setForm(local);void fetchPageContent("story",STORY_CONTENT_KEY,defaultStoryContent,true).then(value=>{setForm(value);setLoaded(true)}).catch(()=>setLoaded(true))},[]);
- const setDesktop=useCallback((polotnoDesktop:PolotnoDesign)=>setForm(c=>({...c,polotnoDesktop})),[]);
- const setMobile=useCallback((polotnoMobile:PolotnoDesign)=>setForm(c=>({...c,polotnoMobile})),[]);
- const save=async(e:FormEvent)=>{e.preventDefault();try{const stored=await savePageContent("story",STORY_CONTENT_KEY,form);setForm(stored);showAdminToast("OUR STORY Polotno 디자인이 D1/R2에 저장되었습니다.","success")}catch(error){showAdminToast(error instanceof Error?error.message:"저장 실패","error")}};
- return <form onSubmit={save}>{loaded?<PolotnoDesignerClient desktop={form.polotnoDesktop||null} mobile={form.polotnoMobile||null} onDesktopChange={setDesktop} onMobileChange={setMobile} pageLabel="OUR STORY"/>:<div className="polotno-loading">저장된 디자인을 불러오는 중...</div>}<div className="admin-form-actions"><button type="submit">저장 및 홈페이지 적용</button></div></form>;
-}
+import FabricDesigner from "@/components/fabric/FabricDesigner";
+export default function StorySettingsForm(){const[form,setForm]=useState<StoryContent>(defaultStoryContent);useEffect(()=>{const local=readLocalContent(STORY_CONTENT_KEY,defaultStoryContent);setForm(local);void fetchPageContent("story",STORY_CONTENT_KEY,defaultStoryContent,true).then(setForm)},[]);const save=async(e:FormEvent)=>{e.preventDefault();try{const stored=await savePageContent("story",STORY_CONTENT_KEY,form);setForm(stored);showAdminToast("OUR STORY 디자인이 D1/R2에 저장되었습니다.","success")}catch(err){showAdminToast(err instanceof Error?err.message:"저장 실패","error")}};const reset=()=>{if(confirm("자유 디자인을 비우고 기존 OUR STORY 화면으로 돌아갈까요?"))setForm(v=>({...v,fabric:emptyFabricResponsiveDocument()}))};return <form onSubmit={save}><div className="admin-editor-intro"><h2>OUR STORY 자유 디자인</h2><p>Fabric.js 기반 편집기입니다. 이미지와 텍스트를 자유롭게 배치하고 Desktop/Mobile을 따로 디자인할 수 있습니다.</p></div><FabricDesigner pageLabel="OUR STORY" value={form.fabric} onChange={fabric=>setForm(v=>({...v,fabric}))}/><div className="admin-form-actions"><button type="submit">저장 및 홈페이지 적용</button><button type="button" onClick={reset}>자유 디자인 초기화</button></div></form>}

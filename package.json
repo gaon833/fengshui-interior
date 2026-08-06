@@ -1,6 +1,6 @@
 {
   "name": "fengshui-interior",
-  "version": "8.1.2",
+  "version": "10.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -15,7 +15,7 @@
     "next": "^15.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "polotno": "^4.5.0"
+    "fabric": "7.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

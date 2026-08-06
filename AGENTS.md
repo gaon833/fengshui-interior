@@ -50,3 +50,6 @@ Do not remove, merge away, rename semantically, or replace these paths merely to
 When touching adjacent code, preserve observable behavior and storage lifecycle.
 If a cleanup would require changing one of these contracts, stop and request explicit approval first.
 
+
+## Fabric editor rule
+OUR STORY and PROCESS use Fabric.js as the only visual editing engine. Do not reintroduce Polotno, Puck, Moveable, Selecto, or the old hand-built Freeform editor alongside it. Preserve R2/D1 and image optimization contracts.
