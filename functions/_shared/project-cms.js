@@ -107,3 +107,12 @@ export async function cleanupProjectImages(bucket, project) {
     if (key) await bucket.delete(key);
   }
 }
+
+export async function cleanupNewProjectImages(bucket, original, stored) {
+  if (!bucket || !stored) return;
+  const originalManaged = new Set(projectMediaValues(original).filter((value) => managedKey(value)));
+  for (const value of projectMediaValues(stored)) {
+    const key = managedKey(value);
+    if (key && !originalManaged.has(value)) await bucket.delete(key);
+  }
+}

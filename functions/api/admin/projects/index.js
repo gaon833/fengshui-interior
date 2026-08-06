@@ -1,5 +1,5 @@
 import { ensureAdminTables, json, validateSession } from "../../../_shared/admin-auth.js";
-import { cleanupProjectImages, cleanupReplacedProjectImages, ensureProjectCmsTable, getProjectById, listProjects, materializeProjectImages, upsertProject } from "../../../_shared/project-cms.js";
+import { cleanupNewProjectImages, cleanupProjectImages, cleanupReplacedProjectImages, ensureProjectCmsTable, getProjectById, listProjects, materializeProjectImages, upsertProject } from "../../../_shared/project-cms.js";
 
 async function requireAdmin(context) {
   if (!context.env.DB) return { response: json({ ok: false, error: "D1 바인딩 DB가 없습니다." }, 503) };
@@ -21,15 +21,22 @@ export async function onRequestGet(context) {
 }
 
 export async function onRequestPost(context) {
+  let project = null;
+  let stored = null;
   try {
     const auth = await requireAdmin(context);
     if (auth.response) return auth.response;
     const body = await context.request.json();
-    const project = body?.project;
+    project = body?.project;
     if (!project?.id || !project?.slug || !project?.status) return json({ ok: false, error: "프로젝트 데이터가 올바르지 않습니다." }, 400);
     const previous = await getProjectById(auth.db, project.id);
-    const stored = await materializeProjectImages(context.env.PROJECT_MEDIA, project);
-    await upsertProject(auth.db, stored);
+    stored = await materializeProjectImages(context.env.PROJECT_MEDIA, project);
+    try {
+      await upsertProject(auth.db, stored);
+    } catch (error) {
+      await cleanupNewProjectImages(context.env.PROJECT_MEDIA, project, stored).catch(() => undefined);
+      throw error;
+    }
     await cleanupReplacedProjectImages(context.env.PROJECT_MEDIA, previous, stored);
     return json({ ok: true, project: stored });
   } catch (error) {
@@ -38,31 +45,53 @@ export async function onRequestPost(context) {
 }
 
 export async function onRequestPut(context) {
+  const materialized = [];
   try {
     const auth = await requireAdmin(context);
     if (auth.response) return auth.response;
     const body = await context.request.json();
     const projects = Array.isArray(body?.projects) ? body.projects : [];
-    const storedProjects = [];
-    const submittedIds = projects.map((project) => String(project?.id || "")).filter(Boolean);
+    const validProjects = projects.filter((project) => project?.id && project?.slug && project?.status);
     const existing = await listProjects(auth.db, false);
-    const submittedSet = new Set(submittedIds);
-    for (const removed of existing.filter((item) => !submittedSet.has(String(item.id)))) await cleanupProjectImages(context.env.PROJECT_MEDIA, removed);
-    if (submittedIds.length) {
-      const placeholders = submittedIds.map(() => "?").join(",");
-      await auth.db.prepare(`DELETE FROM cms_projects WHERE id NOT IN (${placeholders})`).bind(...submittedIds).run();
-    } else {
-      await auth.db.prepare("DELETE FROM cms_projects").run();
-    }
-    for (const project of projects) {
-      if (!project?.id || !project?.slug || !project?.status) continue;
-      const previous = await getProjectById(auth.db, project.id);
+    const existingMap = new Map(existing.map((item) => [String(item.id), item]));
+
+    // 1) 새 이미지를 먼저 모두 안전하게 R2에 준비한다. 기존 데이터/이미지는 아직 건드리지 않는다.
+    for (const project of validProjects) {
       const stored = await materializeProjectImages(context.env.PROJECT_MEDIA, project);
-      await upsertProject(auth.db, stored);
-      await cleanupReplacedProjectImages(context.env.PROJECT_MEDIA, previous, stored);
-      storedProjects.push(stored);
+      materialized.push({ original: project, stored, previous: existingMap.get(String(project.id)) || null });
     }
-    return json({ ok: true, projects: storedProjects });
+
+    // 2) D1 변경을 한 번의 batch로 처리한다. 중간 실패 시 D1은 기존 상태를 유지한다.
+    const ids = validProjects.map((project) => String(project.id));
+    const now = Date.now();
+    const statements = materialized.map(({ stored }) => auth.db.prepare(`INSERT INTO cms_projects (id, slug, status, data, updated_at)
+      VALUES (?, ?, ?, ?, ?)
+      ON CONFLICT(id) DO UPDATE SET slug = excluded.slug, status = excluded.status, data = excluded.data, updated_at = excluded.updated_at`)
+      .bind(String(stored.id), String(stored.slug), String(stored.status), JSON.stringify(stored), now));
+    if (ids.length) {
+      const placeholders = ids.map(() => "?").join(",");
+      statements.push(auth.db.prepare(`DELETE FROM cms_projects WHERE id NOT IN (${placeholders})`).bind(...ids));
+    } else {
+      statements.push(auth.db.prepare("DELETE FROM cms_projects"));
+    }
+    try {
+      await auth.db.batch(statements);
+    } catch (error) {
+      // D1 저장 실패 시 이번 요청에서 새로 만든 R2 파일만 되돌린다.
+      for (const item of materialized) await cleanupNewProjectImages(context.env.PROJECT_MEDIA, item.original, item.stored).catch(() => undefined);
+      throw error;
+    }
+
+    // 3) DB가 성공한 뒤에만 더 이상 참조되지 않는 옛 R2 파일을 삭제한다.
+    const submittedSet = new Set(ids);
+    for (const removed of existing.filter((item) => !submittedSet.has(String(item.id)))) {
+      await cleanupProjectImages(context.env.PROJECT_MEDIA, removed).catch(() => undefined);
+    }
+    for (const item of materialized) {
+      await cleanupReplacedProjectImages(context.env.PROJECT_MEDIA, item.previous, item.stored).catch(() => undefined);
+    }
+
+    return json({ ok: true, projects: materialized.map((item) => item.stored) });
   } catch (error) {
     return json({ ok: false, error: error instanceof Error ? error.message : "프로젝트 동기화에 실패했습니다." }, 500);
   }

@@ -1,5 +1,6 @@
 import type { Project, ProjectImage } from "@/types/project";
 import { optimizeImageFile } from "@/lib/image-optimizer";
+import { rollbackUploadedMedia, uploadProjectDataImages } from "@/lib/r2-media-client";
 
 export const PROJECTS_STORAGE_KEY = "fengshui-admin-projects-v3";
 export const PROJECTS_EVENT = "fengshui-projects-updated";
@@ -65,25 +66,40 @@ export async function fetchServerProjects(fallback: Project[], admin = false): P
 }
 
 export async function saveProjectToServer(project: Project): Promise<Project> {
-  const response = await fetch("/api/admin/projects", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ project }),
-  });
-  const data = await response.json().catch(() => null) as { ok?: boolean; project?: Project; error?: string } | null;
-  if (!response.ok || !data?.ok || !data.project) throw new Error(data?.error || "프로젝트 서버 저장에 실패했습니다.");
-  return data.project;
+  const uploaded: string[] = [];
+  try {
+    const prepared = await uploadProjectDataImages(project, uploaded);
+    const response = await fetch("/api/admin/projects", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ project: prepared }),
+    });
+    const data = await response.json().catch(() => null) as { ok?: boolean; project?: Project; error?: string } | null;
+    if (!response.ok || !data?.ok || !data.project) throw new Error(data?.error || "프로젝트 서버 저장에 실패했습니다.");
+    return data.project;
+  } catch (error) {
+    await rollbackUploadedMedia(uploaded);
+    throw error;
+  }
 }
 
 export async function syncProjectsToServer(projects: Project[]): Promise<Project[]> {
-  const response = await fetch("/api/admin/projects", {
-    method: "PUT",
-    headers: { "content-type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ projects: normalizeProjects(projects) }),
-  });
-  return (await readProjectResponse(response)).projects;
+  const uploaded: string[] = [];
+  try {
+    const prepared: Project[] = [];
+    for (const project of normalizeProjects(projects)) prepared.push(await uploadProjectDataImages(project, uploaded));
+    const response = await fetch("/api/admin/projects", {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ projects: prepared }),
+    });
+    return (await readProjectResponse(response)).projects;
+  } catch (error) {
+    await rollbackUploadedMedia(uploaded);
+    throw error;
+  }
 }
 
 export function saveStoredProjects(projects: Project[]) {
