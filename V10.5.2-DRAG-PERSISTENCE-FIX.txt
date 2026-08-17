@@ -1,0 +1,14 @@
+v10.5.2 page-height drag persistence fix
+
+Root cause fixed:
+- Page-height updates were included in the Fabric canvas creation effect dependencies.
+- Releasing the drag updated page.height, which caused the Fabric canvas to be disposed/re-created immediately.
+- The resize UI could therefore look as if it worked while the applied height briefly snapped/reset or was lost during a following action.
+
+Changes:
+1. Fabric canvas is no longer recreated when only page.height changes.
+2. A dedicated height synchronization effect updates the existing live Fabric canvas in place.
+3. The visual page height is kept in local displayHeight state during and after drag, so it does not snap back before the parent state arrives.
+4. The latest drag height is stored in a ref and committed on pointerup/pointercancel/blur, avoiding React state timing races.
+5. Custom page heights are no longer incorrectly treated as a common-size mismatch during normalization. Only wrong width or height below the mode minimum is normalized.
+6. Version remains 10.5.2 as requested.

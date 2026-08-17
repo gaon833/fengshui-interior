@@ -106,7 +106,7 @@ function styleObject(obj:any){
 function objectName(obj:any,index=0){return obj?.data?.layerName || `${LAYER_NAMES[getKind(obj)]||getKind(obj)} ${index+1}`}
 
 function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb,minPageHeight}:{page:FabricPage;grid:boolean;zoom:number;draw:DrawSettings;onReady:(id:string,r:FabricRuntime|null)=>void;onChange:(id:string,json:any)=>void;onSelect:(inspector:Inspector)=>void;onThumb:(id:string,url:string)=>void;minPageHeight:number}){
- const canvasRef=useRef<HTMLCanvasElement|null>(null); const hostRef=useRef<HTMLDivElement|null>(null); const runtime=useRef<FabricRuntime|null>(null); const [fit,setFit]=useState(1); const [guide,setGuide]=useState<GuideState|null>(null); const [dragHeight,setDragHeight]=useState<number|null>(null); const loading=useRef(true); const lastJson=useRef(JSON.stringify(page.json||EMPTY_JSON)); const selectedLayerId=useRef<string|null>(null); const resizing=useRef(false);
+ const canvasRef=useRef<HTMLCanvasElement|null>(null); const hostRef=useRef<HTMLDivElement|null>(null); const runtime=useRef<FabricRuntime|null>(null); const [fit,setFit]=useState(1); const [guide,setGuide]=useState<GuideState|null>(null); const [displayHeight,setDisplayHeight]=useState(page.height); const [isResizing,setIsResizing]=useState(false); const dragHeightRef=useRef(page.height); const loading=useRef(true); const lastJson=useRef(JSON.stringify(page.json||EMPTY_JSON)); const selectedLayerId=useRef<string|null>(null); const resizing=useRef(false);
  useEffect(()=>{const host=hostRef.current;if(!host)return;const update=()=>setFit(Math.min(1,Math.max(.18,host.clientWidth/page.width)));update();const ro=new ResizeObserver(update);ro.observe(host);return()=>ro.disconnect()},[page.width]);
  useEffect(()=>{let dead=false; let canvas:any=null;
    (async()=>{const fabric=await import("fabric");if(dead||!canvasRef.current)return;canvas=new fabric.Canvas(canvasRef.current,{width:page.width,height:page.height,preserveObjectStacking:true,selection:true,backgroundColor:"#fff"});runtime.current={canvas,fabric};onReady(page.id,runtime.current);loading.current=true;await canvas.loadFromJSON(page.json||EMPTY_JSON);canvas.getObjects().forEach((o:any,i:number)=>{ensureLayerMeta(o,i);styleObject(o)});canvas.requestRenderAll();loading.current=false;
@@ -123,8 +123,20 @@ function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb,minPa
      requestAnimationFrame(()=>{try{onThumb(page.id,canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}})
    })();
    return()=>{dead=true;onReady(page.id,null);runtime.current=null;canvas?.dispose?.()}
- },[page.id,page.width,page.height,grid]);
+ },[page.id,page.width,grid]);
  useEffect(()=>{const r=runtime.current;if(!r)return;const {canvas,fabric}=r;canvas.isDrawingMode=draw.enabled;if(draw.enabled){const Brush=draw.type==="spray"?fabric.SprayBrush:draw.type==="circle"?fabric.CircleBrush:fabric.PencilBrush;const brush=new Brush(canvas);brush.color=draw.color;brush.width=draw.width;canvas.freeDrawingBrush=brush;canvas.discardActiveObject();canvas.requestRenderAll()}},[draw.enabled,draw.type,draw.color,draw.width]);
+ useEffect(()=>{
+   if(resizing.current)return;
+   const next=Math.max(minPageHeight,Math.round(Number(page.height)||minPageHeight));
+   dragHeightRef.current=next;
+   setDisplayHeight(next);
+   const r=runtime.current;if(!r)return;
+   if(Math.round(Number(r.canvas.getHeight())||0)!==next){
+     r.canvas.setDimensions({width:r.canvas.getWidth(),height:next});
+     r.canvas.calcOffset?.();
+     r.canvas.requestRenderAll();
+   }
+ },[page.height,minPageHeight]);
  useEffect(()=>{const r=runtime.current;if(!r||loading.current)return;const raw=JSON.stringify(page.json||EMPTY_JSON);if(raw===lastJson.current)return;
    // Inspector-side edits already changed the live Fabric canvas. If incoming JSON is identical,
    // do not reload the canvas because loadFromJSON clears the current selection/inspector.
@@ -144,14 +156,16 @@ function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb,minPa
      requestAnimationFrame(()=>{try{onThumb(page.id,r.canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}})
    })},[page.json]);
  const scale=fit*zoom;
- const visibleHeight=dragHeight??page.height;
+ const visibleHeight=displayHeight;
  const contentBottomLive=()=>{const r=runtime.current;if(!r)return 0;const bounds=r.canvas.getObjects().filter((o:any)=>!o.excludeFromExport).map((o:any)=>o.getBoundingRect());return bounds.length?Math.max(...bounds.map((b:any)=>b.top+b.height)):0};
  const beginHeightDrag=(e:React.PointerEvent<HTMLDivElement>)=>{
    e.preventDefault();e.stopPropagation();
    const r=runtime.current;if(!r||resizing.current)return;
    resizing.current=true;
+   setIsResizing(true);
    const startY=e.clientY;
-   const startHeight=Number(r.canvas.getHeight())||page.height;
+   const startHeight=Math.max(minPageHeight,Math.round(Number(r.canvas.getHeight())||displayHeight||page.height));
+   dragHeightRef.current=startHeight;
    const previousCursor=document.body.style.cursor;
    const previousSelect=document.body.style.userSelect;
    document.body.style.cursor="ns-resize";
@@ -167,7 +181,8 @@ function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb,minPa
      const contentMin=Math.ceil(contentBottomLive()+20);
      const minHeight=Math.max(minPageHeight,contentMin);
      const next=Math.max(minHeight,Math.round(startHeight+delta));
-     setDragHeight(next);
+     dragHeightRef.current=next;
+     setDisplayHeight(next);
      r.canvas.setDimensions({width:r.canvas.getWidth(),height:next});
      r.canvas.calcOffset?.();
      r.canvas.requestRenderAll();
@@ -176,6 +191,7 @@ function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb,minPa
    const finish=()=>{
      if(!resizing.current)return;
      resizing.current=false;
+     setIsResizing(false);
      window.removeEventListener("pointermove",move);
      window.removeEventListener("pointerup",finish);
      window.removeEventListener("pointercancel",finish);
@@ -183,8 +199,9 @@ function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb,minPa
      document.body.style.cursor=previousCursor;
      document.body.style.userSelect=previousSelect;
 
-     const finalHeight=Math.max(minPageHeight,Math.ceil(Number(r.canvas.getHeight())||startHeight));
-     setDragHeight(null);
+     const finalHeight=Math.max(minPageHeight,Math.ceil(Number(dragHeightRef.current)||Number(r.canvas.getHeight())||startHeight));
+     dragHeightRef.current=finalHeight;
+     setDisplayHeight(finalHeight);
      r.canvas.setDimensions({width:r.canvas.getWidth(),height:finalHeight});
      r.canvas.calcOffset?.();
      r.canvas.getObjects().forEach((o:any,i:number)=>ensureLayerMeta(o,i));
@@ -202,7 +219,7 @@ function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb,minPa
    window.addEventListener("pointercancel",finish);
    window.addEventListener("blur",finish);
  };
- return <div ref={hostRef} className="fabric-page-host"><div className={`fabric-page-scaled ${dragHeight!==null?"is-resizing":""}`} style={{width:page.width*scale,height:visibleHeight*scale}}><div className={`fabric-page-inner ${grid?"is-grid":""}`} style={{width:page.width,height:visibleHeight,transform:`scale(${scale})`}}><div className="fabric-ruler fabric-ruler-x"/><div className="fabric-ruler fabric-ruler-y"/><canvas ref={canvasRef}/>{guide&&<GuideOverlay page={{...page,height:visibleHeight}} guide={guide}/>}</div><div className="fabric-page-resize-handle" role="separator" aria-orientation="horizontal" aria-label="페이지 높이 드래그 조절" title="위아래로 드래그해서 페이지 높이 조절" onPointerDown={beginHeightDrag}><span>↕</span><b>{Math.round(visibleHeight)}px</b></div></div></div>
+ return <div ref={hostRef} className="fabric-page-host"><div className={`fabric-page-scaled ${isResizing?"is-resizing":""}`} style={{width:page.width*scale,height:visibleHeight*scale}}><div className={`fabric-page-inner ${grid?"is-grid":""}`} style={{width:page.width,height:visibleHeight,transform:`scale(${scale})`}}><div className="fabric-ruler fabric-ruler-x"/><div className="fabric-ruler fabric-ruler-y"/><canvas ref={canvasRef}/>{guide&&<GuideOverlay page={{...page,height:visibleHeight}} guide={guide}/>}</div><div className="fabric-page-resize-handle" role="separator" aria-orientation="horizontal" aria-label="페이지 높이 드래그 조절" title="위아래로 드래그해서 페이지 높이 조절" onPointerDown={beginHeightDrag}><span>↕</span><b>{Math.round(visibleHeight)}px</b></div></div></div>
 }
 
 export default function FabricDesigner({value,onChange,pageLabel}:Props){
@@ -233,7 +250,7 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
    if(normalizedPersisted.current)return;
    const source=value;
    if(!source)return;
-   const hasMismatch=(m:Mode)=>(source[m]?.pages||[]).some((p:any)=>p.width!==COMMON_PAGE_SIZE[m].width||p.height!==COMMON_PAGE_SIZE[m].height);
+   const hasMismatch=(m:Mode)=>(source[m]?.pages||[]).some((p:any)=>p.width!==COMMON_PAGE_SIZE[m].width||Number(p.height||0)<COMMON_PAGE_SIZE[m].height);
    if(hasMismatch("desktop")||hasMismatch("mobile")){
      normalizedPersisted.current=true;
      onChange(normalized);
