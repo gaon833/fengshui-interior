@@ -36,12 +36,34 @@ function scaleFabricJson(json:any,sx:number,sy:number){
   (next.objects||[]).forEach(scaleObject);
   return next;
 }
+function jsonContentBottom(json:any){
+  const objects=Array.isArray(json?.objects)?json.objects:[];
+  let maxBottom=0;
+  const walk=(obj:any,parentTop=0,parentScaleY=1)=>{
+    if(!obj||typeof obj!=="object")return;
+    const top=parentTop+Number(obj.top||0)*parentScaleY;
+    const scaleY=parentScaleY*Number(obj.scaleY??1);
+    const height=Math.abs(Number(obj.height||0)*scaleY);
+    maxBottom=Math.max(maxBottom,top+height);
+    const children=obj.objects||obj._objects;
+    if(Array.isArray(children))children.forEach((child:any)=>walk(child,top,scaleY));
+  };
+  objects.forEach((obj:any)=>walk(obj));
+  return maxBottom;
+}
 function normalizePage(page:FabricPage,mode:Mode):FabricPage{
   const target=pageSize(mode);
   const oldW=Math.max(1,Number(page.width||target.width));
-  const oldH=Math.max(1,Number(page.height||target.height));
-  if(oldW===target.width&&oldH===target.height)return page;
-  return {...page,width:target.width,height:target.height,json:scaleFabricJson(page.json,target.width/oldW,target.height/oldH)};
+  const widthScale=target.width/oldW;
+  const persistedHeight=Math.max(
+    target.height,
+    Number(page.height||0),
+    Number((page.json as any)?.height||0),
+    jsonContentBottom(page.json)>0?Math.ceil(jsonContentBottom(page.json)+120):0,
+  );
+  const newH=Math.max(target.height,Math.ceil(persistedHeight*widthScale));
+  if(oldW===target.width&&Number(page.height||0)===newH)return page;
+  return {...page,width:target.width,height:newH,json:scaleFabricJson(page.json,widthScale,widthScale)};
 }
 function blankPage(mode:Mode):FabricPage{const size=pageSize(mode);return{id:uid(),...size,json:structuredClone(EMPTY_JSON)}}
 function ensureDoc(doc:FabricDocument|undefined,mode:Mode):FabricDocument{
@@ -88,7 +110,7 @@ function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb}:{pag
  useEffect(()=>{const host=hostRef.current;if(!host)return;const update=()=>setFit(Math.min(1,Math.max(.18,host.clientWidth/page.width)));update();const ro=new ResizeObserver(update);ro.observe(host);return()=>ro.disconnect()},[page.width]);
  useEffect(()=>{let dead=false; let canvas:any=null;
    (async()=>{const fabric=await import("fabric");if(dead||!canvasRef.current)return;canvas=new fabric.Canvas(canvasRef.current,{width:page.width,height:page.height,preserveObjectStacking:true,selection:true,backgroundColor:"#fff"});runtime.current={canvas,fabric};onReady(page.id,runtime.current);loading.current=true;await canvas.loadFromJSON(page.json||EMPTY_JSON);canvas.getObjects().forEach((o:any,i:number)=>{ensureLayerMeta(o,i);styleObject(o)});canvas.requestRenderAll();loading.current=false;
-     const snapshot=()=>{if(loading.current)return;canvas.getObjects().forEach((o:any,i:number)=>ensureLayerMeta(o,i));const json=canvas.toObject(["data"]);const raw=JSON.stringify(json);lastJson.current=raw;onChange(page.id,json);requestAnimationFrame(()=>{try{onThumb(page.id,canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}})};
+     const snapshot=()=>{if(loading.current)return;const bounds=canvas.getObjects().filter((o:any)=>!o.excludeFromExport).map((o:any)=>o.getBoundingRect());const maxBottom=bounds.length?Math.max(...bounds.map((b:any)=>b.top+b.height)):0;if(maxBottom>canvas.getHeight()-40){canvas.setHeight(Math.ceil(maxBottom+120));}canvas.getObjects().forEach((o:any,i:number)=>ensureLayerMeta(o,i));const json=canvas.toObject(["data"]);const raw=JSON.stringify(json);lastJson.current=raw;onChange(page.id,{...json,width:canvas.getWidth(),height:canvas.getHeight()});requestAnimationFrame(()=>{try{onThumb(page.id,canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}})};
      const select=()=>{const obj=canvas.getActiveObject();selectedLayerId.current=obj?.data?.layerId||null;onSelect(obj?{pageId:page.id,object:obj}:null)};
      const snapMove=(event:any)=>{const obj=event.target;if(!obj)return;let left=Number(obj.left||0),top=Number(obj.top||0);if(grid){left=Math.round(left/GRID)*GRID;top=Math.round(top/GRID)*GRID;obj.set({left,top})}
        const box=obj.getBoundingRect();const xs=[0,page.width/2,page.width],ys=[0,page.height/2,page.height];for(const other of canvas.getObjects()){if(other===obj||other.excludeFromExport)continue;const b=other.getBoundingRect();xs.push(b.left,b.left+b.width/2,b.left+b.width);ys.push(b.top,b.top+b.height/2,b.top+b.height)}
@@ -161,9 +183,15 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
  },[value,normalized,onChange]);
  const commit=(next:FabricResponsiveDocument,record=true)=>{if(record&&!skipHistory.current){history.current.push(cloneJson(normalized));if(history.current.length>60)history.current.shift();future.current=[]}onChange(next)};
  const updateDoc=(nextDoc:FabricDocument,record=true)=>commit({...normalized,[mode]:nextDoc},record);
- const updatePageJson=(id:string,json:any)=>{const next={...doc,pages:doc.pages.map(p=>p.id===id?{...p,json}:p)};commit({...normalized,[mode]:next},true)};
+ const updatePageJson=(id:string,json:any)=>{
+   const width=Math.max(1,Number(json?.width||doc.pages.find(p=>p.id===id)?.width||pageSize(mode).width));
+   const height=Math.max(pageSize(mode).height,Number(json?.height||doc.pages.find(p=>p.id===id)?.height||pageSize(mode).height));
+   const cleanJson={...json};delete cleanJson.width;delete cleanJson.height;
+   const next={...doc,pages:doc.pages.map(p=>p.id===id?{...p,width,height,json:cleanJson}:p)};
+   commit({...normalized,[mode]:next},true);
+ };
  const pageRuntime=()=>runtime.current[pageId];
- const snapshot=()=>{const r=pageRuntime();if(!r)return;r.canvas.getObjects().forEach((o:any,i:number)=>ensureLayerMeta(o,i));updatePageJson(pageId,r.canvas.toObject(["data"]))};
+ const snapshot=()=>{const r=pageRuntime();if(!r)return;r.canvas.getObjects().forEach((o:any,i:number)=>ensureLayerMeta(o,i));updatePageJson(pageId,{...r.canvas.toObject(["data"]),width:r.canvas.getWidth(),height:r.canvas.getHeight()})};
  const isLegacyRectLine=(obj:any)=>["hline","vline"].includes(getKind(obj))&&obj?.type==="rect";
  const visualLineWidth=(obj:any)=>{
    const k=getKind(obj);
@@ -189,7 +217,7 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
    }
    obj.setCoords?.();r.canvas.requestRenderAll();setInspector({pageId,object:obj});snapshot();
  };
- const addObject=(obj:any)=>{const r=pageRuntime();if(!r)return;setDraw(x=>({...x,enabled:false}));ensureLayerMeta(obj,r.canvas.getObjects().length);styleObject(obj);r.canvas.add(obj);r.canvas.setActiveObject(obj);r.canvas.centerObject(obj);r.canvas.requestRenderAll()};
+ const addObject=(obj:any,center=true)=>{const r=pageRuntime();if(!r)return;setDraw(x=>({...x,enabled:false}));ensureLayerMeta(obj,r.canvas.getObjects().length);styleObject(obj);r.canvas.add(obj);r.canvas.setActiveObject(obj);if(center)r.canvas.centerObject(obj);r.canvas.requestRenderAll()};
  const addText=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.IText("텍스트를 입력하세요",{left:80,top:80,fontSize:32,fontFamily:"Arial",fill:"#3d2b20",data:{kind:"text"}}))};
  const addRect=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Rect({left:100,top:100,width:320,height:180,fill:"#ffffff",stroke:"#6c625c",strokeWidth:1,data:{kind:"rect"}}))};
  const addCircle=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Circle({left:120,top:120,radius:90,fill:"#f3eee9",stroke:"#6c625c",strokeWidth:1,data:{kind:"circle"}}))};
@@ -199,7 +227,7 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
  const addHLine=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Line([0,0,360,0],{left:100,top:180,stroke:"#6c625c",strokeWidth:1,fill:"transparent",data:{kind:"hline"},strokeUniform:true,selectable:true,evented:true,lockMovementX:false,lockMovementY:false}))};
  const addVLine=()=>{const r=pageRuntime();if(!r)return;addObject(new r.fabric.Line([0,0,0,360],{left:200,top:100,stroke:"#6c625c",strokeWidth:1,fill:"transparent",data:{kind:"vline"},strokeUniform:true,selectable:true,evented:true,lockMovementX:false,lockMovementY:false}))};
  const addImage=()=>fileRef.current?.click();
- const onFile=async(e:React.ChangeEvent<HTMLInputElement>)=>{const file=e.target.files?.[0];e.target.value="";if(!file)return;try{const src=await imageFileToDataUrl(file);const r=pageRuntime();if(!r)return;const img=await r.fabric.FabricImage.fromURL(src);img.set({left:120,top:120,data:{kind:"image",filters:{brightness:0,contrast:0,blur:0,grayscale:false}}});const max=Math.min(720,doc.pages.find(p=>p.id===pageId)?.width||720);if(img.width>max)img.scaleToWidth(max);addObject(img)}catch(err){showAdminToast(err instanceof Error?err.message:"이미지 처리 실패","error")}};
+ const onFile=async(e:React.ChangeEvent<HTMLInputElement>)=>{const file=e.target.files?.[0];e.target.value="";if(!file)return;try{const src=await imageFileToDataUrl(file);const r=pageRuntime();const p=doc.pages.find(p=>p.id===pageId);if(!r||!p)return;const img=await r.fabric.FabricImage.fromURL(src);img.set({left:0,top:0,data:{kind:"image",filters:{brightness:0,contrast:0,blur:0,grayscale:false}}});if(Number(img.width||0)>0)img.scaleToWidth(p.width);img.set({left:0,top:0});img.setCoords();addObject(img,false)}catch(err){showAdminToast(err instanceof Error?err.message:"이미지 처리 실패","error")}};
  const addSvg=()=>svgRef.current?.click();
  const onSvg=async(e:React.ChangeEvent<HTMLInputElement>)=>{const file=e.target.files?.[0];e.target.value="";if(!file)return;try{const text=await file.text();const r=pageRuntime();if(!r)return;const parsed=await r.fabric.loadSVGFromString(text);const objects=(parsed.objects||[]).filter(Boolean);if(!objects.length)throw new Error("SVG에서 표시 가능한 요소를 찾지 못했습니다.");const obj=r.fabric.util.groupSVGElements(objects,parsed.options||{});obj.set({left:120,top:120,data:{kind:"svg"}});const max=Math.min(650,doc.pages.find(p=>p.id===pageId)?.width||650);if(obj.width>max)obj.scaleToWidth(max);addObject(obj)}catch(err){showAdminToast(err instanceof Error?err.message:"SVG 불러오기 실패","error")}};
  const duplicate=()=>{const r=pageRuntime();const obj=r?.canvas.getActiveObject();if(!r||!obj)return;void obj.clone(["data"]).then((cl:any)=>{cl.set({left:Number(cl.left||0)+24,top:Number(cl.top||0)+24});renewLayerMeta(cl,r.canvas.getObjects().length);styleObject(cl);r.canvas.add(cl);r.canvas.setActiveObject(cl);r.canvas.requestRenderAll()})};
@@ -221,7 +249,9 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
  const dupPage=()=>{const idx=doc.pages.findIndex(p=>p.id===pageId);if(idx<0)return;const src=doc.pages[idx];const cp={...cloneJson(src),id:uid(),json:cloneJson(src.json)};const pages=[...doc.pages];pages.splice(idx+1,0,cp);updateDoc({...doc,pages});setActivePage(cp.id)};
  const deletePage=()=>{if(doc.pages.length<=1){showAdminToast("마지막 페이지는 삭제할 수 없습니다.","error");return}if(!confirm("현재 페이지를 삭제할까요?"))return;const idx=doc.pages.findIndex(p=>p.id===pageId);const pages=doc.pages.filter(p=>p.id!==pageId);updateDoc({...doc,pages});setActivePage(pages[Math.max(0,idx-1)]?.id||pages[0].id)};
  const movePage=(dir:-1|1)=>{const idx=doc.pages.findIndex(p=>p.id===pageId);const t=idx+dir;if(idx<0||t<0||t>=doc.pages.length)return;const pages=[...doc.pages];[pages[idx],pages[t]]=[pages[t],pages[idx]];updateDoc({...doc,pages})};
- const resizeCurrent=()=>{const r=pageRuntime();const p=doc.pages.find(p=>p.id===pageId);if(!r||!p)return;const size=pageSize(mode);if(p.width===size.width&&p.height===size.height){showAdminToast("이미 공통 규격입니다.","success");return}const sx=size.width/p.width,sy=size.height/p.height;r.canvas.getObjects().forEach((o:any)=>{o.set({left:Number(o.left||0)*sx,top:Number(o.top||0)*sy,scaleX:Number(o.scaleX||1)*sx,scaleY:Number(o.scaleY||1)*sy});o.setCoords()});const json=r.canvas.toObject(["data"]);updateDoc({...doc,pages:doc.pages.map(x=>x.id===p.id?{...x,...size,json}:x)});showAdminToast("공통 페이지 규격으로 맞췄습니다.","success")};
+ const fitPageToContent=()=>{const r=pageRuntime();const p=doc.pages.find(p=>p.id===pageId);if(!r||!p)return;const bounds=r.canvas.getObjects().filter((o:any)=>!o.excludeFromExport).map((o:any)=>o.getBoundingRect());const maxBottom=bounds.length?Math.max(...bounds.map((b:any)=>b.top+b.height)):0;const height=Math.max(pageSize(mode).height,Math.ceil(maxBottom+120));r.canvas.setHeight(height);r.canvas.requestRenderAll();snapshot();showAdminToast(`페이지 높이를 ${height}px로 맞췄습니다.`,"success")};
+ const setCurrentPageHeight=(height:number)=>{const r=pageRuntime();if(!r)return;const next=Math.max(pageSize(mode).height,Math.round(Number(height)||pageSize(mode).height));r.canvas.setHeight(next);r.canvas.requestRenderAll();snapshot()};
+ const resizeCurrent=()=>{const r=pageRuntime();const p=doc.pages.find(p=>p.id===pageId);if(!r||!p)return;const size=pageSize(mode);const sx=size.width/p.width;if(sx!==1){r.canvas.getObjects().forEach((o:any)=>{o.set({left:Number(o.left||0)*sx,top:Number(o.top||0)*sx,scaleX:Number(o.scaleX||1)*sx,scaleY:Number(o.scaleY||1)*sx});o.setCoords()})}const bounds=r.canvas.getObjects().filter((o:any)=>!o.excludeFromExport).map((o:any)=>o.getBoundingRect());const maxBottom=bounds.length?Math.max(...bounds.map((b:any)=>b.top+b.height)):0;const height=Math.max(size.height,Math.ceil(maxBottom+120));r.canvas.setDimensions({width:size.width,height});r.canvas.requestRenderAll();snapshot();showAdminToast("가로 공통 규격 + 콘텐츠 높이로 맞췄습니다.","success")};
  const undo=()=>{const prev=history.current.pop();if(!prev)return;future.current.push(cloneJson(normalized));skipHistory.current=true;onChange(prev);setTimeout(()=>{skipHistory.current=false},0)}; const redo=()=>{const next=future.current.pop();if(!next)return;history.current.push(cloneJson(normalized));skipHistory.current=true;onChange(next);setTimeout(()=>{skipHistory.current=false},0)};
  const selected=inspector?.object;const kind=getKind(selected);const imageFilters=selected?.data?.filters||{brightness:0,contrast:0,blur:0,grayscale:false};
  const activeObjects=pageRuntime()?.canvas?.getObjects?.()||[];
@@ -237,7 +267,7 @@ export default function FabricDesigner({value,onChange,pageLabel}:Props){
    </aside>
    <div className={`fabric-workspace ${grid?"show-grid":""}`}>{doc.pages.map((page,index)=><div key={page.id} id={`fabric-page-${page.id}`} className={`fabric-page-card ${page.id===pageId?"is-active":""}`} onMouseDown={()=>setActivePage(page.id)}><div className="fabric-page-label">{index+1} PAGE · {page.width}×{page.height}</div><CanvasPage page={page} grid={grid} zoom={zoom} draw={page.id===pageId?draw:{...draw,enabled:false}} onReady={(id,r)=>{if(r)runtime.current[id]=r;else delete runtime.current[id]}} onChange={updatePageJson} onSelect={(v)=>{setInspector(v);if(v)setActivePage(v.pageId)}} onThumb={(id,url)=>setThumbs(x=>({...x,[id]:url}))}/></div>)}</div>
    <aside className="fabric-inspector fabric-inspector-full"><h3>{selected?`${kind} 설정`:"페이지 / 요소 설정"}</h3>
-    <section><h4>페이지</h4><label>배경색<input type="color" defaultValue="#ffffff" onChange={e=>setCanvasBg(e.target.value)}/></label><div className="fabric-align-grid"><button type="button" onClick={()=>align("left")}>←</button><button type="button" onClick={()=>align("centerX")}>↔</button><button type="button" onClick={()=>align("right")}>→</button><button type="button" onClick={()=>align("top")}>↑</button><button type="button" onClick={()=>align("centerY")}>↕</button><button type="button" onClick={()=>align("bottom")}>↓</button></div></section>
+    <section><h4>페이지</h4><label>배경색<input type="color" defaultValue="#ffffff" onChange={e=>setCanvasBg(e.target.value)}/></label><label>페이지 높이<input type="number" min={pageSize(mode).height} step="10" value={doc.pages.find(p=>p.id===pageId)?.height||pageSize(mode).height} onChange={e=>setCurrentPageHeight(Number(e.target.value))}/></label><div className="fabric-inline-actions"><button type="button" onClick={fitPageToContent}>콘텐츠 높이에 자동 맞춤</button></div><small className="fabric-field-help">콘텐츠가 아래쪽을 넘으면 페이지 높이는 자동으로 늘어납니다.</small><div className="fabric-align-grid"><button type="button" onClick={()=>align("left")}>←</button><button type="button" onClick={()=>align("centerX")}>↔</button><button type="button" onClick={()=>align("right")}>→</button><button type="button" onClick={()=>align("top")}>↑</button><button type="button" onClick={()=>align("centerY")}>↕</button><button type="button" onClick={()=>align("bottom")}>↓</button></div></section>
     {selected?<><section><h4>변형</h4><label>X<input type="number" value={Math.round(selected.left||0)} onChange={e=>setProp("left",Number(e.target.value))}/></label><label>Y<input type="number" value={Math.round(selected.top||0)} onChange={e=>setProp("top",Number(e.target.value))}/></label><label>회전<input type="number" value={Math.round(selected.angle||0)} onChange={e=>setProp("angle",Number(e.target.value))}/></label><label>투명도<input type="range" min="0" max="1" step="0.05" value={selected.opacity??1} onChange={e=>setProp("opacity",Number(e.target.value))}/></label><label>Skew X<input type="number" min="-60" max="60" value={Math.round(selected.skewX||0)} onChange={e=>setProp("skewX",Number(e.target.value))}/></label><label>Skew Y<input type="number" min="-60" max="60" value={Math.round(selected.skewY||0)} onChange={e=>setProp("skewY",Number(e.target.value))}/></label><div className="fabric-inline-actions"><button type="button" onClick={()=>flip("x")}>좌우 반전</button><button type="button" onClick={()=>flip("y")}>상하 반전</button><button type="button" onClick={toggleLock}>{selected.lockMovementX?"잠금 해제":"잠금"}</button></div></section>
       {kind==="text"&&<section><h4>텍스트</h4><label>글자 크기<input type="number" min="8" max="260" value={selected.fontSize||32} onChange={e=>setProp("fontSize",Number(e.target.value))}/></label><label>폰트<select value={selected.fontFamily||"Arial"} onChange={e=>setProp("fontFamily",e.target.value)}><option>Arial</option><option>Georgia</option><option>Times New Roman</option><option>Helvetica</option><option>Noto Sans KR</option><option>serif</option><option>sans-serif</option></select></label><label>글자색<input type="color" value={typeof selected.fill==="string"?selected.fill:"#3d2b20"} onChange={e=>setProp("fill",e.target.value)}/></label><label>행간<input type="number" min="0.6" max="3" step="0.1" value={selected.lineHeight||1.16} onChange={e=>setProp("lineHeight",Number(e.target.value))}/></label><label>자간<input type="number" min="-300" max="1200" value={selected.charSpacing||0} onChange={e=>setProp("charSpacing",Number(e.target.value))}/></label><label>정렬<select value={selected.textAlign||"left"} onChange={e=>setProp("textAlign",e.target.value)}><option value="left">왼쪽</option><option value="center">가운데</option><option value="right">오른쪽</option><option value="justify">양쪽</option></select></label><div className="fabric-inline-actions"><button type="button" onClick={()=>setProp("fontWeight",selected.fontWeight==="bold"?"normal":"bold")}>Bold</button><button type="button" onClick={()=>setProp("fontStyle",selected.fontStyle==="italic"?"normal":"italic")}>Italic</button><button type="button" onClick={()=>setProp("underline",!selected.underline)}>Underline</button><button type="button" onClick={()=>setProp("linethrough",!selected.linethrough)}>Strike</button></div></section>}
       {["rect","circle","ellipse","triangle","star","hline","vline","svg","drawing"].includes(kind)&&<section><h4>색상 / 선</h4>

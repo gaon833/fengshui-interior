@@ -52,3 +52,4 @@
 
 /* v10.5 keyboard/delete hint */
 .fabric-tool-hint{grid-column:1/-1;color:#8a817a;font-size:9px;line-height:1.35;margin:-2px 0 2px}
+.fabric-inspector-full .fabric-field-help{display:block;margin:6px 0 10px;color:#8a8a84;font-size:10px;line-height:1.45}.fabric-inspector-full .fabric-inline-actions{display:flex;gap:6px;flex-wrap:wrap}.fabric-inspector-full .fabric-inline-actions button{flex:1 1 auto}
