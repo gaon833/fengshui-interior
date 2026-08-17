@@ -63,3 +63,28 @@
 .fabric-page-resize-handle b{min-width:48px;font-size:9px;font-weight:600;letter-spacing:.01em}
 .fabric-page-scaled.is-resizing{outline:1px solid rgba(40,170,247,.6)!important}
 .fabric-page-card + .fabric-page-card{margin-top:10px}
+
+
+/* v10.5.2 drag handle reliability fix */
+.fabric-page-resize-handle{
+  bottom:-16px!important;
+  height:32px!important;
+  z-index:500!important;
+  cursor:ns-resize!important;
+  touch-action:none!important;
+  pointer-events:auto!important;
+  opacity:.9!important;
+  border-top:2px solid rgba(40,170,247,.85)!important;
+  background:linear-gradient(to bottom,rgba(40,170,247,.12),rgba(255,255,255,.98))!important;
+}
+.fabric-page-resize-handle::before{
+  content:"";
+  position:absolute;
+  left:0;right:0;top:-10px;bottom:-10px;
+}
+.fabric-page-resize-handle:hover,.fabric-page-scaled.is-resizing .fabric-page-resize-handle{
+  opacity:1!important;
+  background:#eaf7ff!important;
+  border-top-color:#168fd0!important;
+}
+.fabric-page-scaled.is-resizing{user-select:none!important}

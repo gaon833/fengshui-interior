@@ -1,0 +1,8 @@
+v10.5.2 page-height drag reliability fix
+
+- Bottom resize hit area enlarged to 32px.
+- Drag tracking moved from the handle element to window-level pointer events.
+- Drag remains active when the mouse leaves the handle/canvas.
+- Canvas dimensions and pointer offsets refresh live during resizing.
+- Minimum height protects content with an additional 20px safety gap.
+- Version remains 10.5.2 as requested.

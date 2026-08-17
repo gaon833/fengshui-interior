@@ -147,11 +147,60 @@ function CanvasPage({page,grid,zoom,draw,onReady,onChange,onSelect,onThumb,minPa
  const visibleHeight=dragHeight??page.height;
  const contentBottomLive=()=>{const r=runtime.current;if(!r)return 0;const bounds=r.canvas.getObjects().filter((o:any)=>!o.excludeFromExport).map((o:any)=>o.getBoundingRect());return bounds.length?Math.max(...bounds.map((b:any)=>b.top+b.height)):0};
  const beginHeightDrag=(e:React.PointerEvent<HTMLDivElement>)=>{
-   e.preventDefault();e.stopPropagation();const r=runtime.current;if(!r)return;resizing.current=true;
-   const startY=e.clientY;const startHeight=r.canvas.getHeight();const pointerId=e.pointerId;const handle=e.currentTarget;handle.setPointerCapture?.(pointerId);
-   const move=(ev:PointerEvent)=>{if(!resizing.current)return;const delta=(ev.clientY-startY)/Math.max(.01,scale);const minHeight=Math.max(minPageHeight,Math.ceil(contentBottomLive()));const next=Math.max(minHeight,Math.round(startHeight+delta));setDragHeight(next);r.canvas.setHeight(next);r.canvas.requestRenderAll()};
-   const finish=(ev:PointerEvent)=>{if(!resizing.current)return;resizing.current=false;handle.releasePointerCapture?.(pointerId);handle.removeEventListener("pointermove",move);handle.removeEventListener("pointerup",finish);handle.removeEventListener("pointercancel",finish);const finalHeight=Math.max(minPageHeight,Math.ceil(r.canvas.getHeight()));setDragHeight(null);r.canvas.setHeight(finalHeight);r.canvas.getObjects().forEach((o:any,i:number)=>ensureLayerMeta(o,i));const json=r.canvas.toObject(["data"]);lastJson.current=JSON.stringify(json);onChange(page.id,{...json,width:r.canvas.getWidth(),height:finalHeight});r.canvas.requestRenderAll();requestAnimationFrame(()=>{try{onThumb(page.id,r.canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}})};
-   handle.addEventListener("pointermove",move);handle.addEventListener("pointerup",finish);handle.addEventListener("pointercancel",finish);
+   e.preventDefault();e.stopPropagation();
+   const r=runtime.current;if(!r||resizing.current)return;
+   resizing.current=true;
+   const startY=e.clientY;
+   const startHeight=Number(r.canvas.getHeight())||page.height;
+   const previousCursor=document.body.style.cursor;
+   const previousSelect=document.body.style.userSelect;
+   document.body.style.cursor="ns-resize";
+   document.body.style.userSelect="none";
+
+   const move=(ev:PointerEvent)=>{
+     if(!resizing.current)return;
+     ev.preventDefault();
+     const liveScale=Math.max(.01,fit*zoom);
+     const delta=(ev.clientY-startY)/liveScale;
+     // Keep the bottom edge at least 20px below the lowest visible object,
+     // while still allowing the user to create as much empty space as desired.
+     const contentMin=Math.ceil(contentBottomLive()+20);
+     const minHeight=Math.max(minPageHeight,contentMin);
+     const next=Math.max(minHeight,Math.round(startHeight+delta));
+     setDragHeight(next);
+     r.canvas.setDimensions({width:r.canvas.getWidth(),height:next});
+     r.canvas.calcOffset?.();
+     r.canvas.requestRenderAll();
+   };
+
+   const finish=()=>{
+     if(!resizing.current)return;
+     resizing.current=false;
+     window.removeEventListener("pointermove",move);
+     window.removeEventListener("pointerup",finish);
+     window.removeEventListener("pointercancel",finish);
+     window.removeEventListener("blur",finish);
+     document.body.style.cursor=previousCursor;
+     document.body.style.userSelect=previousSelect;
+
+     const finalHeight=Math.max(minPageHeight,Math.ceil(Number(r.canvas.getHeight())||startHeight));
+     setDragHeight(null);
+     r.canvas.setDimensions({width:r.canvas.getWidth(),height:finalHeight});
+     r.canvas.calcOffset?.();
+     r.canvas.getObjects().forEach((o:any,i:number)=>ensureLayerMeta(o,i));
+     const json=r.canvas.toObject(["data"]);
+     lastJson.current=JSON.stringify(json);
+     onChange(page.id,{...json,width:r.canvas.getWidth(),height:finalHeight});
+     r.canvas.requestRenderAll();
+     requestAnimationFrame(()=>{try{onThumb(page.id,r.canvas.toDataURL({format:"jpeg",quality:.55,multiplier:.12}))}catch{}});
+   };
+
+   // Use window listeners instead of the small handle itself so the drag keeps working
+   // even when the pointer leaves the handle or crosses the canvas/workspace boundary.
+   window.addEventListener("pointermove",move,{passive:false});
+   window.addEventListener("pointerup",finish);
+   window.addEventListener("pointercancel",finish);
+   window.addEventListener("blur",finish);
  };
  return <div ref={hostRef} className="fabric-page-host"><div className={`fabric-page-scaled ${dragHeight!==null?"is-resizing":""}`} style={{width:page.width*scale,height:visibleHeight*scale}}><div className={`fabric-page-inner ${grid?"is-grid":""}`} style={{width:page.width,height:visibleHeight,transform:`scale(${scale})`}}><div className="fabric-ruler fabric-ruler-x"/><div className="fabric-ruler fabric-ruler-y"/><canvas ref={canvasRef}/>{guide&&<GuideOverlay page={{...page,height:visibleHeight}} guide={guide}/>}</div><div className="fabric-page-resize-handle" role="separator" aria-orientation="horizontal" aria-label="페이지 높이 드래그 조절" title="위아래로 드래그해서 페이지 높이 조절" onPointerDown={beginHeightDrag}><span>↕</span><b>{Math.round(visibleHeight)}px</b></div></div></div>
 }
