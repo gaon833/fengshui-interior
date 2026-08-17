@@ -24,7 +24,7 @@ function effectiveSize(page:FabricPage){
   const width=Math.max(1,Number(page.width||(page.json as any)?.width||1420));
   const savedHeight=Math.max(1,Number(page.height||0),Number((page.json as any)?.height||0));
   const contentBottom=jsonContentBottom(page.json);
-  const height=Math.max(savedHeight,contentBottom>savedHeight-40?Math.ceil(contentBottom+120):0,1);
+  const height=Math.max(savedHeight,contentBottom>savedHeight?Math.ceil(contentBottom):0,1);
   return {width,height};
 }
 

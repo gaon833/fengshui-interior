@@ -53,3 +53,13 @@
 /* v10.5 keyboard/delete hint */
 .fabric-tool-hint{grid-column:1/-1;color:#8a817a;font-size:9px;line-height:1.35;margin:-2px 0 2px}
 .fabric-inspector-full .fabric-field-help{display:block;margin:6px 0 10px;color:#8a8a84;font-size:10px;line-height:1.45}.fabric-inspector-full .fabric-inline-actions{display:flex;gap:6px;flex-wrap:wrap}.fabric-inspector-full .fabric-inline-actions button{flex:1 1 auto}
+
+
+/* v10.5.2 direct page-height drag handle */
+.fabric-page-scaled{position:relative}
+.fabric-page-resize-handle{position:absolute;left:0;right:0;bottom:-10px;height:20px;z-index:110;display:flex;align-items:center;justify-content:center;gap:6px;cursor:ns-resize;touch-action:none;user-select:none;border-top:1px solid rgba(40,170,247,.75);background:linear-gradient(to bottom,rgba(40,170,247,.08),rgba(255,255,255,.96));color:#168fd0;font-size:10px;opacity:.72;transition:opacity .15s ease,background .15s ease}
+.fabric-page-resize-handle:hover,.fabric-page-scaled.is-resizing .fabric-page-resize-handle{opacity:1;background:#eef9ff}
+.fabric-page-resize-handle span{display:grid;place-items:center;width:20px;height:16px;border:1px solid rgba(40,170,247,.45);border-radius:8px;background:#fff;font-size:12px;line-height:1}
+.fabric-page-resize-handle b{min-width:48px;font-size:9px;font-weight:600;letter-spacing:.01em}
+.fabric-page-scaled.is-resizing{outline:1px solid rgba(40,170,247,.6)!important}
+.fabric-page-card + .fabric-page-card{margin-top:10px}
