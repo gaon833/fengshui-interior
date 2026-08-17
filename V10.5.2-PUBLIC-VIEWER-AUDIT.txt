@@ -1,0 +1,11 @@
+10.5.2 PUBLIC VIEWER AUDIT
+
+- OUR STORY / PROCESS 공통 FabricDocumentViewer 재검수
+- CSS transform 기반 전체 stage 축소 제거
+- Fabric viewportTransform 단일 스케일링으로 변경
+- canvas width:100%!important / height:100%!important 제거
+- enableRetinaScaling:false 유지 (DPR 이중 확대 방지)
+- 저장된 page.width/page.height 원본 좌표 유지
+- 하단 여백은 page.height 전체와 함께 동일 비율 축소
+- ResizeObserver에서는 캔버스 재생성 없이 dimensions + viewport만 갱신
+- 모바일/데스크톱 기존 문서 선택 로직 유지

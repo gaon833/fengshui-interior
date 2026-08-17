@@ -1,0 +1,7 @@
+v10.5.2 public Fabric viewer zoom fix
+
+- Fixed DPR/retina canvas intrinsic size being exposed by width:auto!important.
+- Public canvas now fills the fixed source-size stage (100% x 100%).
+- Fabric StaticCanvas retina backstore scaling is disabled in the public viewer.
+- The whole source-size stage is scaled once from saved page width to host width.
+- OUR STORY and PROCESS share this viewer, so both are fixed.

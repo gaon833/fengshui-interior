@@ -1,0 +1,16 @@
+V10.5.2 SECOND AUDIT
+
+Public Fabric viewer re-audited after the previous viewport-only scaling change.
+
+Additional issue found and fixed:
+- Initial public render had a race between ResizeObserver measurement and async Fabric JSON loading.
+- If measurement completed before Fabric runtime existed, the scale effect could be consumed too early.
+- The async loader then used the stale initial scale and could render the source-width canvas (e.g. 1420px) at 1:1, appearing enlarged.
+
+Fix:
+- Keep the latest measured public scale in scaleRef.
+- Fabric load completion always reads scaleRef (or directly measures host width as fallback).
+- Both initial render and later resizes use the same viewport-transform scaling path.
+- Retina scaling stays disabled.
+- Saved page width/height remain authoritative, so editor bottom spacing scales proportionally on the public page.
+- Applies to both OUR STORY and PROCESS through the shared FabricDocumentViewer.

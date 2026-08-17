@@ -23,7 +23,7 @@ function jsonContentBottom(json:any){
 function effectiveSize(page:FabricPage){
   const width=Math.max(1,Math.round(Number(page.width||(page.json as any)?.width||1420)));
   // 관리자에서 저장한 page.height를 최우선으로 사용한다.
-  // 예전 데이터 호환을 위해 json.height / 실제 콘텐츠 끝값도 fallback으로만 사용한다.
+  // 예전 데이터만 json.height / 실제 콘텐츠 끝값을 fallback으로 사용한다.
   const pageHeight=Number(page.height||0);
   const jsonHeight=Number((page.json as any)?.height||0);
   const contentBottom=jsonContentBottom(page.json);
@@ -34,18 +34,20 @@ function effectiveSize(page:FabricPage){
 function CanvasViewer({page,index}:{page:FabricPage;index:number}){
   const canvasRef=useRef<HTMLCanvasElement|null>(null);
   const hostRef=useRef<HTMLDivElement|null>(null);
+  const runtimeRef=useRef<any>(null);
+  const scaleRef=useRef(0);
   const [scale,setScale]=useState(0);
   const size=useMemo(()=>effectiveSize(page),[page.width,page.height,page.json]);
 
-  // Public view must preserve the exact same geometry as the editor.
-  // Render Fabric at its saved source size, then scale the WHOLE canvas.
-  // This keeps every object position and the page bottom whitespace identical.
+  // Measure only the available public-page width. The Fabric object coordinates
+  // remain in the saved editor coordinate system (for example 1420 x 3250).
   useEffect(()=>{
     const host=hostRef.current;
     if(!host)return;
     const update=()=>{
-      const hostWidth=Math.max(1,host.getBoundingClientRect().width||host.clientWidth||1);
-      const next=hostWidth/size.width;
+      const hostWidth=Math.max(1,host.clientWidth||host.getBoundingClientRect().width||1);
+      const next=Math.min(1,hostWidth/size.width);
+      scaleRef.current=next;
       setScale(prev=>Math.abs(prev-next)<0.0001?prev:next);
     };
     update();
@@ -55,8 +57,12 @@ function CanvasViewer({page,index}:{page:FabricPage;index:number}){
     return()=>{ro?.disconnect();window.removeEventListener("resize",update)};
   },[size.width]);
 
+  // Create/load the Fabric canvas in source coordinates. Do not use CSS transform
+  // on the canvas or a parent stage; Fabric's viewport transform is the single
+  // scaling mechanism used by the public viewer.
   useEffect(()=>{
-    let dead=false;let canvas:any;
+    let dead=false;
+    let canvas:any;
     void (async()=>{
       const {StaticCanvas}=await import("fabric");
       if(dead||!canvasRef.current)return;
@@ -65,42 +71,54 @@ function CanvasViewer({page,index}:{page:FabricPage;index:number}){
         height:size.height,
         backgroundColor:"#fff",
         renderOnAddRemove:false,
+        enableRetinaScaling:false,
       });
+      runtimeRef.current=canvas;
       await canvas.loadFromJSON(page.json||{objects:[]});
       if(dead){canvas?.dispose?.();return;}
-      // Keep the Fabric backstore at the exact saved editor dimensions.
-      // Never resize the Fabric canvas itself to the browser viewport.
-      canvas.setDimensions({width:size.width,height:size.height},{cssOnly:false});
+      // The initial ResizeObserver can run before Fabric finishes loading.
+      // Always read the latest measured scale from a ref here, otherwise the
+      // async loader may accidentally apply the stale initial scale (1.0) and
+      // show the 1420px source canvas enlarged on the public page.
+      const currentScale=Math.max(0.0001,scaleRef.current||Math.min(1,(hostRef.current?.clientWidth||size.width)/size.width));
+      const displayWidth=Math.max(1,Math.round(size.width*currentScale));
+      const displayHeight=Math.max(1,Math.round(size.height*currentScale));
+      canvas.setDimensions({width:displayWidth,height:displayHeight});
+      canvas.setViewportTransform([currentScale,0,0,currentScale,0,0]);
+      canvas.calcOffset?.();
       canvas.requestRenderAll();
     })();
-    return()=>{dead=true;canvas?.dispose?.()};
-  },[page.id,size.width,size.height,page.json]);
+    return()=>{
+      dead=true;
+      if(runtimeRef.current===canvas)runtimeRef.current=null;
+      canvas?.dispose?.();
+    };
+  },[page.id,page.json,size.width,size.height]);
 
-  const scaledHeight=scale>0?size.height*scale:0;
+  // Resize/zoom an already loaded Fabric canvas. This avoids rebuilding objects
+  // on every ResizeObserver callback and preserves the exact editor geometry.
+  useEffect(()=>{
+    scaleRef.current=scale;
+    const canvas=runtimeRef.current;
+    if(!canvas||scale<=0)return;
+    const displayWidth=Math.max(1,Math.round(size.width*scale));
+    const displayHeight=Math.max(1,Math.round(size.height*scale));
+    canvas.setDimensions({width:displayWidth,height:displayHeight});
+    canvas.setViewportTransform([scale,0,0,scale,0,0]);
+    canvas.calcOffset?.();
+    canvas.requestRenderAll();
+  },[scale,size.width,size.height]);
+
+  const displayHeight=scale>0?Math.round(size.height*scale):0;
   return <div
     ref={hostRef}
     className="fabric-public-page"
-    style={scaledHeight>0?{height:`${scaledHeight}px`}:undefined}
+    style={displayHeight>0?{height:`${displayHeight}px`}:undefined}
     data-page-width={size.width}
     data-page-height={size.height}
     data-page-scale={scale||undefined}
   >
-    <div
-      className="fabric-public-page-stage"
-      style={{
-        width:`${size.width}px`,
-        height:`${size.height}px`,
-        transform:scale>0?`scale(${scale})`:"scale(0)",
-        transformOrigin:"top left",
-      }}
-    >
-      <canvas
-        ref={canvasRef}
-        aria-label={`${index+1} page`}
-        width={size.width}
-        height={size.height}
-      />
-    </div>
+    <canvas ref={canvasRef} aria-label={`${index+1} page`}/>
   </div>;
 }
 

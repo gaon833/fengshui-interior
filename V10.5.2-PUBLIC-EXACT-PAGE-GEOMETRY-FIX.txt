@@ -1,0 +1,8 @@
+v10.5.2 public exact page geometry fix
+
+- OUR STORY / PROCESS shared FabricDocumentViewer updated.
+- Public page now renders at the exact saved source dimensions first.
+- The complete source canvas is scaled as one unit to the browser width.
+- Bottom whitespace is therefore scaled from the same saved page.height and matches the editor proportion exactly.
+- Fabric no longer receives viewport-sized CSS dimensions that can be overwritten during setDimensions().
+- Version remains 10.5.2.
