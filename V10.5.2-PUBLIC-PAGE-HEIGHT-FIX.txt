@@ -1,8 +1,0 @@
-V10.5.2 PUBLIC PAGE HEIGHT FIX
-
-- OUR STORY / PROCESS 홈페이지 FabricDocumentViewer가 관리자에서 저장한 page.height를 최우선으로 사용합니다.
-- 기존 aspect-ratio + canvas height:auto 방식 제거.
-- ResizeObserver로 홈페이지 실제 가로폭을 측정하고 저장된 페이지 비율에 따라 실제 표시 높이를 px로 계산합니다.
-- public page wrapper와 canvas 표시 높이를 동일한 px 값으로 고정하여 관리자에서 만든 하단 여백/페이지 높이가 홈페이지에서도 정확히 유지됩니다.
-- 예전 데이터는 json.height 또는 콘텐츠 끝값을 fallback으로 지원합니다.
-- 버전 번호 10.5.2 유지.

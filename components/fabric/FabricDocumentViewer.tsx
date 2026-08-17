@@ -34,48 +34,73 @@ function effectiveSize(page:FabricPage){
 function CanvasViewer({page,index}:{page:FabricPage;index:number}){
   const canvasRef=useRef<HTMLCanvasElement|null>(null);
   const hostRef=useRef<HTMLDivElement|null>(null);
-  const [rendered,setRendered]=useState({width:0,height:0});
+  const [scale,setScale]=useState(0);
   const size=useMemo(()=>effectiveSize(page),[page.width,page.height,page.json]);
 
-  // 실제 홈페이지의 가로폭을 기준으로 저장된 페이지 비율을 px 높이로 확정한다.
-  // aspect-ratio / height:auto에 의존하지 않아 관리자 하단 여백이 그대로 보인다.
+  // Public view must preserve the exact same geometry as the editor.
+  // Render Fabric at its saved source size, then scale the WHOLE canvas.
+  // This keeps every object position and the page bottom whitespace identical.
   useEffect(()=>{
     const host=hostRef.current;
     if(!host)return;
     const update=()=>{
-      const width=Math.max(1,host.clientWidth||host.getBoundingClientRect().width||1);
-      const height=Math.max(1,width*(size.height/size.width));
-      setRendered(prev=>Math.abs(prev.width-width)<.5&&Math.abs(prev.height-height)<.5?prev:{width,height});
+      const hostWidth=Math.max(1,host.getBoundingClientRect().width||host.clientWidth||1);
+      const next=hostWidth/size.width;
+      setScale(prev=>Math.abs(prev-next)<0.0001?prev:next);
     };
     update();
     const ro=typeof ResizeObserver!=="undefined"?new ResizeObserver(update):null;
     ro?.observe(host);
     window.addEventListener("resize",update,{passive:true});
     return()=>{ro?.disconnect();window.removeEventListener("resize",update)};
-  },[size.width,size.height]);
+  },[size.width]);
 
   useEffect(()=>{
     let dead=false;let canvas:any;
     void (async()=>{
       const {StaticCanvas}=await import("fabric");
       if(dead||!canvasRef.current)return;
-      canvas=new StaticCanvas(canvasRef.current,{width:size.width,height:size.height,backgroundColor:"#fff",renderOnAddRemove:false});
+      canvas=new StaticCanvas(canvasRef.current,{
+        width:size.width,
+        height:size.height,
+        backgroundColor:"#fff",
+        renderOnAddRemove:false,
+      });
       await canvas.loadFromJSON(page.json||{objects:[]});
       if(dead){canvas?.dispose?.();return;}
-      // Fabric 내부 backstore 크기도 저장된 page.height와 정확히 일치시킨다.
-      canvas.setDimensions({width:size.width,height:size.height});
+      // Keep the Fabric backstore at the exact saved editor dimensions.
+      // Never resize the Fabric canvas itself to the browser viewport.
+      canvas.setDimensions({width:size.width,height:size.height},{cssOnly:false});
       canvas.requestRenderAll();
     })();
     return()=>{dead=true;canvas?.dispose?.()};
   },[page.id,size.width,size.height,page.json]);
 
-  const styleHeight=rendered.height>0?`${rendered.height}px`:undefined;
-  return <div ref={hostRef} className="fabric-public-page" style={{height:styleHeight,minHeight:styleHeight}} data-page-width={size.width} data-page-height={size.height}>
-    <canvas
-      ref={canvasRef}
-      aria-label={`${index+1} page`}
-      style={rendered.width>0?{width:`${rendered.width}px`,height:`${rendered.height}px`,display:"block"}:undefined}
-    />
+  const scaledHeight=scale>0?size.height*scale:0;
+  return <div
+    ref={hostRef}
+    className="fabric-public-page"
+    style={scaledHeight>0?{height:`${scaledHeight}px`}:undefined}
+    data-page-width={size.width}
+    data-page-height={size.height}
+    data-page-scale={scale||undefined}
+  >
+    <div
+      className="fabric-public-page-stage"
+      style={{
+        width:`${size.width}px`,
+        height:`${size.height}px`,
+        transform:scale>0?`scale(${scale})`:"scale(0)",
+        transformOrigin:"top left",
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        aria-label={`${index+1} page`}
+        width={size.width}
+        height={size.height}
+      />
+    </div>
   </div>;
 }
 
